@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/prueba.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="icon" type="image/svg+xml" href="~/favicon.ico" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" />
@@ -62,23 +62,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="buscador-usuario text-center">
         <?php
         echo '
-            <nav class="nav">
+            <nav class="nav text-center">
             <ul class="nav">
-            <div class="m-1">
+            <div class="text-center">
                 <form method="post" action="creacionusuarios.php">
                     <input class="form-control" type="hidden" name="crearPerfiles" value="crear">
-                    <button class="btn w-100 m-1 btn-primary btn-sm ">Nuevo Usuario</button>
+                    <button class="btn w-100 btn-primary btn-sm ">Nuevo Usuario</button>
                 </form>
             </div>
             </ul>
             </nav>';
         ?>
-        <div>
+        <?php /*<div>
             <input type="text" class="form-control" placeholder="Usuario" id="filtroUsuario">
         </div>
         <div>
             <input type="text" id="filtroCentro" class="form-control" placeholder="Centro Médico">
-        </div>
+        </div>*/ ?>
     </div>
 
     <br><br><br>
@@ -86,8 +86,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="col-lg-12">
             <table id="tableUsers" class="table table-responsive" style="padding: left 20px, right 20px;">
                 <thead style="background-color: #115DFC; color: white;">
-                    <script>
-                        $(document).ready(function() {
+                    <?php /*  <script>
+                       $(document).ready(function() {
                             // Función para realizar el filtrado
                             function filtrar() {
                                 var inputFiltroUsuario = $('#filtroUsuario').val().toLowerCase();
@@ -119,7 +119,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             // Agregar eventos de cambio a los inputs de filtrado
                             $('#filtroUsuario, #filtroCentro').on('input', filtrar);
                         });
-                    </script>
+                    </script>*/ ?>
                     <tr>
                         <th>IDUsuario</th>
                         <th>Usuario </th>
@@ -191,30 +191,88 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         foreach ($listusuarios as $row) { ?>
             <!-- Modal -->
             <!-- Modal -->
-            <div class="modal fade" id="editar_<?php echo $row['IDUsuario']; ?>_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
+            <div class="modal fade" id="editar_<?php echo $row['IDUsuario']; ?>_Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Editar:</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <form method="POST" action="index.php">
                             <div class="modal-body">
-                                <div class="form-group">
-                                    <label for="rut_<?php echo $row['idAlumno']; ?>">Nombre:</label>
-                                    <input class="form-control" required type="text" name="rut" id="rut_<?php echo $row['Nombre']; ?>" value="<?php echo $row['rut'] ?>">
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="nombre">Nombre Completo:</label>
+                                        <input type="text" class="form-control" name="nombre" value="<?php echo $row['Nombre']; ?>">
+                                    </div>
+                                    <div class="col">
+                                        <label for="rut">Rut:</label>
+                                        <input type="text" class="form-control" name="rut" value="<?php echo $row['Rut']; ?>">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" name="editar" class="btn btn-primary">Editar</button>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                            </div>
+
+                                <br>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="usuario">Usuario:</label>
+                                        <input type="text" class="form-control" name="usuario" value="<?php echo $row['usuario']; ?>">
+                                    </div>
+                                    <div class="col">
+                                        <label for="clave">Clave:</label>
+                                        <input type="text" class="form-control" name="clave" value="<?php echo $row['Clave']; ?>">
+                                    </div>
+                                </div>
+
+                                <br>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="correo">Correo:</label>
+                                        <input type="text" class="form-control" name="correo" value="<?php echo $row['Correo']; ?>">
+                                    </div>
+
+                                </div>
+
+                                <br>
+                                <?php
+
+                                $perfilUsuario = $objusuario->buscarPerfilId($row['IDPerfil']);
+                                $centroUsuario = $objusuario->buscarcentroID($row['IDCentroMedico']); ?>
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="perfil">Perfil</label>
+                                        <select class="form-select" style="width: 100%" aria-label="Default select example" id="perfil" name="perfil">
+                                            <option value="Seleccionar" <?php echo ($perfilUsuario == 'Seleccionar') ? 'selected' : ''; ?>>Seleccionar</option>
+                                            <option value="Administrador" <?php echo ($perfilUsuario == 'Administrador') ? 'selected' : ''; ?>>Administrador</option>
+                                            <option value="Recepcionista" <?php echo ($perfilUsuario == 'Recepcionista') ? 'selected' : ''; ?>>Recepcionista</option>
+                                            <option value="Diagnostico" <?php echo ($perfilUsuario == 'Diagnostico') ? 'selected' : ''; ?>>Diagnostico</option>
+                                            <option value="Centro Médico" <?php echo ($perfilUsuario == 'Centro Médico') ? 'selected' : ''; ?>>Centro Médico</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col">
+                                        <label for="rut">Centro Médico</label>
+                                        <select class="form-select" style="width: 100%" aria-label="Default select example" id="centro" name="centro">
+                                            <option>Seleccionar</option>
+                                            <option <?php echo ($nombreCentro == 'N/A') ? 'selected' : ''; ?>>N/A</option>
+                                            <option <?php echo ($nombreCentro == 'Ultraman') ? 'selected' : ''; ?>>Ultraman</option>
+                                            <option <?php echo ($nombreCentro == 'Megaman') ? 'selected' : ''; ?>>Megaman</option>
+                                            <option <?php echo ($nombreCentro == 'ultramegaman') ? 'selected' : ''; ?>>ultramegaman</option>
+                                        </select>
+                                    </div>
+
+                                    <input type="hidden" name="op" value="Modificar">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" name="modificar" class="btn btn-primary" value="Modificar"></button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                </div>
                         </form>
                     </div>
                 </div>
             </div>
+
 
 
     <?php }
@@ -223,7 +281,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script src="https://kit.fontawesome.com/4652dbea50.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
 </body>
 
