@@ -22,10 +22,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $op = $_POST['op'];
     }
 
-    if ($op == 'EDITAR') {
+    /*if ($op == 'EDITAR') {
         header("Location: editarusuario.php?IDUsuario=$IDUsuario");
         exit();
-    }
+    }*/
 }
 
 ?>
@@ -41,6 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="icon" type="image/svg+xml" href="~/favicon.ico" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <link rel="stylesheet" href="..//css/prueba.css">
     <title>Document</title>
@@ -53,39 +54,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </header>
 <br><br><br><br><br><br>
 
-<body>
-    <div class="titulo-usuario">
-        <br>
-        <h1 style="padding-top: 20px;">Listado de Usuarios</h1><br>
-        <div class="buscador-usuario">
-            <?php
-            echo '
+<body style="background-color: #1E1E1E; font-family: 'Montserrat';" class="text-center">
+    <h1 style="padding-top:20px; color:#FFFFFF">Usuarios</h1><br>
+
+    <br>
+
+    <div class="buscador-usuario text-center">
+        <?php
+        echo '
             <nav class="nav">
             <ul class="nav">
             <div class="m-1">
                 <form method="post" action="creacionusuarios.php">
-                    <input type="hidden" name="crearPerfiles" value="crear">
-                    <button class="btn w-100 m-1 btn-primary btn-sm ">Insertar usuarios</button>
+                    <input class="form-control" type="hidden" name="crearPerfiles" value="crear">
+                    <button class="btn w-100 m-1 btn-primary btn-sm ">Nuevo Usuario</button>
                 </form>
             </div>
-        </ul>
-        </nav>';
-            ?>
-            <div>
-                <label for="filtroUsuario">Filtrar por Usuario:</label>
-                <input type="text" id="filtroUsuario">
-            </div>
-            <div>
-                <label for="filtroCentro">Filtrar por laboratorio:</label>
-                <input type="text" id="filtroCentro">
-            </div>
+            </ul>
+            </nav>';
+        ?>
+        <div>
+            <input type="text" class="form-control" placeholder="Usuario" id="filtroUsuario">
+        </div>
+        <div>
+            <input type="text" id="filtroCentro" class="form-control" placeholder="Centro Médico">
         </div>
     </div>
+
     <br><br><br>
     <div class="row mantenedorDiagnostico">
         <div class="col-lg-12">
-            <table id="tableUsers" class=" table table-hover table-responsive tabla-usuario">
-                <thead>
+            <table id="tableUsers" class="table table-responsive" style="padding: left 20px, right 20px;">
+                <thead style="background-color: #115DFC; color: white;">
                     <script>
                         $(document).ready(function() {
                             // Función para realizar el filtrado
@@ -122,9 +122,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </script>
                     <tr>
                         <th>IDUsuario</th>
-                        <th>usuario </th>
+                        <th>Usuario </th>
                         <th>Nombre Completo</th>
-                        <th>correo </th>
+                        <th>Correo </th>
                         <th>Rut </th>
                         <th class="th-usuario">Clave </th>
                         <th>Perfil</th>
@@ -133,7 +133,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <th>Borrar</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody style="background-color: #FFFFFF">
                     <?php
                     foreach ($listusuarios as $usu) {
                     ?>
@@ -168,17 +168,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 ?>
                             </td>
                             <td>
-                                <form method="POST">
-                                    <input type="hidden" name="op" value="EDITAR">
-                                    <input type="hidden" name="IDUsuario" value="<?php echo $usu['IDUsuario'] ?>">
-                                    <button type="submit" class="btn w-100 center-block btn-primary">EDITAR</button>
-                                </form>
+                                <button type='button' class='btn w-100 center-block' data-bs-toggle='modal' data-bs-target='#editar_<?php echo $usu['IDUsuario']; ?>_Modal'><img src="../img/pen.png" width="40px" height="40px"></button>
                             </td>
                             <td class="text-center">
                                 <form method="POST" action="" id="eliminarForm">
                                     <input type="hidden" name="op" id="op" value="">
                                     <input type="hidden" name="IDUsuario" value="<?php echo $usu['IDUsuario']; ?>">
-                                    <button type="button" class="btn btn-danger" onclick="confirmarYEliminar('<?php echo $usu['IDUsuario']; ?>')">ELIMINAR</button>
+                                    <button type="button" class="btn" onclick="confirmarYEliminar('<?php echo $usu['IDUsuario']; ?>')"><img src="../img/delete.png" width="40px" height="40px"></button>
                                 </form>
                             </td>
                         </tr>
@@ -189,6 +185,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </table>
         </div>
     </div>
+
+    <?php
+    if (!empty($listusuarios)) {
+        foreach ($listusuarios as $row) { ?>
+            <!-- Modal -->
+            <!-- Modal -->
+            <div class="modal fade" id="editar_<?php echo $row['IDUsuario']; ?>_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Editar:</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form method="POST" action="index.php">
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="rut_<?php echo $row['idAlumno']; ?>">Nombre:</label>
+                                    <input class="form-control" required type="text" name="rut" id="rut_<?php echo $row['Nombre']; ?>" value="<?php echo $row['rut'] ?>">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" name="editar" class="btn btn-primary">Editar</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+    <?php }
+    } ?>
+
     <script src="https://kit.fontawesome.com/4652dbea50.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
