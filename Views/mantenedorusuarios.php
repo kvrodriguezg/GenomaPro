@@ -135,7 +135,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </thead>
                 <tbody style="background-color: #FFFFFF">
                     <?php
+                    $tempUsuarios = array();
                     foreach ($listusuarios as $usu) {
+                        echo $usu['IDUsuario'];
+                        $tempUsuarios[] = $usu; 
                     ?>
                         <tr>
                             <td>
@@ -168,7 +171,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 ?>
                             </td>
                             <td>
-                                <button type='button' class='btn w-100 center-block' data-bs-toggle='modal' data-bs-target='#editar_<?php echo $usu['IDUsuario']; ?>_Modal'><img src="../img/pen.png" width="40px" height="40px"></button>
+                            <button type='button' class='btn w-100 center-block' data-bs-toggle='modal' data-bs-target='#editar_<?php echo $usu['IDUsuario']; ?>_Modal'><img src="../img/pen.png" width="40px" height="40px"></button>
+
                             </td>
                             <td class="text-center">
                                 <form method="POST" action="" id="eliminarForm">
@@ -179,18 +183,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </td>
                         </tr>
                     <?php
-                    }
-                    ?>
+                    } ?>
                 </tbody>
             </table>
         </div>
     </div>
 
     <?php
-    if (!empty($listusuarios)) {
-        foreach ($listusuarios as $row) { ?>
+
+
+foreach ($tempUsuarios as $row) {
+    echo $row['IDUsuario'];}
+    if (!empty($tempUsuarios)) {
+        foreach ($tempUsuarios as $row) {
+            echo $row['IDUsuario']
+    ?>
             <!-- Modal -->
             <!-- Modal -->
+
+
             <div class="modal fade" id="editar_<?php echo $row['IDUsuario']; ?>_Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -198,7 +209,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <h5 class="modal-title" id="exampleModalLabel">Editar:</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <form method="POST" action="index.php">
+                        <form method="POST" action="mantenedorusuarios.php">
                             <div class="modal-body">
                                 <div class="row">
                                     <div class="col">
@@ -238,43 +249,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <?php
 
                                 $perfilUsuario = $objusuario->buscarPerfilId($row['IDPerfil']);
-                                $centroUsuario = $objusuario->buscarcentroID($row['IDCentroMedico']); ?>
+                                $centroUsuario = $objusuario->buscarcentroID($row['IDCentroMedico']);
+                                $perfiles = $objusuario->buscarPerfiles();
+                                $centros = $objusuario->buscarCentros() ?>
+
                                 <div class="row">
                                     <div class="col">
-                                        <label for="perfil">Perfil</label>
-                                        <select class="form-select" style="width: 100%" aria-label="Default select example" id="perfil" name="perfil">
-                                            <option value="Seleccionar" <?php echo ($perfilUsuario == 'Seleccionar') ? 'selected' : ''; ?>>Seleccionar</option>
-                                            <option value="Administrador" <?php echo ($perfilUsuario == 'Administrador') ? 'selected' : ''; ?>>Administrador</option>
-                                            <option value="Recepcionista" <?php echo ($perfilUsuario == 'Recepcionista') ? 'selected' : ''; ?>>Recepcionista</option>
-                                            <option value="Diagnostico" <?php echo ($perfilUsuario == 'Diagnostico') ? 'selected' : ''; ?>>Diagnostico</option>
-                                            <option value="Centro Médico" <?php echo ($perfilUsuario == 'Centro Médico') ? 'selected' : ''; ?>>Centro Médico</option>
+                                        <label for="perfil">Perfil:</label>
+                                        <select class="form-select" style="width: 100%" aria-label="Default select example" id="perfil" name="perfil" required>
+                                            <?php
+                                            foreach ($perfiles as $row1) {
+                                                $selected = ($perfilUsuario[0] == $row1['TipoPerfil']) ? 'selected' : '';
+                                                echo '<option value="' . $row1['TipoPerfil'] . '" ' . $selected . '>' . $row1['TipoPerfil'] . '</option>';
+                                            }
+                                            ?>
                                         </select>
                                     </div>
 
                                     <div class="col">
-                                        <label for="rut">Centro Médico</label>
-                                        <select class="form-select" style="width: 100%" aria-label="Default select example" id="centro" name="centro">
-                                            <option>Seleccionar</option>
-                                            <option <?php echo ($nombreCentro == 'N/A') ? 'selected' : ''; ?>>N/A</option>
-                                            <option <?php echo ($nombreCentro == 'Ultraman') ? 'selected' : ''; ?>>Ultraman</option>
-                                            <option <?php echo ($nombreCentro == 'Megaman') ? 'selected' : ''; ?>>Megaman</option>
-                                            <option <?php echo ($nombreCentro == 'ultramegaman') ? 'selected' : ''; ?>>ultramegaman</option>
+                                        <label for="perfil">Centro Médico:</label>
+                                        <select class="form-select" style="width: 100%" aria-label="Default select example" id="centro" name="centro" required>
+                                            <?php
+                                            foreach ($centros as $row2) {
+                                                $selected = ($centroUsuario[0] == $row2['NombreCentro']) ? 'selected' : '';
+                                                echo '<option value="' . $row2['NombreCentro'] . '" ' . $selected . '>' . $row2['NombreCentro'] . '</option>';
+                                            }
+                                            ?>
                                         </select>
                                     </div>
-
+                                    <input type="hidden" name="IDUsuario" value="<?php echo $row['IDUsuario']; ?>">
                                     <input type="hidden" name="op" value="Modificar">
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="submit" name="modificar" class="btn btn-primary" value="Modificar"></button>
+                                    <button type="submit" name="modificar" class="btn btn-primary" value="Modificar">Modificar</button>
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                                 </div>
+                            </div>
                         </form>
                     </div>
                 </div>
             </div>
-
-
-
     <?php }
     } ?>
 
