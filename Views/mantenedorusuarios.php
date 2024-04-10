@@ -137,8 +137,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <?php
                     $tempUsuarios = array();
                     foreach ($listusuarios as $usu) {
-                        echo $usu['IDUsuario'];
-                        $tempUsuarios[] = $usu; 
+                        $tempUsuarios[] = $usu;
                     ?>
                         <tr>
                             <td>
@@ -171,8 +170,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 ?>
                             </td>
                             <td>
-                            <button type='button' class='btn w-100 center-block' data-bs-toggle='modal' data-bs-target='#editar_<?php echo $usu['IDUsuario']; ?>_Modal'><img src="../img/pen.png" width="40px" height="40px"></button>
-
+                                <button type='button' class='btn w-100 center-block btn-editar-usuario' data-bs-toggle='modal' data-user-id=<?php echo $usu['IDUsuario']; ?> data-bs-target='#editar_Modal'> <img src="../img/pen.png" width="40px" height="40px"></button>
                             </td>
                             <td class="text-center">
                                 <form method="POST" action="" id="eliminarForm">
@@ -189,114 +187,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
 
-    <?php
-
-
-foreach ($tempUsuarios as $row) {
-    echo $row['IDUsuario'];}
-    if (!empty($tempUsuarios)) {
-        foreach ($tempUsuarios as $row) {
-            echo $row['IDUsuario']
-    ?>
-            <!-- Modal -->
-            <!-- Modal -->
-
-
-            <div class="modal fade" id="editar_<?php echo $row['IDUsuario']; ?>_Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Editar:</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <form method="POST" action="mantenedorusuarios.php">
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="col">
-                                        <label for="nombre">Nombre Completo:</label>
-                                        <input type="text" class="form-control" name="nombre" value="<?php echo $row['Nombre']; ?>">
-                                    </div>
-                                    <div class="col">
-                                        <label for="rut">Rut:</label>
-                                        <input type="text" class="form-control" name="rut" value="<?php echo $row['Rut']; ?>">
-                                    </div>
-                                </div>
-
-                                <br>
-
-                                <div class="row">
-                                    <div class="col">
-                                        <label for="usuario">Usuario:</label>
-                                        <input type="text" class="form-control" name="usuario" value="<?php echo $row['usuario']; ?>">
-                                    </div>
-                                    <div class="col">
-                                        <label for="clave">Clave:</label>
-                                        <input type="text" class="form-control" name="clave" value="<?php echo $row['Clave']; ?>">
-                                    </div>
-                                </div>
-
-                                <br>
-
-                                <div class="row">
-                                    <div class="col">
-                                        <label for="correo">Correo:</label>
-                                        <input type="text" class="form-control" name="correo" value="<?php echo $row['Correo']; ?>">
-                                    </div>
-
-                                </div>
-
-                                <br>
-                                <?php
-
-                                $perfilUsuario = $objusuario->buscarPerfilId($row['IDPerfil']);
-                                $centroUsuario = $objusuario->buscarcentroID($row['IDCentroMedico']);
-                                $perfiles = $objusuario->buscarPerfiles();
-                                $centros = $objusuario->buscarCentros() ?>
-
-                                <div class="row">
-                                    <div class="col">
-                                        <label for="perfil">Perfil:</label>
-                                        <select class="form-select" style="width: 100%" aria-label="Default select example" id="perfil" name="perfil" required>
-                                            <?php
-                                            foreach ($perfiles as $row1) {
-                                                $selected = ($perfilUsuario[0] == $row1['TipoPerfil']) ? 'selected' : '';
-                                                echo '<option value="' . $row1['TipoPerfil'] . '" ' . $selected . '>' . $row1['TipoPerfil'] . '</option>';
-                                            }
-                                            ?>
-                                        </select>
-                                    </div>
-
-                                    <div class="col">
-                                        <label for="perfil">Centro Médico:</label>
-                                        <select class="form-select" style="width: 100%" aria-label="Default select example" id="centro" name="centro" required>
-                                            <?php
-                                            foreach ($centros as $row2) {
-                                                $selected = ($centroUsuario[0] == $row2['NombreCentro']) ? 'selected' : '';
-                                                echo '<option value="' . $row2['NombreCentro'] . '" ' . $selected . '>' . $row2['NombreCentro'] . '</option>';
-                                            }
-                                            ?>
-                                        </select>
-                                    </div>
-                                    <input type="hidden" name="IDUsuario" value="<?php echo $row['IDUsuario']; ?>">
-                                    <input type="hidden" name="op" value="Modificar">
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="submit" name="modificar" class="btn btn-primary" value="Modificar">Modificar</button>
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-    <?php }
-    } ?>
-
     <script src="https://kit.fontawesome.com/4652dbea50.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
+    <script>
+        $(document).ready(function() {
+            $('.btn-editar-usuario').click(function() {
+                var userId = $(this).data('user-id');
+                $.ajax({
+                    type: 'POST',
+                    url: 'modalUsuario.php',
+                    data: {
+                        userId: userId
+                    },
+                    success: function(response) {
+                        $('body').append(response);
+                        $('#editar_Modal_' + userId).modal('show'); // Abre el modal con el ID único
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>

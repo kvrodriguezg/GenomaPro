@@ -144,6 +144,13 @@ class usuario
         return $this->user;
     }
 
+    public function buscarUsuarioporID($IDUsuario)
+    {
+        $consulta = mysqli_query($this->db, "SELECT * FROM Usuarios where IDUsuario=$IDUsuario");
+        $Usuario = mysqli_fetch_array($consulta);
+        return $Usuario;
+    }
+
     public function buscarPerfilId($IDPerfil)
     {
         $consulta = mysqli_query($this->db, "SELECT TipoPerfil FROM Perfiles WHERE IDPerfil = $IDPerfil");
