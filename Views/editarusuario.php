@@ -141,7 +141,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <br><br><br>
 
             <input type="hidden" name="op" value="Modificar">
-            <input class="btn w-100 m-1 btn-primary btn-sm" name="modificar" type="submit" value="Modificar" />
+            <input class="btn w-100 m-1 btn-primary" name="modificar" type="submit" value="Modificar" />
         </form>
         <?php
         }
