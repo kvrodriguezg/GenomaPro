@@ -57,29 +57,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body style="background-color: #1E1E1E; font-family: 'Montserrat';" class="text-center">
     <h1 style="padding-top:20px; color:#FFFFFF">Usuarios</h1><br>
 
-    <br>
+    <button type='button' class='btn btn-primary center-block text-center btn-editar-usuario' data-bs-toggle='modal' data-user-id='0' data-bs-target='#editar_Modal'>Nuevo Usuario</button>
 
-    <div class="buscador-usuario text-center">
-        <?php
-        echo '
-            <nav class="nav text-center">
-            <ul class="nav">
-            <div class="text-center">
-                <form method="post" action="creacionusuarios.php">
-                    <input class="form-control" type="hidden" name="crearPerfiles" value="crear">
-                    <button class="btn w-100 btn-primary btn-sm ">Nuevo Usuario</button>
-                </form>
-            </div>
-            </ul>
-            </nav>';
-        ?>
-        <?php /*<div>
-            <input type="text" class="form-control" placeholder="Usuario" id="filtroUsuario">
-        </div>
-        <div>
-            <input type="text" id="filtroCentro" class="form-control" placeholder="Centro Médico">
-        </div>*/ ?>
-    </div>
+ 
 
     <br><br><br>
     <div class="row mantenedorDiagnostico">
