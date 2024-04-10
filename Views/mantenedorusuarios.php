@@ -59,13 +59,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <button type='button' class='btn btn-primary center-block text-center btn-editar-usuario' data-bs-toggle='modal' data-user-id='0' data-bs-target='#editar_Modal'>Nuevo Usuario</button>
 
- 
-
     <br><br><br>
+    <style>
+        .table thead th {
+            background-color: #115DFC;
+            color: white;
+        }
+    </style>
+    <div class="container">
+        <div class = "">
     <div class="row mantenedorDiagnostico">
         <div class="col-lg-12">
             <table id="tableUsers" class="table table-responsive" style="padding: left 20px, right 20px;">
-                <thead style="background-color: #115DFC; color: white;">
+                <thead>
                     <?php /*  <script>
                        $(document).ready(function() {
                             // Función para realizar el filtrado
@@ -168,7 +174,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 
     <script src="https://kit.fontawesome.com/4652dbea50.js" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
