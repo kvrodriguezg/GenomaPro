@@ -29,24 +29,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="icon" type="image/svg+xml" href="~/favicon.ico" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/login.css">
     <title>Iniciar Sesión</title>
 </head>
 
-<body style="background-color: #1E1E1E; font-family: 'Montserrat';">
-
-    <header class="navbar navbar-light fixed-top mb-5" style="background-color: #9CD0FE;">
-        <div class="container">
-            <a class="navbar-brand" href="../index.php">
-                <img src="../img/logo_labmuest.png" alt="" width="110" height="35">
-            </a>
-        </div>
-    </header>
-
-    <div class="container rounded-3" style="margin-top: 150px;"> <!-- Ajusta este valor según la altura de tu header -->
+<body>
+    <div class="container rounded-3" style="display: flex; flex-direction: column; justify-content: center; height: 100vh;"> <!-- Ajusta este valor según la altura de tu header -->
         <div class="row justify-content-center">
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body" >
                         <form method="POST" action="login.php" class="form">
 
                             <img class="img-login mx-auto d-block" src="../img/1.png" alt="" width="250">
