@@ -43,13 +43,12 @@ if ($op == 'EDITAR') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="icon" type="image/svg+xml" href="~/favicon.ico" />
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link rel="stylesheet" href="../css/registro.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <title>Document</title>
 </head>
 
@@ -60,114 +59,127 @@ if ($op == 'EDITAR') {
 </header>
 <br><br><br><br><br>
 
-<body class="container">
-    <h1 style="padding-top: 20px;">Mantenedor Laboratorios</h1><br>
+<style>
+    .table thead th {
+        background-color: #115DFC;
+        color: white;
+    }
+
+    .table-container {
+        display: flex;
+        justify-content: center;
+    }
+</style>
+
+<style>
+    .center-button {
+        text-align: center;
+    }
+</style>
+
+<body class="text-center" style="background-color: #1E1E1E; font-family: 'Montserrat';">
+    <h1 style="padding-top:40px; color:#FFFFFF">Centros Médicos</h1><br>
     <?php
-   // require_once("../Controllers/centrosmedicosController.php");
+    // require_once("../Controllers/centrosmedicosController.php");
     echo '
+    <div class="mx-auto text-center">
                 <nav class="nav">
                 <ul class="nav">
-                    <div class="m-1">
+                    <div >
                     </div>
                 </ul>
                 <ul class="nav">
-                <div class="m-1">
+                <div >
                     <form method="post" action="crearlaboratorio.php">
                         <input type="hidden" name="crearPerfiles" value="crear">
                         <button class="btn w-100 m-1 btn-primary btn-sm ">CREAR CENTRO</button>
                     </form>
                 </div>
             </ul>
-            </nav>';
+            </nav>
+            <div>';
     ?>
 
     <br><br><br>
 
-    <section style="margin: 10px;">
-        <table id="tableUsers" class="tabla table">
-            <style>
-                .tabla {
-                    width: 100%;
-                }
-            </style>
-            <thead>
-                <tr>
-                    <th>ID </th>
-                    <th>Nombre Laboratorio </th>
-                    <th>Código </th>
-                    <th>Editar </th>
-                    <th>Eliminar </th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                foreach ($listCentros as $registro) {
-                    ?>
+    <div class="table-container">
+        <div class="col-lg-11">
+            <table id="tableUsers" class="table table-responsive">
+                <style>
+                    .tabla {
+                        width: 100%;
+                    }
+                </style>
+                <thead>
                     <tr>
-                        <td>
-                            <?php echo $registro['IDCentroMedico']; ?>
-                        </td>
-                        <td>
-                            <?php echo $registro['NombreCentro']; ?>
-                        </td>
-                        <td>
-                            <?php echo $registro['codigo']; ?>
-                        </td>
-                        <td>
-                            <form method="POST">
-                                <input type="hidden" name="op" value="EDITAR">
-                                <input type="hidden" name="IDCentroMedico"
-                                    value="<?php echo $registro['IDCentroMedico'] ?>">
-                                <input type="hidden" name="NombreCentro" value="<?php echo $registro['NombreCentro'] ?>">
-                                <input type="hidden" name="codigo" value="<?php echo $registro['codigo'] ?>">
-                                <button type="submit" class="btn w-100 center-block btn-primary">EDITAR</button>
-                            </form>
-                        </td>
-                        <td class="text-center">
-                            <form method="POST" action="" id="eliminarCentroForm">
-                                <input type="hidden" name="op" value="">
-                                <input type="hidden" name="IDCentroMedico"
-                                    value="<?php echo $registro['IDCentroMedico']; ?>">
-                                <button type="button" class="btn btn-danger w-100 center-block"
-                                    onclick="confirmarYEliminar(this)">ELIMINAR</button>
-                            </form>
-                        </td>
+                        <th>ID </th>
+                        <th>Nombre Laboratorio </th>
+                        <th>Código </th>
+                        <th>Editar </th>
+                        <th>Eliminar </th>
                     </tr>
+                </thead>
+                <tbody style="background-color: #FFFFFF">
                     <?php
-                }
-                ?>
-            </tbody>
-        </table>
-    </section>
+                    foreach ($listCentros as $registro) {
+                    ?>
+                        <tr>
+                            <td>
+                                <?php echo $registro['IDCentroMedico']; ?>
+                            </td>
+                            <td>
+                                <?php echo $registro['NombreCentro']; ?>
+                            </td>
+                            <td>
+                                <?php echo $registro['codigo']; ?>
+                            </td>
+                            <td>
+                                <form method="POST">
+                                    <input type="hidden" name="op" value="EDITAR">
+                                    <input type="hidden" name="IDCentroMedico" value="<?php echo $registro['IDCentroMedico'] ?>">
+                                    <input type="hidden" name="NombreCentro" value="<?php echo $registro['NombreCentro'] ?>">
+                                    <input type="hidden" name="codigo" value="<?php echo $registro['codigo'] ?>">
+                                    <button type="submit" class="btn w-100 center-block"><img src="../img/pen.png" width="40px" height="40px"></button>
+                                </form>
+                            </td>
+                            <td class="text-center">
+                                <form method="POST" action="" id="eliminarCentroForm">
+                                    <input type="hidden" name="op" value="">
+                                    <input type="hidden" name="IDCentroMedico" value="<?php echo $registro['IDCentroMedico']; ?>">
+                                    <button type="button" class="btn w-100 center-block" onclick="confirmarYEliminar(this)"><img src="../img/delete.png" width="40px" height="40px"></button>
+                                </form>
+                            </td>
+                        </tr>
+                    <?php
+                    }
+                    ?>
+                </tbody>
+            </table>
+            </section>
 
 
 
-    <script src="https://kit.fontawesome.com/4652dbea50.js" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
+            <script src="https://kit.fontawesome.com/4652dbea50.js" crossorigin="anonymous"></script>
+            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
+        </div>
+    </div>
 </body>
 
 </html>
 
 
 <script>
-function confirmarYEliminar(button) {
-    var confirmacion = confirm("¿Estás seguro de que deseas eliminar este usuario?");
-    if (confirmacion) {
-        var form = button.closest('form');
-        var opField = form.querySelector('[name="op"]');
-        opField.value = "ELIMINAR";
-        console.log("Valor del campo op:", opField.value);
-        form.submit();
+    function confirmarYEliminar(button) {
+        var confirmacion = confirm("¿Estás seguro de que deseas eliminar este usuario?");
+        if (confirmacion) {
+            var form = button.closest('form');
+            var opField = form.querySelector('[name="op"]');
+            opField.value = "ELIMINAR";
+            console.log("Valor del campo op:", opField.value);
+            form.submit();
+        }
     }
-}
-
 </script>
