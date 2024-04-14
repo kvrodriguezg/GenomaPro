@@ -55,8 +55,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <br><br><br><br><br><br>
 
 
-<body style="background-color: #1E1E1E; font-family: 'Montserrat';" class="text-center">
-    <h1 style="padding-top:20px; color:#FFFFFF">Usuarios</h1><br>
+<body style="background-color: #E7E7E7; font-family: 'Montserrat';" class="text-center">
+    <h1 style="padding-top:20px; color:#000000">Usuarios</h1><br>
 
     <button type='button' class='btn btn-primary center-block text-center btn-editar-usuario' data-bs-toggle='modal' data-user-id='0' data-bs-target='#editar_Modal'>Nuevo Usuario</button>
 
@@ -138,7 +138,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     ?>
                                 </td>
                                 <td>
-                                    <button type='button' class='btn w-100 center-block btn-editar-usuario' data-bs-toggle='modal' data-user-id=<?php echo $usu['IDUsuario']; ?> data-bs-target='#editar_Modal'> <img src="../img/pen.png" width="40px" height="40px"></button>
+                                    <button type='button' class='btn w-100 center-block btn-editar-usuario' data-bs-toggle='modal' data-user-id=<?php echo $usu['IDUsuario']; ?> data-bs-target='#editar_Modal_' <?php echo $usu['IDUsuario'] ?>> <img src="../img/pen.png" width="40px" height="40px"></button>
                                 </td>
                                 <td class="text-center">
                                     <form method="POST" action="" id="eliminarForm">
