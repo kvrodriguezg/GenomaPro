@@ -132,7 +132,7 @@ verificarAcceso($perfilesPermitidos); ?>
                     }
                 }
             </script>
-                        <script>
+            <?php /*                        <script>
                 function confirmarYEliminar(codigo) {
                     var confirmacion = confirm("¿Estás seguro de que deseas eliminar este diagnóstico?");
                     if (confirmacion) {
@@ -144,7 +144,7 @@ verificarAcceso($perfilesPermitidos); ?>
                         document.getElementById('eliminarForm').submit();
                     }
                 }
-            </script>
+            </script>*/ ?>
 
 </body>
 

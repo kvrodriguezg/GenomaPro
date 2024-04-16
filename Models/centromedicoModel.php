@@ -22,13 +22,12 @@ class CentroMedico
     public function crearCentros()
     {
 
-            $query = "INSERT INTO CentrosMedicos (NombreCentro, codigo) VALUES ('MEGAMAN', 'MM'),('ULTRAMAN', 'UM'),('ULTRASEVEN', 'US');";
-            $creacion = mysqli_query($this->db, $query);
-            if (!$creacion) {
-                echo "Error al crear datos " . mysqli_error($this->db);
-            }
-            return true;
-        
+        $query = "INSERT INTO CentrosMedicos (NombreCentro, codigo) VALUES ('MEGAMAN', 'MM'),('ULTRAMAN', 'UM'),('ULTRASEVEN', 'US');";
+        $creacion = mysqli_query($this->db, $query);
+        if (!$creacion) {
+            echo "Error al crear datos " . mysqli_error($this->db);
+        }
+        return true;
     }
 
     public function verCentros()
@@ -48,14 +47,14 @@ class CentroMedico
     {
 
 
-            $query = "INSERT INTO CentrosMedicos (NombreCentro, codigo)  VALUES (?,?);";
+        $query = "INSERT INTO CentrosMedicos (NombreCentro, codigo)  VALUES (?,?);";
 
-            if ($stmt = mysqli_prepare($this->db, $query)) {
-                mysqli_stmt_bind_param($stmt, "ss", $nombreCentro, $CodigoCentro);
-                if (mysqli_stmt_execute($stmt)) {
-                    return true;
-                }
+        if ($stmt = mysqli_prepare($this->db, $query)) {
+            mysqli_stmt_bind_param($stmt, "ss", $nombreCentro, $CodigoCentro);
+            if (mysqli_stmt_execute($stmt)) {
+                return true;
             }
+        }
     }
 
     public function modificarCentro($IDCentroMedico, $NombreCentro, $codigo)
@@ -111,6 +110,18 @@ class CentroMedico
             }
         } else {
             return false;
+        }
+    }
+
+    public function buscarCentroPorID($id)
+    {
+        $consulta = "SELECT * FROM centrosmedicos WHERE IDCentroMedico = $id";
+        $resultado = mysqli_query($this->db, $consulta);
+        if (mysqli_num_rows($resultado) > 0) {
+            $resultado2 = mysqli_fetch_assoc($resultado);
+            return $resultado2;
+        } else {
+            return null;
         }
     }
 }
