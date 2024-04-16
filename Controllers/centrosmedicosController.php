@@ -10,7 +10,7 @@ if (isset($_POST['crearcentros'])) {
     $objCentros->crearCentros();
 } 
 
-$listCentros = $objCentros->verCentros();
+
 
 if (isset($_POST['operacion']) && $_POST['operacion'] == "Guardar" && isset($_POST['nombreCentro']) && isset($_POST['codigo'])) {
     $nombreCentro = $_POST['nombreCentro'];
@@ -89,3 +89,5 @@ if (isset($_POST['op']) && $_POST['op'] == "ELIMINAR" && isset($_POST['IDCentroM
          </script>';
    exit();
 }
+
+$listCentros = $objCentros->verCentros();
