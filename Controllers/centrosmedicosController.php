@@ -51,6 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['operacion']) && $_POST
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id']))
 {
+    $boton = "Enviar";
     $id = $_POST['id'];
     if ($id>0){
         $IDCentroMedico = $id;
@@ -58,6 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id']))
         $codigo = $centros['codigo'];
         $nombreCentro = $centros['NombreCentro'];
         $operacion = "Modificar";
+        $titulo = "Editar:";
     }
     else if ($id==0)
     {
@@ -65,6 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id']))
         $codigo = "";
         $nombreCentro = "";
         $operacion = "Guardar";
+        $titulo = "Nuevo Centro Médico:";
     }
 }
 

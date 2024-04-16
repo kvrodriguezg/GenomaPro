@@ -9,7 +9,6 @@ $perfiles = array();
 $centros = array();
 $perfiles = $objusuario->buscarPerfiles();
 $centros = $objusuario->buscarCentros() ?>
-?>
 
 <?php if ($IDUsuario > 0) { ?>
     <div class="modal fade" id="editar_Modal_<?php echo $row['IDUsuario']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -24,11 +23,11 @@ $centros = $objusuario->buscarCentros() ?>
                         <div class="row">
                             <div class="col">
                                 <label for="nombre">Nombre Completo:</label>
-                                <input type="text" class="form-control" name="nombre" value="<?php echo $row['Nombre']; ?>">
+                                <input required type="text" class="form-control" name="nombre" value="<?php echo $row['Nombre']; ?>">
                             </div>
                             <div class="col">
                                 <label for="rut">Rut:</label>
-                                <input type="text" class="form-control" name="rut" value="<?php echo $row['Rut']; ?>">
+                                <input required type="text" class="form-control" name="rut" value="<?php echo $row['Rut']; ?>">
                             </div>
                         </div>
 
@@ -37,11 +36,11 @@ $centros = $objusuario->buscarCentros() ?>
                         <div class="row">
                             <div class="col">
                                 <label for="usuario">Usuario:</label>
-                                <input type="text" class="form-control" name="usuario" value="<?php echo $row['usuario']; ?>">
+                                <input required type="text" class="form-control" name="usuario" value="<?php echo $row['usuario']; ?>">
                             </div>
                             <div class="col">
                                 <label for="clave">Clave:</label>
-                                <input type="text" class="form-control" name="clave" value="<?php echo $row['Clave']; ?>">
+                                <input required type="text" class="form-control" name="clave" value="<?php echo $row['Clave']; ?>">
                             </div>
                         </div>
 
@@ -50,7 +49,7 @@ $centros = $objusuario->buscarCentros() ?>
                         <div class="row">
                             <div class="col">
                                 <label for="correo">Correo:</label>
-                                <input type="text" class="form-control" name="correo" value="<?php echo $row['Correo']; ?>">
+                                <input required type="text" class="form-control" name="correo" value="<?php echo $row['Correo']; ?>">
                             </div>
 
                         </div>
@@ -64,7 +63,7 @@ $centros = $objusuario->buscarCentros() ?>
                         <div class="row">
                             <div class="col">
                                 <label for="perfil">Perfil:</label>
-                                <select class="form-select" style="width: 100%" aria-label="Default select example" id="perfil" name="perfil" required>
+                                <select required class="form-select" style="width: 100%" aria-label="Default select example" id="perfil" name="perfil" required>
                                     <?php
                                     foreach ($perfiles as $row1) {
                                         $selected = ($perfilUsuario[0] == $row1['TipoPerfil']) ? 'selected' : '';
@@ -76,7 +75,7 @@ $centros = $objusuario->buscarCentros() ?>
 
                             <div class="col">
                                 <label for="perfil">Centro Médico:</label>
-                                <select class="form-select" style="width: 100%" aria-label="Default select example" id="centro" name="centro" required>
+                                <select required class="form-select" style="width: 100%" aria-label="Default select example" id="centro" name="centro" required>
                                     <?php
                                     foreach ($centros as $row2) {
                                         $selected = ($centroUsuario[0] == $row2['NombreCentro']) ? 'selected' : '';
@@ -97,14 +96,13 @@ $centros = $objusuario->buscarCentros() ?>
             </div>
         </div>
     </div>
-<?php } else if ($IDUsuario == 0) {
-    echo "usuario" ?>
+<?php } else if ($IDUsuario == 0) { ?>
 
     <div class="modal fade" id="editar_Modal_0" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Editar:</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Nuevo Usuario:</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form method="POST" action="mantenedorusuarios.php">
@@ -112,11 +110,11 @@ $centros = $objusuario->buscarCentros() ?>
                         <div class="row">
                             <div class="col">
                                 <label for="nombre">Nombre Completo:</label>
-                                <input type="text" class="form-control" name="nombre">
+                                <input required type="text" class="form-control" name="nombre">
                             </div>
                             <div class="col">
                                 <label for="rut">Rut:</label>
-                                <input type="text" class="form-control" name="rut">
+                                <input required type="text" class="form-control" name="rut">
                             </div>
                         </div>
 
@@ -125,11 +123,11 @@ $centros = $objusuario->buscarCentros() ?>
                         <div class="row">
                             <div class="col">
                                 <label for="usuario">Usuario:</label>
-                                <input type="text" class="form-control" name="usuario">
+                                <input required type="text" class="form-control" name="usuario">
                             </div>
                             <div class="col">
                                 <label for="clave">Clave:</label>
-                                <input type="text" class="form-control" name="clave">
+                                <input required type="text" class="form-control" name="clave">
                             </div>
                         </div>
 
@@ -138,7 +136,7 @@ $centros = $objusuario->buscarCentros() ?>
                         <div class="row">
                             <div class="col">
                                 <label for="correo">Correo:</label>
-                                <input type="text" class="form-control" name="correo">
+                                <input required type="text" class="form-control" name="correo">
                             </div>
 
                         </div>
@@ -149,7 +147,7 @@ $centros = $objusuario->buscarCentros() ?>
                         <div class="row">
                             <div class="col">
                                 <label for="perfil">Perfil:</label>
-                                <select class="form-select" style="width: 100%" aria-label="Default select example" id="perfil" name="perfil" required>
+                                <select required class="form-select" style="width: 100%" aria-label="Default select example" id="perfil" name="perfil" required>
                                     <?php
                                     foreach ($perfiles as $row1) {
                                         echo '<option value=' . $row1['TipoPerfil'] . '>' . $row1['TipoPerfil'] . '</option>';
@@ -160,7 +158,7 @@ $centros = $objusuario->buscarCentros() ?>
 
                             <div class="col">
                                 <label for="perfil">Centro Médico:</label>
-                                <select class="form-select" style="width: 100%" aria-label="Default select example" id="centro" name="centro" required>
+                                <select required class="form-select" style="width: 100%" aria-label="Default select example" id="centro" name="centro" required>
                                     <?php
                                     foreach ($centros as $row2) {
                                         echo '<option value=' . $row2['NombreCentro'] . '>' . $row2['NombreCentro'] . '</option>';

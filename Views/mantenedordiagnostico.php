@@ -73,7 +73,7 @@ verificarAcceso($perfilesPermitidos); ?>
                     <tbody style="background-color: #FFFFFF">
                         <?php while ($fila = mysqli_fetch_assoc($diagnosticos)) : ?>
 
-                            <tr class="table ">
+                            <tr class="table">
                                 <td><?php echo $fila['Codigo'] ?></td>
                                 <td><?php echo $fila['descripcion'] ?></td>
                                 <td>
@@ -127,24 +127,13 @@ verificarAcceso($perfilesPermitidos); ?>
                     if (confirmacion) {
                         var opField = document.getElementById('operacion');
                         opField.value = "eliminar";
-                        console.log("Valor del campo op:", opField.value);
-                        document.getElementById('eliminarForm_' + codigo).submit();
-                    }
-                }
-            </script>
-            <?php /*                        <script>
-                function confirmarYEliminar(codigo) {
-                    var confirmacion = confirm("¿Estás seguro de que deseas eliminar este diagnóstico?");
-                    if (confirmacion) {
-                        var opField = document.getElementById('operacion');
-                        opField.value = "eliminar";
                         var codigoEliminar = document.getElementById('codigo');
                         codigoEliminar.value = codigo;
                         console.log("Valor del campo op:", opField.value);
                         document.getElementById('eliminarForm').submit();
                     }
                 }
-            </script>*/ ?>
+            </script>
 
 </body>
 

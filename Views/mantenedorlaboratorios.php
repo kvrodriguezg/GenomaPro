@@ -9,33 +9,6 @@ require_once $rutaacceso;
 //require_once('../Controllers/centrosmedicosController.php');
 $perfilesPermitidos = 5;
 verificarAcceso($perfilesPermitidos);
-if (!isset($_POST['IDCentroMedico'])) {
-    $IDCentroMedico = '';
-} else {
-    $IDCentroMedico = $_POST['IDCentroMedico'];
-}
-if (!isset($_POST['NombreCentro'])) {
-    $NombreCentro = '';
-} else {
-    $NombreCentro = $_POST['NombreCentro'];
-}
-if (!isset($_POST['codigo'])) {
-    $codigo = '';
-} else {
-    $codigo = $_POST['codigo'];
-}
-
-if (!isset($_POST['op'])) {
-    $op = '';
-} else {
-    $op = $_POST['op'];
-}
-if ($op == 'EDITAR') {
-
-    header("Location: editarlaboratorio.php?IDCentroMedico=$IDCentroMedico&NombreCentro=$NombreCentro&codigo=$codigo");
-    exit();
-}
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -77,9 +50,9 @@ if ($op == 'EDITAR') {
     }
 </style>
 
-<body class="text-center" style="background-color: #1E1E1E; font-family: 'Montserrat';">
-    <h1 style="padding-top:40px; color:#FFFFFF">Centros Médicos</h1><br>
-    <button type="button" class="btn center-block btn-primary btn-editar-centro" data-bs-toggle="modal" data-cod-id=0 bs-target="#editar_Modal_0">Nuevo Centro Médico</button>
+<body class="text-center" style="background-color: #E7E7E7; font-family: 'Montserrat';">
+    <h1 style="padding-top:40px; color:#000000">Centros Médicos</h1><br>
+    <button type="button" class="btn center-block btn-primary btn-editar-centro" data-bs-toggle="modal" data-id=0 bs-target="#editar_Modal_0">Nuevo Centro Médico</button>
     <br><br><br>
 
     <div class="table-container">
@@ -93,7 +66,7 @@ if ($op == 'EDITAR') {
                 <thead>
                     <tr>
                         <th>ID </th>
-                        <th>Nombre Laboratorio </th>
+                        <th>Nombre</th>
                         <th>Código </th>
                         <th></th>
                         <th></th>
@@ -115,7 +88,7 @@ if ($op == 'EDITAR') {
                             </td>
                             <td>
                                 <div>
-                                    <button type='button' class='btn center-block btn-editar-centro' data-bs-toggle='modal' data-cod-id=<?php echo $registro['IDCentroMedico']; ?> bs-target='#editar_Modal_' <?php echo $registro['IDCentroMedico'] ?>> <img src="../img/pen.png" width="40px" height="40px"></button>
+                                    <button type='button' class='btn center-block btn-editar-centro' data-bs-toggle='modal' data-id=<?php echo $registro['IDCentroMedico']; ?> bs-target='#editar_Modal_' <?php echo $registro['IDCentroMedico'] ?>> <img src="../img/pen.png" width="40px" height="40px"></button>
                                 </div>
                             </td>
                             <td class="text-center">

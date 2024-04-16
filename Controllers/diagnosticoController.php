@@ -13,6 +13,7 @@ if (isset($_POST['codigo'])) {
         $operacion = "modificar";
         $readonly = "readonly";
         $boton = "Modificar";
+        $titulo = "Editar:";
     } else if ($_POST['codigo'] == 0) {
         $codigo = 0;
         $valorcodigo = "";
@@ -20,6 +21,7 @@ if (isset($_POST['codigo'])) {
         $operacion = "insertar";
         $boton = "Ingresar";
         $readonly = "";
+        $titulo = "Nuevo Diagnóstico:";
     }
 }
 
