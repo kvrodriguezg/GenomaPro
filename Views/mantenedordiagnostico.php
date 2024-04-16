@@ -19,7 +19,7 @@ verificarAcceso($perfilesPermitidos); ?>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="icon" type="image/svg+xml" href="~/favicon.ico" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" />
@@ -41,17 +41,11 @@ verificarAcceso($perfilesPermitidos); ?>
 </style>
 
 
-<body class="text-center" style="background-color: #1E1E1E; font-family: 'Montserrat';">
+<body class="text-center" style="background-color: #E7E7E7; font-family: 'Montserrat';">
     <br><br><br><br><br><br>
-    <?php /*if (!isset($mensaje)) : ?>
-        <div class="alert alert-success alert-dismissible fade show" role="alert" style="font-size: 15px;">
-            <strong><?php echo $_GET['mensaje'] ?></strong>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    <?php endif*/ ?>
 
-    <h1 style="padding-top:20px; color:#FFFFFF">Diagnósticos</h1><br>
-    <a href="creardiagnostico.php" class="text-center btn btn-primary">Nuevo Diagnóstico</a>
+    <h1 style="padding-top:20px; color:#000000">Diagnósticos</h1><br>
+    <button type='button' class='btn btn-primary center-block btn-editar-diagnostico' data-bs-toggle='modal' data-cod-diag=0 data-bs-target='#editar_Modal_0'>Nuevo Diagnóstico</button>
     <br><br><br>
     <div>
         <style>
@@ -79,18 +73,22 @@ verificarAcceso($perfilesPermitidos); ?>
                     <tbody style="background-color: #FFFFFF">
                         <?php while ($fila = mysqli_fetch_assoc($diagnosticos)) : ?>
 
-                            <tr class="table ">
+                            <tr class="table">
                                 <td><?php echo $fila['Codigo'] ?></td>
-                                <td><?php echo $fila['descripcion'] ?>
-
+                                <td><?php echo $fila['descripcion'] ?></td>
                                 <td>
-                                    <a href="editardiagnostico.php?Codigo=<?php echo $fila['Codigo']; ?>" class="btn w-30 m-1"><img src="../img/pen.png" width="50px" height="50px"></a>
+                                    <div>
+                                        <button type='button' class='btn center-block btn-editar-diagnostico' data-bs-toggle='modal' data-cod-diag=<?php echo $fila['Codigo']; ?> bs-target='#editar_Modal_' <?php echo $fila['Codigo'] ?>> <img src="../img/pen.png" width="40px" height="40px"></button>
+                                    </div>
                                 </td>
                                 <td>
-                                    <a href="borrardiagnostico.php?Codigo=<?php echo $fila['Codigo']; ?>" class="btn w-30 m-1"><img src="../img/delete.png" width="50px" height="50px"></a>
+                                    <form method="POST" id="eliminarForm" action="mantenedordiagnostico.php">
+                                        <input type="hidden" name="operacion" id="operacion" value="">
+                                        <input type="hidden" name="codigo" id="codigo" value="<?php echo $fila['Codigo']; ?>">
+                                        <button type="button" class="btn" onclick="confirmarYEliminar('<?php echo $fila['Codigo']; ?>')"><img src="../img/delete.png" width="40px" height="40px"></button>
+                                    </form>
                                 </td>
                             </tr>
-
                         <?php endwhile; ?>
                     </tbody>
                 </table>
@@ -100,19 +98,43 @@ verificarAcceso($perfilesPermitidos); ?>
 
 
             <script src="https://kit.fontawesome.com/4652dbea50.js" crossorigin="anonymous"></script>
-            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
             <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-            <!-- Optional JavaScript; choose one of the two! -->
+            <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
-            <!-- Option 1: Bootstrap Bundle with Popper -->
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
-            <!-- Option 2: Separate Popper and Bootstrap JS -->
-            <!--
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
-    -->
+            <script>
+                $(document).ready(function() {
+                    $('.btn-editar-diagnostico').click(function() {
+                        var codigo = $(this).data('cod-diag');
+                        $.ajax({
+                            type: 'POST',
+                            url: 'modalDiagnostico.php',
+                            data: {
+                                codigo: codigo,
+                            },
+                            success: function(response) {
+                                $('body').append(response);
+                                $('#editar_Modal_' + codigo).modal('show');
+                            }
+                        });
+                    });
+                });
+            </script>
+            <script>
+                function confirmarYEliminar(codigo) {
+                    var confirmacion = confirm("¿Estás seguro de que deseas eliminar este diagnóstico?");
+                    if (confirmacion) {
+                        var opField = document.getElementById('operacion');
+                        opField.value = "eliminar";
+                        var codigoEliminar = document.getElementById('codigo');
+                        codigoEliminar.value = codigo;
+                        console.log("Valor del campo op:", opField.value);
+                        document.getElementById('eliminarForm').submit();
+                    }
+                }
+            </script>
+
 </body>
 
 </html>
