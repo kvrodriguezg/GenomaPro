@@ -50,7 +50,7 @@ verificarAcceso($perfilesPermitidos);
         }
     </style>
 
-<body class="text-center" style="background-color: #1E1E1E; font-family: 'Montserrat';">
+<body class="text-center" style="background-color: #E7E7E7; font-family: 'Montserrat';">
     <header class="navbar navbar-light fixed-top" style="background-color: #9CD0FE;">
         <?php
         include("menu.php");
@@ -58,7 +58,7 @@ verificarAcceso($perfilesPermitidos);
     </header>
     <br><br><br><br><br>
     <div>
-        <h1 style="padding-top:20px; color:#FFFFFF">Registro</h1>
+        <h1 style="padding-top:20px; color:#000000">Registro</h1>
     </div>
 
     <br>
