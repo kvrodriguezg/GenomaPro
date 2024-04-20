@@ -40,16 +40,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="icon" type="image/svg+xml" href="~/favicon.ico" />
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" />
-
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="../css/nav.css">
     <title>Document</title>
 </head>
 
 
-<header class="navbar navbar-light fixed-top" style="background-color: #9CD0FE;">
+
+<header class="navbar navbar-light fixed-top" style="background-color: #FFFFFF;">
     <?php
-    include("menuadministrador.php");
+    include("../Views/Shared/nav.php");
     ?>
 </header>
 <br><br><br><br><br><br><br>
