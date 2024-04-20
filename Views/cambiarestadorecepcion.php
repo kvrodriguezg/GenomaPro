@@ -37,16 +37,17 @@ $idEstado = $_POST['estado'] ?? "";
     <!--datables estilo bootstrap 4 CSS-->
     <link rel="stylesheet" type="text/css" href="../datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css">
     <!--font awesome con CDN-->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
-        integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/nav.css">
 </head>
 
 <body>
-    <header class="navbar navbar-light fixed-top" style="background-color: #9CD0FE;">
-        <?php
-        include("menurecepcionista.php");
-        ?>
-    </header>
+
+<header class="navbar navbar-light fixed-top" style="background-color: #FFFFFF;">
+    <?php
+    include("../Views/Shared/navRecepcion.php");
+    ?>
+</header>
     <br><br><br>
     <div>
         <h2 class="titulo">Cambio de Estado Masivo</h2><br>

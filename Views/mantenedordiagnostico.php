@@ -24,12 +24,12 @@ verificarAcceso($perfilesPermitidos); ?>
     <link rel="icon" type="image/svg+xml" href="~/favicon.ico" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/nav.css">
     <title>Diagnósticos</title>
 </head>
-
-<header class="navbar navbar-light fixed-top" style="background-color: #9CD0FE;">
+<header class="navbar navbar-light fixed-top" style="background-color: #FFFFFF;">
     <?php
-    include("menuadministrador.php");
+    include("../Views/Shared/nav.php");
     ?>
 </header>
 
