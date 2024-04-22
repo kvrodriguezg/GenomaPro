@@ -1,6 +1,6 @@
 <?php
 
-function Conectarse()
+ function Conectarse()
 {
     if (!($link = mysqli_connect("localhost", "root", ""))) {
         echo "ERROR 1";
@@ -10,8 +10,8 @@ function Conectarse()
     $db_nombre = "bddgenomapro";
 
     //Validamos si existe.
-    $db_existe = mysqli_select_db($link, $db_nombre);
-//
+  $db_existe = mysqli_select_db($link, $db_nombre);
+
         // Si la base de datos no existe, crearla
         if (!$db_existe) {
             $query = "CREATE DATABASE $db_nombre";
@@ -26,4 +26,4 @@ function Conectarse()
             }
         }
         return $link;
-}
+} 
