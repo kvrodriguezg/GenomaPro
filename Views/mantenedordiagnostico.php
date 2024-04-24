@@ -43,15 +43,24 @@ verificarAcceso($perfilesPermitidos); ?>
 
 <body class="text-center" style="background-color: #E7E7E7; font-family: 'Montserrat';">
     <br><br><br><br><br><br>
-
-    <h1 style="padding-top:20px; color:#000000">Diagnósticos</h1><br>
-    <button type='button' class='btn btn-primary center-block btn-editar-diagnostico' data-bs-toggle='modal' data-cod-diag=0 data-bs-target='#editar_Modal_0'>Nuevo Diagnóstico</button>
+    <div style="width:100%; display:flex; justify-content:center;">
+        <div style="width: 80px; height: 80px; border-radius: 100%; background-color: #023E73; display: flex; justify-content: center; align-items: center; position: relative;" class="text-center">
+            <div style="position: absolute; z-index: 10;">
+                <button type='button' style="color: #000000; position: absolute; left: 4px; top: 0;" class='btn center-block text-center btn-editar-diagnostico' data-bs-toggle='modal' data-cod-diag=0 data-bs-target='#editar_Modal_0'>
+                    <i class="fa-solid fa-plus" style="color: #ffffff;"></i>
+                </button>
+            </div>
+            <i class="fa-solid fa-2xl fa-microscope" style="color: #ffffff;"></i>
+        </div>
+    </div>
     <br><br><br>
     <div>
         <style>
             .table thead th {
-                background-color: #115DFC;
+                background-color: #023E73;
                 color: white;
+                text-decoration: none;
+                font-weight: lighter;
             }
 
             .table-container {
@@ -77,15 +86,16 @@ verificarAcceso($perfilesPermitidos); ?>
                                 <td><?php echo $fila['Codigo'] ?></td>
                                 <td><?php echo $fila['descripcion'] ?></td>
                                 <td>
-                                    <div>
-                                        <button type='button' class='btn center-block btn-editar-diagnostico' data-bs-toggle='modal' data-cod-diag=<?php echo $fila['Codigo']; ?> bs-target='#editar_Modal_' <?php echo $fila['Codigo'] ?>> <img src="../img/pen.png" width="40px" height="40px"></button>
+                                <div>
+                                    <button type='button' class='btn center-block btn-editar-diagnostico' data-bs-toggle='modal' data-cod-diag=<?php echo $fila['Codigo']; ?> bs-target='#editar_Modal_' <?php echo $fila['Codigo'] ?>> <i class="fa-solid fa-2xl fa-pen-to-square" style="color: #023059;"></i></button>
                                     </div>
+                                    
                                 </td>
                                 <td>
                                     <form method="POST" id="eliminarForm" action="mantenedordiagnostico.php">
                                         <input type="hidden" name="operacion" id="operacion" value="">
                                         <input type="hidden" name="codigo" id="codigo" value="<?php echo $fila['Codigo']; ?>">
-                                        <button type="button" class="btn" onclick="confirmarYEliminar('<?php echo $fila['Codigo']; ?>')"><img src="../img/delete.png" width="40px" height="40px"></button>
+                                        <button type="button" class="btn" onclick="confirmarYEliminar('<?php echo $fila['Codigo']; ?>')"><i class="fa-solid fa-2xl fa-trash" style="color: #023059;"></i></button>
                                     </form>
                                 </td>
                             </tr>

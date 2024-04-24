@@ -36,8 +36,10 @@ verificarAcceso($perfilesPermitidos);
 
 <style>
     .table thead th {
-        background-color: #115DFC;
-        color: white;
+        background-color: #023E73;
+            color: white;
+            text-decoration: none;
+            font-weight: lighter;
     }
 
     .table-container {
@@ -53,8 +55,16 @@ verificarAcceso($perfilesPermitidos);
 </style>
 
 <body class="text-center" style="background-color: #E7E7E7; font-family: 'Montserrat';">
-    <h1 style="padding-top:40px; color:#000000">Centros Médicos</h1><br>
-    <button type="button" class="btn center-block btn-primary btn-editar-centro" data-bs-toggle="modal" data-id=0 bs-target="#editar_Modal_0">Nuevo Centro Médico</button>
+<div style="width:100%; display:flex; justify-content:center;">
+<div style="width: 80px; height: 80px; border-radius: 100%; background-color: #023E73; display: flex; justify-content: center; align-items: center; position: relative;" class="text-center">
+    <div style="position: absolute; z-index: 10;">
+        <button type='button' style="color: #000000; position: absolute; left: 4px; top: 0;" class="btn center-block  btn-editar-centro" data-bs-toggle="modal" data-id=0 bs-target="#editar_Modal_0">
+            <i class="fa-solid fa-plus" style="color: #ffffff;"></i>
+        </button>
+    </div>
+    <i class="fa-regular fa-2xl fa-hospital" style="color: #ffffff;"></i>
+</div>
+</div>
     <br><br><br>
 
     <div class="table-container">
@@ -90,14 +100,14 @@ verificarAcceso($perfilesPermitidos);
                             </td>
                             <td>
                                 <div>
-                                    <button type='button' class='btn center-block btn-editar-centro' data-bs-toggle='modal' data-id=<?php echo $registro['IDCentroMedico']; ?> bs-target='#editar_Modal_' <?php echo $registro['IDCentroMedico'] ?>> <img src="../img/pen.png" width="40px" height="40px"></button>
+                                    <button type='button' class='btn center-block btn-editar-centro' data-bs-toggle='modal' data-id=<?php echo $registro['IDCentroMedico']; ?> data-bs-target='#editar_Modal_' <?php echo $registro['IDCentroMedico'] ?>> <i class="fa-solid fa-2xl fa-pen-to-square" style="color: #023059;"></i></button>
                                 </div>
                             </td>
                             <td class="text-center">
                                 <form method="POST" action="" id="eliminarCentroForm">
                                     <input type="hidden" name="op" value="">
                                     <input type="hidden" name="IDCentroMedico" value="<?php echo $registro['IDCentroMedico']; ?>">
-                                    <button type="button" class="btn w-100 center-block" onclick="confirmarYEliminar(this)"><img src="../img/delete.png" width="40px" height="40px"></button>
+                                    <button type="button" class="btn w-100 center-block" onclick="confirmarYEliminar(this)"><i class="fa-solid fa-2xl fa-trash" style="color: #023059;"></i></button>
                                 </form>
                             </td>
                         </tr>

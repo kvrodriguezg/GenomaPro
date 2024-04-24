@@ -44,7 +44,8 @@ verificarAcceso($perfilesPermitidos);
 </header>
     <br><br><br><br><br>
     <div>
-        <h2 class="titulo">Recepción de Solicitudes</h2>
+    
+    <h1 style="padding-top: 30px;">Recepción de solicitudes</h1><br>
     </div>
     <div>
         <div>
@@ -54,7 +55,7 @@ verificarAcceso($perfilesPermitidos);
     <br>
 
 
-    <div class="recepcion">
+    <div style="backgroundColor:#e7e7e7">
         <div style="padding-bottom: 5px;">
             <a href="ingresoExamen.php" class="btn btn-primary me-2">Ingresar Examen</a>
         </div>
@@ -67,8 +68,8 @@ verificarAcceso($perfilesPermitidos);
         </style>
         <div class="row">
             <div class="col-m-12">
-                <table id="pruebas4" class="tabla-recepcion">
-                    <thead>
+                <table id="pruebas4">
+                    <thead class="bg-primary" style="color:white;">
                         <tr>
                             <th>ID Examen</th>
                             <th>Nombre Paciente</th>
