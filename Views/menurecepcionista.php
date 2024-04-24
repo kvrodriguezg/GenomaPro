@@ -10,9 +10,6 @@
                     <a class="nav-link text-blue" href="recepcion.php"> <i class="fa-solid fa-stethoscope"></i> Listado de Exámenes</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-blue" href="cambiarestadorecepcion.php"> <i class="fa-solid fa-stethoscope"></i> Cambiar Estado Másivo</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link text-blue" href="cerrarsesion.php"> <i class="fa-solid fa-stethoscope"></i> Cerrar Sesión</a>
                 </li>
             </ul>

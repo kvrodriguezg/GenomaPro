@@ -8,7 +8,7 @@ class ExisteTabla
     public function __construct()
     {
         $this->db = Conectarse();
-    }
+    } 
 
     public function comprobarTabla($tabla)
     {
@@ -169,7 +169,7 @@ class ExisteTabla
         }
     }
 
-    public function crearUsuarioAdmin()
+     public function crearUsuarioAdmin()
     {
         if ($this->comprobarTabla("Usuarios") == true) {
             $usuario = "admin";
@@ -202,5 +202,5 @@ class ExisteTabla
             return false;
         }
     }
-    
+     
 }
