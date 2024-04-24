@@ -111,8 +111,7 @@ class ExisteTabla
         if ($this->comprobarTabla("Estados") == true) {
             $query = "INSERT IGNORE INTO Estados (NombreEstado, IDPerfil) VALUES 
                 ('Recepcionado', (SELECT IDPerfil FROM Perfiles WHERE TipoPerfil = 'recepcion')),
-                ('Listo para Tincion', (SELECT IDPerfil FROM Perfiles WHERE TipoPerfil = 'recepcion')),
-                ('Listo para Diagnostico', (SELECT IDPerfil FROM Perfiles WHERE TipoPerfil = 'tincion')),
+                ('Listo para Diagnostico', (SELECT IDPerfil FROM Perfiles WHERE TipoPerfil = 'recepcion')),
                 ('Realizado', (SELECT IDPerfil FROM Perfiles WHERE TipoPerfil = 'diagnostico'));";
             $creacion = mysqli_query($this->db, $query);
     
