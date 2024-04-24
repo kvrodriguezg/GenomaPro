@@ -37,22 +37,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="../css/prueba.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
     <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" href="../css/nav.css">
     <title>Document</title>
 </head>
 
+  <header class="navbar navbar-light fixed-top" style="background-color: #FFFFFF;">
+    <?php
+    include("../Views/Shared/nav.php");
+    ?>
+</header>
 <body style="background-color: #E7E7E7; font-family: 'Montserrat';" class="text-center">
-    <header class="navbar navbar-light fixed-top" style="background-color: #9CD0FE;">
-        <?php
-        include("menuadministrador.php");
-        ?>
-    </header>
-    <br><br><br><br><br><br><br>
-
+  <br><br><br><br><br><br>
     <h1 style="padding-top:20px; color:#FFFFF">Estados</h1><br>
+
+
 
     <a type='button' class='btn btn-primary text-center btn-editar-estado ' data-bs-toggle='modal'
         data-estados-id='0' data-bs-target='#editar_Modal_'>Crear Estado</a>
@@ -88,6 +91,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <th>Estado</th>
                         <th>Perfil</th>
                         <th>Acci&oacute;n</th>
+                      <th></th>
                     </tr>
                 </thead>
                 <tbody style="background-color: #FFFFFF">
@@ -104,9 +108,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 ?>
                             </td>
                             <td>
-                                <button type='button' class='btn w-100 center-block btn-editar-estado' data-bs-toggle='modal'
+                                <button type='button' class='btn center-block btn-editar-estado' data-bs-toggle='modal'
                                     data-estados-id='<?php echo $fila['IDEstado']; ?>' data-bs-target='#editar_Modal'> <img src="../img/pen.png" width="40px" height="40px"></button>
-                                <form method="post">
+                              </td>
+                          <td>
+                              <form method="post">
                                     <input type="hidden" name="sw" value="eliminar">
                                     <input type="hidden" name="IDEstado" value="<?php echo $fila['IDEstado']; ?>">
                                     <button type="submit" class="btn"><img src="../img/delete.png" width="40px" height="40px"></button>
@@ -158,4 +164,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </body>
 
 </html>
-<?php include 'modalestado.php'; ?>

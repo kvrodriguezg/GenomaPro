@@ -19,9 +19,8 @@ verificarAcceso($perfilesPermitidos);
 ?>
 <script src="../../js/diagnostico.js"></script>
 <link rel="stylesheet" href="../css/prueba.css">
-<?php include "menudiagnostico.php" ?>
-
-
+<link rel="stylesheet" href="../css/nav.css">
+<?php include "../Views/Shared/navDiagnostico.php" ?>
 <body>
     <div style="height: 70px"></div><br><br>
     <div>

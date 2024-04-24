@@ -9,33 +9,6 @@ require_once $rutaacceso;
 //require_once('../Controllers/centrosmedicosController.php');
 $perfilesPermitidos = 5;
 verificarAcceso($perfilesPermitidos);
-if (!isset($_POST['IDCentroMedico'])) {
-    $IDCentroMedico = '';
-} else {
-    $IDCentroMedico = $_POST['IDCentroMedico'];
-}
-if (!isset($_POST['NombreCentro'])) {
-    $NombreCentro = '';
-} else {
-    $NombreCentro = $_POST['NombreCentro'];
-}
-if (!isset($_POST['codigo'])) {
-    $codigo = '';
-} else {
-    $codigo = $_POST['codigo'];
-}
-
-if (!isset($_POST['op'])) {
-    $op = '';
-} else {
-    $op = $_POST['op'];
-}
-if ($op == 'EDITAR') {
-
-    header("Location: editarlaboratorio.php?IDCentroMedico=$IDCentroMedico&NombreCentro=$NombreCentro&codigo=$codigo");
-    exit();
-}
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,131 +16,148 @@ if ($op == 'EDITAR') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="icon" type="image/svg+xml" href="~/favicon.ico" />
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link rel="stylesheet" href="../css/registro.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/nav.css">
     <title>Document</title>
 </head>
 
-<header class="navbar navbar-light fixed-top" style="background-color: #9CD0FE;">
+
+<header class="navbar navbar-light fixed-top" style="background-color: #FFFFFF;">
     <?php
-    include("menuadministrador.php");
+    include("../Views/Shared/nav.php");
     ?>
 </header>
 <br><br><br><br><br>
 
-<body class="container">
-    <h1 style="padding-top: 20px;">Mantenedor Laboratorios</h1><br>
-    <?php
-   // require_once("../Controllers/centrosmedicosController.php");
-    echo '
-                <nav class="nav">
-                <ul class="nav">
-                    <div class="m-1">
-                    </div>
-                </ul>
-                <ul class="nav">
-                <div class="m-1">
-                    <form method="post" action="crearlaboratorio.php">
-                        <input type="hidden" name="crearPerfiles" value="crear">
-                        <button class="btn w-100 m-1 btn-primary btn-sm ">CREAR CENTRO</button>
-                    </form>
-                </div>
-            </ul>
-            </nav>';
-    ?>
+<style>
+    .table thead th {
+        background-color: #023E73;
+            color: white;
+            text-decoration: none;
+            font-weight: lighter;
+    }
 
+    .table-container {
+        display: flex;
+        justify-content: center;
+    }
+</style>
+
+<style>
+    .center-button {
+        text-align: center;
+    }
+</style>
+
+<body class="text-center" style="background-color: #E7E7E7; font-family: 'Montserrat';">
+<div style="width:100%; display:flex; justify-content:center;">
+<div style="width: 80px; height: 80px; border-radius: 100%; background-color: #023E73; display: flex; justify-content: center; align-items: center; position: relative;" class="text-center">
+    <div style="position: absolute; z-index: 10;">
+        <button type='button' style="color: #000000; position: absolute; left: 4px; top: 0;" class="btn center-block  btn-editar-centro" data-bs-toggle="modal" data-id=0 bs-target="#editar_Modal_0">
+            <i class="fa-solid fa-plus" style="color: #ffffff;"></i>
+        </button>
+    </div>
+    <i class="fa-regular fa-2xl fa-hospital" style="color: #ffffff;"></i>
+</div>
+</div>
     <br><br><br>
 
-    <section style="margin: 10px;">
-        <table id="tableUsers" class="tabla table">
-            <style>
-                .tabla {
-                    width: 100%;
-                }
-            </style>
-            <thead>
-                <tr>
-                    <th>ID </th>
-                    <th>Nombre Laboratorio </th>
-                    <th>Código </th>
-                    <th>Editar </th>
-                    <th>Eliminar </th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                foreach ($listCentros as $registro) {
-                    ?>
+    <div class="table-container">
+        <div class="col-lg-11">
+            <table id="tableUsers" class="table table-responsive">
+                <style>
+                    .tabla {
+                        width: 100%;
+                    }
+                </style>
+                <thead>
                     <tr>
-                        <td>
-                            <?php echo $registro['IDCentroMedico']; ?>
-                        </td>
-                        <td>
-                            <?php echo $registro['NombreCentro']; ?>
-                        </td>
-                        <td>
-                            <?php echo $registro['codigo']; ?>
-                        </td>
-                        <td>
-                            <form method="POST">
-                                <input type="hidden" name="op" value="EDITAR">
-                                <input type="hidden" name="IDCentroMedico"
-                                    value="<?php echo $registro['IDCentroMedico'] ?>">
-                                <input type="hidden" name="NombreCentro" value="<?php echo $registro['NombreCentro'] ?>">
-                                <input type="hidden" name="codigo" value="<?php echo $registro['codigo'] ?>">
-                                <button type="submit" class="btn w-100 center-block btn-primary">EDITAR</button>
-                            </form>
-                        </td>
-                        <td class="text-center">
-                            <form method="POST" action="" id="eliminarCentroForm">
-                                <input type="hidden" name="op" value="">
-                                <input type="hidden" name="IDCentroMedico"
-                                    value="<?php echo $registro['IDCentroMedico']; ?>">
-                                <button type="button" class="btn btn-danger w-100 center-block"
-                                    onclick="confirmarYEliminar(this)">ELIMINAR</button>
-                            </form>
-                        </td>
+                        <th>ID </th>
+                        <th>Nombre</th>
+                        <th>Código </th>
+                        <th></th>
+                        <th></th>
                     </tr>
+                </thead>
+                <tbody style="background-color: #FFFFFF">
                     <?php
-                }
-                ?>
-            </tbody>
-        </table>
-    </section>
+                    foreach ($listCentros as $registro) {
+                    ?>
+                        <tr>
+                            <td>
+                                <?php echo $registro['IDCentroMedico']; ?>
+                            </td>
+                            <td>
+                                <?php echo $registro['NombreCentro']; ?>
+                            </td>
+                            <td>
+                                <?php echo $registro['codigo']; ?>
+                            </td>
+                            <td>
+                                <div>
+                                    <button type='button' class='btn center-block btn-editar-centro' data-bs-toggle='modal' data-id=<?php echo $registro['IDCentroMedico']; ?> data-bs-target='#editar_Modal_' <?php echo $registro['IDCentroMedico'] ?>> <i class="fa-solid fa-2xl fa-pen-to-square" style="color: #023059;"></i></button>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <form method="POST" action="" id="eliminarCentroForm">
+                                    <input type="hidden" name="op" value="">
+                                    <input type="hidden" name="IDCentroMedico" value="<?php echo $registro['IDCentroMedico']; ?>">
+                                    <button type="button" class="btn w-100 center-block" onclick="confirmarYEliminar(this)"><i class="fa-solid fa-2xl fa-trash" style="color: #023059;"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                    <?php
+                    }
+                    ?>
+                </tbody>
+            </table>
+            </section>
 
 
 
-    <script src="https://kit.fontawesome.com/4652dbea50.js" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
-
+            <script src="https://kit.fontawesome.com/4652dbea50.js" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+            <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        </div>
+    </div>
 </body>
 
 </html>
 
+<script>
+    $(document).ready(function() {
+        $('.btn-editar-centro').click(function() {
+            var id = $(this).data('id');
+            $.ajax({
+                type: 'POST',
+                url: 'modalCentroMedico.php',
+                data: {
+                    id: id,
+                },
+                success: function(response) {
+                    $('body').append(response);
+                    $('#editar_Modal_' + id).modal('show');
+                }
+            });
+        });
+    });
+</script>
 
 <script>
-function confirmarYEliminar(button) {
-    var confirmacion = confirm("¿Estás seguro de que deseas eliminar este usuario?");
-    if (confirmacion) {
-        var form = button.closest('form');
-        var opField = form.querySelector('[name="op"]');
-        opField.value = "ELIMINAR";
-        console.log("Valor del campo op:", opField.value);
-        form.submit();
+    function confirmarYEliminar(button) {
+        var confirmacion = confirm("¿Estás seguro de que deseas eliminar este centro?");
+        if (confirmacion) {
+            var form = button.closest('form');
+            var opField = form.querySelector('[name="op"]');
+            opField.value = "ELIMINAR";
+            console.log("Valor del campo op:", opField.value);
+            form.submit();
+        }
     }
-}
-
 </script>

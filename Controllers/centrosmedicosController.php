@@ -1,21 +1,21 @@
 <?php
 $directorioActual = __DIR__;
-$ruta = dirname($directorioActual) . "/Models/centromedicoModel.php";
+$ruta = dirname($directorioActual) . "../Models/centromedicoModel.php";
 require_once $ruta;
 //include("../Models/centromedicoModel.php");
-$objCentros = new centromedico();
+$objCentros = new CentroMedico();
 
 // Creación de CENTRO si no existe
 if (isset($_POST['crearcentros'])) {
     $objCentros->crearCentros();
 } 
 
-$listCentros = $objCentros->verCentros();
 
-if (isset($_POST['op']) && $_POST['op'] == "GUARDAR" && isset($_POST['nombreCentro']) && isset($_POST['CodigoCentro'])) {
+
+if (isset($_POST['operacion']) && $_POST['operacion'] == "Guardar" && isset($_POST['nombreCentro']) && isset($_POST['codigo'])) {
     $nombreCentro = $_POST['nombreCentro'];
-    $CodigoCentro = $_POST['CodigoCentro'];
-    $insertarCentro = $objCentros->insertarCentro($nombreCentro,$CodigoCentro);
+    $codigoCentro = $_POST['codigo'];
+    $insertarCentro = $objCentros->insertarCentro($nombreCentro,$codigoCentro);
     if ($insertarCentro) {
         echo '<script>alert("Centro creado con éxito.");</script>';
     } else {
@@ -31,8 +31,8 @@ if (isset($_POST['op']) && $_POST['op'] == "GUARDAR" && isset($_POST['nombreCent
 
 
 //EDITAR CENTRO
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['op']) && $_POST['op'] == "Modificar" && isset($_POST['IDCentroMedico']) && isset($_POST['NombreCentro']) && isset($_POST['codigo'])) {
-    $nombreCentro = $_POST['NombreCentro'];
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['operacion']) && $_POST['operacion'] == "Modificar" && isset($_POST['IDCentroMedico']) && isset($_POST['nombreCentro']) && isset($_POST['codigo'])) {
+    $nombreCentro = $_POST['nombreCentro'];
     $CodigoCentro = $_POST['codigo'];
     $IDCentroMedico = $_POST['IDCentroMedico'];
     $editarCentro = $objCentros->modificarCentro($IDCentroMedico,$nombreCentro,$CodigoCentro);
@@ -47,6 +47,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['op']) && $_POST['op'] 
            }, 100);
          </script>';
    exit();
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id']))
+{
+    $boton = "Enviar";
+    $id = $_POST['id'];
+    if ($id>0){
+        $IDCentroMedico = $id;
+        $centros = $objCentros->buscarCentroPorID($id);
+        $codigo = $centros['codigo'];
+        $nombreCentro = $centros['NombreCentro'];
+        $operacion = "Modificar";
+        $titulo = "Editar:";
+    }
+    else if ($id==0)
+    {
+        $IDCentroMedico = 0;
+        $codigo = "";
+        $nombreCentro = "";
+        $operacion = "Guardar";
+        $titulo = "Nuevo Centro Médico:";
+    }
 }
 
 
@@ -67,3 +89,5 @@ if (isset($_POST['op']) && $_POST['op'] == "ELIMINAR" && isset($_POST['IDCentroM
          </script>';
    exit();
 }
+
+$listCentros = $objCentros->verCentros();

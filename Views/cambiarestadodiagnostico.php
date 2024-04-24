@@ -18,8 +18,12 @@ $seleccionados = $_POST['seleccionados'] ?? "";
 $idEstado = $_POST['estado'] ?? "";
 $diagnostico = $_POST['diagnostico'] ?? "";
 ?>
+<link rel="stylesheet" href="../css/nav.css">
+<header class="navbar navbar-light fixed-top" style="background-color: #FFFFFF;">
+    <?php include "../Views/Shared/navDiagnostico.php" ?>
+    
+</header>
 
-<?php include "menudiagnostico.php" ?>
 
 <body>
     <div style="height: 70px"></div><br><br>

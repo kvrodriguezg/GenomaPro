@@ -31,12 +31,37 @@ class usuario
         }
         return $this->usuario;
     }
+    
 
     public function buscarPerfil($nombrePerfil)
     {
         $consulta = mysqli_query($this->db, "SELECT IDPerfil FROM Perfiles WHERE TipoPerfil = '$nombrePerfil'");
         $idperfil = mysqli_fetch_array($consulta);
         return $idperfil;
+    }
+
+    public function buscarPerfiles()
+    {
+        $perfiles = array();
+        $consulta = mysqli_query($this->db, "SELECT * FROM Perfiles");
+        
+        while ($perfil = mysqli_fetch_array($consulta)) {
+            $perfiles[] = $perfil;
+        }
+        
+        return $perfiles;
+    }
+
+    public function buscarCentros()
+    {
+        $centros = array();
+        $consulta = mysqli_query($this->db, "SELECT * FROM CentrosMedicos");
+        
+        while ($centro = mysqli_fetch_array($consulta)) {
+            $centros[] = $centro;
+        }
+        
+        return $centros;
     }
 
     public function buscarcentro($nombreCentro)
@@ -117,6 +142,13 @@ class usuario
             $this->user[] = $filas;
         }
         return $this->user;
+    }
+
+    public function buscarUsuarioporID($IDUsuario)
+    {
+        $consulta = mysqli_query($this->db, "SELECT * FROM Usuarios where IDUsuario=$IDUsuario");
+        $Usuario = mysqli_fetch_array($consulta);
+        return $Usuario;
     }
 
     public function buscarPerfilId($IDPerfil)
