@@ -1,6 +1,6 @@
 <?php
 $directorioActual = __DIR__;
-$rutadiagnostico = dirname($directorioActual) . "/Controllers/diagnosticocontroller.php";
+$rutadiagnostico = dirname($directorioActual) . "/Controllers/diagnosticoontroller.php";
 require_once $rutadiagnostico;
 ?>
 
