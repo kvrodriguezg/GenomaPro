@@ -27,7 +27,7 @@ verificarAcceso($perfilesPermitidos);
     <div style="width: 80px; height: 80px; border-radius: 100%; background-color: #023E73; display: flex; justify-content: center; align-items: center; position: relative;" class="text-center">
     <div style="position: absolute; z-index: 10;">
         <button type='button' style="color: #000000; position: absolute; left: 4px; top: 0;" class='btn center-block text-center btn-editar-usuario' data-bs-toggle='modal' data-user-id='0' data-bs-target='#editar_Modal'>
-            <i class="fa-solid fa-plus" style="color: #ffffff;"></i>
+            
         </button>
     </div>
     <i class="fa-solid fa-stethoscope fa-2xl" style="color: #ffffff;"></i>
@@ -44,12 +44,12 @@ verificarAcceso($perfilesPermitidos);
                     <th>Laboratorio</th>
                     <th>Examen</th>
                     <th>F. Toma de Muestra</th>
-                    <th>F. de Tinción</th>
                     <th>F. Diagnóstico</th>
                     <th>Diagnóstico</th>
                     <th>Cod. Diagnóstico</th>
                     <th>Estado</th>
                     <th>Cambiar Estado</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -62,7 +62,6 @@ verificarAcceso($perfilesPermitidos);
                             <td><?php echo $examen->obtenerCentroMedico($row['IDCentroSolicitante']) ?></td>
                             <td><?php echo $row['NombreExamen'] ?></td>
                             <td><?php echo $row['FechaTomaMuestra'] ?></td>
-                            <td><?php echo $row['Fechatincion'] ?></td>
                             <td><?php echo $row['Fechadiagnostico'] ?></td>
                             <td><?php echo $examen->obtenerDiagnostico($row['CodigoDiagnosticos']); ?></td>
                             <td>
