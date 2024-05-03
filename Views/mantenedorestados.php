@@ -42,8 +42,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+     <link rel="stylesheet" href="../css/nav.css"> 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <link rel="stylesheet" href="../css/nav.css">
     <title>Document</title>
 </head>
 <header class="navbar navbar-light fixed-top" style="background-color: #FFFFFF;">
@@ -51,6 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     include ("../Views/Shared/nav.php");
     ?>
 </header>
+
 <br><br><br><br><br><br>
 
 
@@ -177,7 +178,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     document.getElementById('eliminarForm').submit();
                 }
             }
+
         </script>
+
+    <script src="https://kit.fontawesome.com/4652dbea50.js" crossorigin="anonymous"></script>
+
 </body>
 <div id="modal-container"></div>
 

@@ -17,7 +17,7 @@ $pdf = new TCPDF();
 $pdf->AddPage();
 
 // Definir el contenido del PDF
-$logoPath       = '../img/logo_labmuest.png';  // Ruta a tu logo
+$logoPath       = '../img/1.png';  // Ruta a tu logo
 $firmaDigital   ='../img/Firma.png'; //Ruta Firma Digital Director Técnico
 $fechaImpresion = date("Y-m-d H:i:s");  // Fecha de impresión actual
 
@@ -27,7 +27,6 @@ $rutPaciente            = $detallePdf['RutPaciente'];
 $descripcionDiagnostico = $detallePdf['DescripcionDiagnostico']; // $DetallePdf[''];  //"Descripción del Diagnóstico desde la base de datos";
 $fechaTomaMuestra       = $detallePdf['FechaTomaMuestra'];
 $fechaRecepcionExamen   = $detallePdf['FechaRecepcion'];
-$fechaTincion           = $detallePdf['Fechatincion'];
 $fechaDiagnostico       = $detallePdf['Fechadiagnostico'];
 $Diagnostico            = $detallePdf['CodigoDiagnosticos'];
 
@@ -62,18 +61,11 @@ $html = '<table width="100%">
             <td><strong>Fecha de impresión :</strong> </td>
             <td>'.$fechaImpresion.'</td>
         </tr>
-        <tr>
-        <td><strong>Fecha de Tinción :</strong> </td>
-        <td>'.$fechaTincion.'</td>
-    </tr>
     <tr>
     <td><strong>Fecha de Análisis Diagnóstico :</strong> </td>
     <td>'.$fechaDiagnostico.'</td>
 </tr>
         </table>
-
-        
-        <br>
         <br>
         <strong>Diagnóstico:  </strong>'.$Diagnostico.'<br><br>
     <strong>Descripción del Diagnóstico:</strong>
@@ -86,7 +78,7 @@ $html = '<table width="100%">
     <br><br><br><br>
     <br><br><br><br>
     <br><br><br><br>
-    <br><br>
+    <br>
     <div  style="width: 90%; text-align: center;">
     <img src="'.$firmaDigital.'" width="80">
     <h6>Luis Yañez Carreño </h6>

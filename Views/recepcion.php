@@ -1,4 +1,4 @@
-<?php 
+<?php
 $directorioActual = __DIR__;
 $rutaacceso = dirname($directorioActual) . "/Controllers/accesoController.php";
 require_once $rutaacceso;
@@ -8,7 +8,10 @@ require_once $rutaexamenes;
 
 //require_once("../Controllers/examenesController.php");
 //require_once('../Controllers/accesoController.php');
-session_start();
+
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 $perfilesPermitidos = 3;
 verificarAcceso($perfilesPermitidos);
 ?>
@@ -37,16 +40,12 @@ verificarAcceso($perfilesPermitidos);
 </head>
 
 <body>
-<header class="navbar navbar-light fixed-top" style="background-color: #FFFFFF;">
-    <?php
-    include("../Views/Shared/navRecepcion.php");
-    ?>
-</header>
+    <header class="navbar navbar-light fixed-top" style="background-color: #FFFFFF;">
+        <?php
+        include("../Views/Shared/navRecepcion.php");
+        ?>
+    </header>
     <br><br><br><br><br>
-    <div>
-    
-    <h1 style="padding-top: 30px;">Recepción de solicitudes</h1><br>
-    </div>
     <div>
         <div>
         </div>
@@ -54,91 +53,108 @@ verificarAcceso($perfilesPermitidos);
     </div>
     <br>
 
-
-    <div style="backgroundColor:#e7e7e7">
-        <div style="padding-bottom: 5px;">
-            <a href="ingresoExamen.php" class="btn btn-primary me-2">Ingresar Examen</a>
-        </div>
-        <style>
-            .recepcion {
-                margin: 20px;
-            }
-
-            .tabla-recepcion {}
-        </style>
-        <div class="row">
-            <div class="col-m-12">
-                <table id="pruebas4">
-                    <thead class="bg-primary" style="color:white;">
-                        <tr>
-                            <th>ID Examen</th>
-                            <th>Nombre Paciente</th>
-                            <th>Domicilio</th>
-                            <th>Laboratorio</th>
-                            <th>Examen</th>
-                            <th>F. Toma de Muestra</th>
-                            <th>F. de Tinción</th>
-                            <th>F. Diagnóstico</th>
-                            <th>Diagnóstico</th>
-                            <th>Cod. Diagnóstico</th>
-                            <th>Estado</th>
-                            <th>Cambiar Estado</th>
-                            <th>PDF</th>
-                            <TH>Acciones</TH>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php while ($row = mysqli_fetch_array($examenes)) { ?>
-                            <tr class=>
-                                <form method="post" action="recepcion.php">
-                                    <td><?php echo $row['IDExamen'] ?></td>
-                                    <td><?php echo $examen->obtenerNombrePaciente($row['RutPaciente']) ?></td>
-                                    <td><?php echo $examen->obtenerDomicilioPaciente($row['RutPaciente']) ?></td>
-                                    <td><?php echo $examen->obtenerCentroMedico($row['IDCentroSolicitante']) ?></td>
-                                    <td><?php echo $row['NombreExamen'] ?></td>
-                                    <td><?php echo $row['FechaTomaMuestra'] ?></td>
-                                    <td><?php echo $row['Fechatincion'] ?></td>
-                                    <td><?php echo $row['Fechadiagnostico'] ?></td>
-                                    <td><?php echo $examen->obtenerDiagnostico($row['CodigoDiagnosticos']); ?></td>
-                                    <td><?php echo $row['CodigoDiagnosticos']; ?></td>
-                                    <td><?php echo $examen->obtenerEstadoActual($row['IDEstado']); ?></td>
-
-                                    <td>
-                                        <select class="form-select" style="width: 150px" name="estado" required>
-                                            <?php
-                                            $resultadoEstados = $examen->obtenerEstados('recepcion');
-
-                                            while ($row1 = mysqli_fetch_array($resultadoEstados)) {
-                                                echo '<option value="' . $row1['IDEstado'] . '">' . $row1['NombreEstado'] . '</option>';
-                                            }
-                                            ?>
-                                        </select>
-                                    </td>
-                                   <td>
-                                    <button type="button" class="btn btn-outline-danger" 
-                            <?php if($row['IDEstado']==4) {?>                               
-                                onclick="window.open('generar_pdf.php?id=<?php echo $row['IDExamen']; ?>', '_blank');">
-                                <img src="../img/pdf.png" alt="Icono PDF">
-                                <?php } else {?>
-                                ><img src="../img/pdf.png" alt="Icono PDF">
-                                <?php
-                                }
-                                ?>
-                            </button>
-                                    </td>
-                                    <td>
-                                        <!-- <a href="generar_pdf.php" class="btn w-100 m-1 btn-danger" >Ver PDF</a>  -->
-                                        <input type="hidden" name="idExamen" value=<?php echo $row['IDExamen'] ?>>
-                                        <input name="actualizarEstado" type="submit" class="btn w-100 m-1 btn-primary"></input>
-                                        <input name="eliminarRegistro" type="submit" class="btn w-100 m-1 btn-danger" value="Eliminar"></input>
-                                    </td>
-                                </form>
-                            </tr>
-                        <?php } ?>
-                    </tbody>
-                </table>
+    <div style="width:100%; display:flex; justify-content:center;">
+        <div style="width: 80px; height: 80px; border-radius: 100%; background-color: #023E73; display: flex; justify-content: center; align-items: center; position: relative;" class="text-center">
+            <div style="position: absolute; z-index: 10;">
+                <button type='button' style="color: #000000; position: absolute; left: 4px; top: 0;" class='btn center-block text-center btn-nuevo-examen' data-bs-toggle="modal" data-id=0 bs-target="#editar_Modal_0">
+                    <i class="fa-solid fa-plus" style="color: #ffffff;"></i>
+                </button>
             </div>
+            <i class="fa-solid fa-clipboard fa-2xl" style="color: #ffffff;"></i>
         </div>
+    </div>
+    <style>
+        .tabla-recepcion thead th {
+            background-color: #023E73;
+            color: white;
+            text-decoration: none;
+            font-weight: lighter;
+        }
+
+        .col-clave {
+            max-width: 100px;
+            overflow: hidden;
+            /* Oculta el texto que excede el ancho máximo */
+            text-overflow: ellipsis;
+            /* Agrega puntos suspensivos (...) al final del texto truncado */
+            white-space: nowrap;
+            /* Evita que el texto se divida en varias líneas */
+        }
+
+        .table-container {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+    <div class="row">
+        <div class="col-m-12">
+            <table id="pruebas4" class="tabla-recepcion">
+                <thead class="bg-primary" style="color:white;">
+                    <tr>
+                        <th>ID Examen</th>
+                        <th>Nombre Paciente</th>
+                        <th>Domicilio</th>
+                        <th>Laboratorio</th>
+                        <th>Examen</th>
+                        <th>F. Toma de Muestra</th>
+                        <th>F. Diagnóstico</th>
+                        <th>Diagnóstico</th>
+                        <th>Cod. Diagnóstico</th>
+                        <th>Estado</th>
+                        <th>Cambiar Estado</th>
+                        <th>PDF</th>
+                        <TH>Acciones</TH>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php while ($row = mysqli_fetch_array($examenes)) { ?>
+                        <tr class=>
+                            <form method="post" action="recepcion.php">
+                                <td><?php echo $row['IDExamen'] ?></td>
+                                <td><?php echo $examen->obtenerNombrePaciente($row['RutPaciente']) ?></td>
+                                <td><?php echo $examen->obtenerDomicilioPaciente($row['RutPaciente']) ?></td>
+                                <td><?php echo $examen->obtenerCentroMedico($row['IDCentroSolicitante']) ?></td>
+                                <td><?php echo $row['NombreExamen'] ?></td>
+                                <td><?php echo $row['FechaTomaMuestra'] ?></td>
+                                <td><?php echo $row['Fechadiagnostico'] ?></td>
+                                <td><?php echo $examen->obtenerDiagnostico($row['CodigoDiagnosticos']); ?></td>
+                                <td><?php echo $row['CodigoDiagnosticos']; ?></td>
+                                <td><?php echo $examen->obtenerEstadoActual($row['IDEstado']); ?></td>
+
+                                <td>
+                                    <select class="form-select" style="width: 150px" name="estado" required>
+                                        <?php
+                                        $resultadoEstados = $examen->obtenerEstados('recepcion');
+
+                                        while ($row1 = mysqli_fetch_array($resultadoEstados)) {
+                                            echo '<option value="' . $row1['IDEstado'] . '">' . $row1['NombreEstado'] . '</option>';
+                                        }
+                                        ?>
+                                    </select>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-outline-danger" <?php if ($row['IDEstado'] == 3) { ?> onclick="window.open('generar_pdf.php?id=<?php echo $row['IDExamen']; ?>', '_blank');">
+                                        <img src="../img/pdf.png" alt="Icono PDF">
+                                    <?php } else { ?>
+                                        ><img src="../img/pdf.png" alt="Icono PDF">
+                                    <?php
+                                                                                            }
+                                    ?>
+                                    </button>
+                                </td>
+                                <td>
+                                    <!-- <a href="generar_pdf.php" class="btn w-100 m-1 btn-danger" >Ver PDF</a>  -->
+                                    <input type="hidden" name="idExamen" value=<?php echo $row['IDExamen'] ?>>
+                                    <input name="actualizarEstado" type="submit" class="btn w-100 m-1 btn-primary"></input>
+                                    <input name="eliminarRegistro" type="submit" class="btn w-100 m-1 btn-danger" value="Eliminar"></input>
+                                </td>
+                            </form>
+                        </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
     </div>
 </body>
 
@@ -159,5 +175,17 @@ verificarAcceso($perfilesPermitidos);
 
 <!-- código JS propìo-->
 <script type="text/javascript" src="../js/data3.js"></script>
-
-</html>
+<script>
+    $(document).ready(function() {
+        $('.btn-nuevo-examen').click(function() {
+            $.ajax({
+                type: 'POST',
+                url: 'modalIngresoExamen.php',
+                success: function(response) {
+                    $('body').append(response);
+                    $('#editar_Modal_0').modal('show');
+                }
+            });
+        });
+    });
+</script>

@@ -150,10 +150,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <button type='button' class='btn w-100 center-block btn-editar-usuario' data-bs-toggle='modal' data-user-id=<?php echo $usu['IDUsuario']; ?> data-bs-target='#editar_Modal_' <?php echo $usu['IDUsuario'] ?>> <i class="fa-solid fa-2xl fa-pen-to-square" style="color: #023059;"></i></button>
                                 </td>
                                 <td class="text-center">
-                                    <form method="POST" action="" id="eliminarForm">
+                                    <form method="POST" action=""  id="eliminarForm_<?php echo $usu['IDUsuario'];?>">
                                         <input type="hidden" name="op" id="op" value="eliminar">
-                                        <input type="hidden" name="IDUsuario" value="<?php echo $usu['IDUsuario']; ?>">
-                                        <button type="button" class="btn" onclick="confirmarYEliminar('<?php echo $usu['IDUsuario']; ?>')"><i class="fa-solid fa-2xl fa-trash" style="color: #023059;"></i></button>
+                                        <input type="hidden" name="IDUsuarioEliminar" value=<?php echo $usu['IDUsuario']; ?>>
+                                        <button type="submit" class="btn" onclick="confirmarYEliminar('<?php echo $usu['IDUsuario']; ?>')"><i class="fa-solid fa-2xl fa-trash" style="color: #023059;"></i></button>
                                     </form>
                                 </td>
                             </tr>

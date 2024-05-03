@@ -38,8 +38,8 @@ if (isset($_POST['op']) && $_POST['op'] == "GUARDAR" && isset($_POST['nombre']) 
 
 
 // Eliminar perfil 
-if (isset($_POST['op']) && $_POST['op'] == "eliminar" && isset($_POST['IDUsuario'])) {
-    $IDUsuario = $_POST['IDUsuario'];
+if (isset($_POST['op']) && $_POST['op'] == "eliminar" && isset($_POST['IDUsuarioEliminar'])) {
+    $IDUsuario = $_POST['IDUsuarioEliminar'];
     $borrarusuario = $objusuario->eliminarUsuario($IDUsuario);
     if ($borrarusuario) {
         echo '<script>alert("Usuario eliminado con éxito.");</script>';

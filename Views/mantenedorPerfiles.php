@@ -167,6 +167,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     }
                 } 
             </script>
+            <script src="https://kit.fontawesome.com/4652dbea50.js" crossorigin="anonymous"></script>
 </body>
 
 </html>
