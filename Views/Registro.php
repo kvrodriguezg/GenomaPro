@@ -12,7 +12,7 @@ $generaPdf = dirname($directorioActual) . "/Views/generar_pdf.php";
 echo $generaPdf;
 //require_once $generaPdf;
 
-$perfilesPermitidos = (4);
+$perfilesPermitidos = (3);
 verificarAcceso($perfilesPermitidos);
 ?>
 <!DOCTYPE html>
@@ -39,23 +39,27 @@ verificarAcceso($perfilesPermitidos);
 </head>
 
 <style>
-        .table thead th {
-            background-color: #115DFC;
-            color: white;
-        }
+    .table thead th {
+        background-color: #115DFC;
+        color: white;
+    }
 
-        .table-container {
-            display: flex;
-            justify-content: center;
-        }
-    </style>
+    .table-container {
+        display: flex;
+        justify-content: center;
+    }
+</style>
+
+<header class="navbar navbar-light fixed-top" style="background-color: #FFFFFF;">
+    <?php
+    include("../Views/Shared/navRecepcion.php");
+    ?>
+</header>
 
 <body class="text-center" style="background-color: #E7E7E7; font-family: 'Montserrat';">
-    <header class="navbar navbar-light fixed-top" style="background-color: #9CD0FE;">
-        <?php
-        include("menu.php");
-        ?>
-    </header>
+
+
+
     <br><br><br><br><br>
     <div>
         <h1 style="padding-top:20px; color:#000000">Registro</h1>
@@ -64,64 +68,62 @@ verificarAcceso($perfilesPermitidos);
     <br>
 
     <div class="table-container">
-        
-            <div class="col-lg-11">
-                <table class="table table-responsive">
-                    <thead style="background-color: #FFFFFF">
-                        <tr>
-                            <th>#</th>
-                            <th>Nombre Paciente</th>
-                            <th>Domicilio</th>
-                            <th>Laboratorio</th>
-                            <th>Examen</th>
-                            <th>F. Toma de Muestra</th>
-                            <th>F. de Tinción</th>
-                            <th>F. Diagnóstico</th>
-                            <th>Diagnóstico</th>
-                            <th>Cod. Diagnóstico</th>
-                            <th>Estado</th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php while ($row = mysqli_fetch_array($examenes)) { ?>
-                            <tr class="table table-striped">
-                                <form method="post" action="Registro.php">
-                                    <td><?php echo $row['IDExamen'] ?></td>
-                                    <td><?php echo $examen->obtenerNombrePaciente($row['RutPaciente']) ?></td>
-                                    <td><?php echo $examen->obtenerDomicilioPaciente($row['RutPaciente']) ?></td>
-                                    <td><?php echo $examen->obtenerCentroMedico($row['IDCentroSolicitante']) ?></td>
-                                    <td><?php echo $row['NombreExamen'] ?></td>
-                                    <td><?php echo $row['FechaTomaMuestra'] ?></td>
-                                    <td><?php echo $row['Fechatincion'] ?></td>
-                                    <td><?php echo $row['Fechadiagnostico'] ?></td>
-                                    <td><?php echo $examen->obtenerDiagnostico($row['CodigoDiagnosticos']); ?></td>
-                                    <td><?php echo $row['CodigoDiagnosticos']; ?></td>
-                                    <td><?php echo $examen->obtenerEstadoActual($row['IDEstado']); ?></td>
-                                    <td>
-                                        <button type="button" class="btn btn-outline-danger" <?php if ($row['IDEstado'] == 4) { ?> onclick="window.open('generar_pdf.php?id=<?php echo $row['IDExamen']; ?>', '_blank');">
-                                            <img src="../img/pdf.png" alt="Icono PDF">
-                                        <?php } else { ?>
-                                            ><img src="../img/pdf.png" alt="Icono PDF">
-                                        <?php
-                                                                                                }
-                                        ?>
-                                        </button>
 
-                                    </td>
-                                    <td>
-                                        <!-- <a href="generar_pdf.php" class="btn w-100 m-1 btn-danger" >Ver PDF</a>  -->
-                                        <input type="hidden" name="idExamen" value=<?php echo $row['IDExamen'] ?>>
-                                        <button name="eliminarRegistro" type="submit" class="btn w-100 m-1"><img src="../img/delete.png" width="60px" height="60px"></button>
-                                    </td>
-                                </form>
-                            </tr>
-                        <?php } ?>
-                    </tbody>
-                </table>
-            </div>
-        
+        <div class="col-lg-11">
+            <table class="table table-responsive">
+                <thead style="background-color: #FFFFFF">
+                    <tr>
+                        <th>#</th>
+                        <th>Nombre Paciente</th>
+                        <th>Domicilio</th>
+                        <th>Laboratorio</th>
+                        <th>Examen</th>
+                        <th>F. Toma de Muestra</th>
+                        <th>F. Diagnóstico</th>
+                        <th>Diagnóstico</th>
+                        <th>Cod. Diagnóstico</th>
+                        <th>Estado</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php while ($row = mysqli_fetch_array($examenes)) { ?>
+                        <tr class="table table-striped">
+                            <form method="post" action="Registro.php">
+                                <td><?php echo $row['IDExamen'] ?></td>
+                                <td><?php echo $examen->obtenerNombrePaciente($row['RutPaciente']) ?></td>
+                                <td><?php echo $examen->obtenerDomicilioPaciente($row['RutPaciente']) ?></td>
+                                <td><?php echo $examen->obtenerCentroMedico($row['IDCentroSolicitante']) ?></td>
+                                <td><?php echo $row['NombreExamen'] ?></td>
+                                <td><?php echo $row['FechaTomaMuestra'] ?></td>
+                                <td><?php echo $row['Fechadiagnostico'] ?></td>
+                                <td><?php echo $examen->obtenerDiagnostico($row['CodigoDiagnosticos']); ?></td>
+                                <td><?php echo $row['CodigoDiagnosticos']; ?></td>
+                                <td><?php echo $examen->obtenerEstadoActual($row['IDEstado']); ?></td>
+                                <td>
+                                    <button type="button" class="btn btn-outline-danger" <?php if ($row['IDEstado'] == 3) { ?> onclick="window.open('generar_pdf.php?id=<?php echo $row['IDExamen']; ?>', '_blank');">
+                                        <img src="../img/pdf.png" alt="Icono PDF">
+                                    <?php } else { ?>
+                                        ><img src="../img/pdf.png" alt="Icono PDF">
+                                    <?php
+                                                                                            }
+                                    ?>
+                                    </button>
+
+                                </td>
+                                <td>
+                                    <!-- <a href="generar_pdf.php" class="btn w-100 m-1 btn-danger" >Ver PDF</a>  -->
+                                    <input type="hidden" name="idExamen" value=<?php echo $row['IDExamen'] ?>>
+                                    <button name="eliminarRegistro" type="submit" class="btn w-100 m-1"><img src="../img/delete.png" width="60px" height="60px"></button>
+                                </td>
+                            </form>
+                        </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+        </div>
+
     </div>
     <script src="https://kit.fontawesome.com/4652dbea50.js" crossorigin="anonymous"></script>
     <!-- jQuery, Popper.js, Bootstrap JS -->

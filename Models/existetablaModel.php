@@ -66,12 +66,9 @@ class ExisteTabla
     {
         if ($this->comprobarTabla("Diagnosticos") == true) {
             $query = "INSERT IGNORE INTO Diagnosticos (codigo, descripcion) VALUES 
-                ('A', 'NEGATIVO'),
-                ('B', 'MUESTRA INADECUADA, VOLVER A TOMAR'),
-                ('C', 'MUESTRA PRESENTA INFECCION'),
-                ('D', 'POSIBLE ADENOCARCINOMA'),
-                ('E', 'CANCER EPIDERMOIDE'),
-                ('F', 'MUESTRA ATROFICA');";
+                ('N', 'NEGATIVO'),
+                ('P', 'POSITIVO'),
+                ('M', 'MUESTRA ATROFICA');";
             $creacion = mysqli_query($this->db, $query);
     
             if (!$creacion) {
