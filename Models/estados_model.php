@@ -35,6 +35,17 @@ class Estados
         }
         return $this->Estados;
     }
+    public function buscarEstadoPorID($id)
+    {
+        $consulta = "SELECT * FROM estados WHERE IDEstados = $id";
+        $resultado = mysqli_query($this->db, $consulta);
+        if (mysqli_num_rows($resultado) > 0) {
+            $resultado2 = mysqli_fetch_assoc($resultado);
+            return $resultado2;
+        } else {
+            return null;
+        }
+    }
 
  
 

@@ -42,10 +42,10 @@ class perfiles
         
     }
 
-    public function eliminarPerfil($idPerfil){
-        $query="DELETE FROM Perfiles WHERE idPerfil=?;";
+    public function eliminarPerfil($IDPerfil){
+        $query="DELETE FROM Perfiles WHERE IDPerfil=?;";
         if ($stmt = mysqli_prepare($this->db, $query)) {
-            mysqli_stmt_bind_param($stmt, "s", $idPerfil);
+            mysqli_stmt_bind_param($stmt, "s", $IDPerfil);
             if (mysqli_stmt_execute($stmt)) {
                 return true;
             } else {
@@ -54,11 +54,11 @@ class perfiles
 
         }
     }
-    public function modificarPerfil($idperfil, $nombrePerfil)
+    public function modificarPerfil($IDPerfil, $TipoPerfil)
     {
         $query = "UPDATE Perfiles SET TipoPerfil = ? WHERE IDPerfil = ?;"; // LA CONSULTA QUE QUIERO EJECUTAR
         if ($stmt = mysqli_prepare($this->db, $query)) { // LE AVISO AL EDITOR QUE LE ENVIARE UNA CONSULTA PREPARADA
-            mysqli_stmt_bind_param($stmt, "si", $nombrePerfil, $idperfil); // LE INDICO A LA CONSULTA PREPARADA STMT 
+            mysqli_stmt_bind_param($stmt, "si", $IDPerfil, $TipoPerfil); // LE INDICO A LA CONSULTA PREPARADA STMT 
                                                                                 //QUE DATOS NECESITO QUE VALIDE
             if (mysqli_stmt_execute($stmt)) { //EJECUTO LA CONSULTA PREPARADA YA CON LOS DATOS QUE LE ENVIE
                 return true; //SI TODO VA BIEN, SE EJECUTA Y RETORNA TRUE
@@ -86,10 +86,10 @@ class perfiles
         return $this->tipoperfiles;
     }
 
-    public function buscarPerfil($idPerfil) {
-        $consulta = "SELECT TipoPerfil FROM Perfiles WHERE idPerfil = ?";
+    public function buscarPerfil($IDPerfil) {
+        $consulta = "SELECT TipoPerfil FROM Perfiles WHERE $IDPerfil = ?";
         if ($stmt = mysqli_prepare($this->db, $consulta)) {
-            mysqli_stmt_bind_param($stmt, "i", $idPerfil); 
+            mysqli_stmt_bind_param($stmt, "i", $IDPerfil); 
             if (mysqli_stmt_execute($stmt)) {
                 mysqli_stmt_bind_result($stmt, $tipoPerfil); 
                 mysqli_stmt_fetch($stmt);    
@@ -100,6 +100,17 @@ class perfiles
         } else {
             return false;
         }
+    }
+    public function buscarPerfiles()
+    {
+        $perfiles = array();
+        $consulta = mysqli_query($this->db, "SELECT * FROM Perfiles");
+        
+        while ($perfil = mysqli_fetch_array($consulta)) {
+            $perfiles[] = $perfil;
+        }
+        
+        return $perfiles;
     }
     
 

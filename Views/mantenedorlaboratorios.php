@@ -41,6 +41,7 @@ verificarAcceso($perfilesPermitidos);
             text-decoration: none;
             font-weight: lighter;
     }
+    
 
     .table-container {
         display: flex;
