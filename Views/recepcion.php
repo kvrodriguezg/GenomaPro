@@ -44,31 +44,48 @@ verificarAcceso($perfilesPermitidos);
 </header>
     <br><br><br><br><br>
     <div>
-    
-    <h1 style="padding-top: 30px;">Recepción de solicitudes</h1><br>
-    </div>
-    <div>
         <div>
         </div>
 
     </div>
     <br>
 
-
-    <div style="backgroundColor:#e7e7e7">
-        <div style="padding-bottom: 5px;">
-            <a href="ingresoExamen.php" class="btn btn-primary me-2">Ingresar Examen</a>
-        </div>
+    <div style="width:100%; display:flex; justify-content:center;">
+<div style="width: 80px; height: 80px; border-radius: 100%; background-color: #023E73; display: flex; justify-content: center; align-items: center; position: relative;" class="text-center">
+    <div style="position: absolute; z-index: 10;">
+        <button type='button' style="color: #000000; position: absolute; left: 4px; top: 0;" class='btn center-block text-center btn-editar-centro' data-bs-toggle="modal" data-id=0 bs-target="#editar_Modal_0"> 
+            <i class="fa-solid fa-plus" style="color: #ffffff;"></i>
+        </button>
+    </div>
+    <i class="fa-solid fa-clipboard fa-2xl" style="color: #ffffff;"></i>
+</div>
+</div>
         <style>
-            .recepcion {
-                margin: 20px;
-            }
+        .tabla-recepcion thead th {
+            background-color: #023E73;
+            color: white;
+            text-decoration: none;
+            font-weight: lighter;
+        }
 
-            .tabla-recepcion {}
-        </style>
+        .col-clave {
+            max-width: 100px;
+            overflow: hidden;
+            /* Oculta el texto que excede el ancho máximo */
+            text-overflow: ellipsis;
+            /* Agrega puntos suspensivos (...) al final del texto truncado */
+            white-space: nowrap;
+            /* Evita que el texto se divida en varias líneas */
+        }
+
+        .table-container {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
         <div class="row">
             <div class="col-m-12">
-                <table id="pruebas4">
+                <table id="pruebas4" class="tabla-recepcion">
                     <thead class="bg-primary" style="color:white;">
                         <tr>
                             <th>ID Examen</th>
@@ -159,5 +176,3 @@ verificarAcceso($perfilesPermitidos);
 
 <!-- código JS propìo-->
 <script type="text/javascript" src="../js/data3.js"></script>
-
-</html>
