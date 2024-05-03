@@ -122,5 +122,27 @@ $diagnostico = $_POST['diagnostico'] ?? "";
     </section>
 </body>
 <?php include "../views/Shared/scripts.php" ?>
+<style>
+        .tabla-recepcion thead th {
+            background-color: #023E73;
+            color: white;
+            text-decoration: none;
+            font-weight: lighter;
+        }
 
+        .col-clave {
+            max-width: 100px;
+            overflow: hidden;
+            /* Oculta el texto que excede el ancho máximo */
+            text-overflow: ellipsis;
+            /* Agrega puntos suspensivos (...) al final del texto truncado */
+            white-space: nowrap;
+            /* Evita que el texto se divida en varias líneas */
+        }
+
+        .table-container {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
 </html>

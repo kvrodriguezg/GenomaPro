@@ -50,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <br><br><br><br><br>
 
 <body style="background-color: #E7E7E7; font-family: 'Montserrat';" class="text-center">
-    <h1 style="padding-top:30px; color:#FFFFF">Listados de Perfiles</h1><br>
+    <h1 style="padding-top:30px; color:#FFFFFF">Listados de Perfiles</h1><br>
 
     <a type='button' class='btn btn-primary text-center btn-editar-estado ' data-bs-toggle='modal' data-estados-id='0'
         data-bs-target='#editar_Modal_'>Crear Perfil</a>
@@ -149,6 +149,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     }
                 }
             </script>
+            <script src="https://kit.fontawesome.com/4652dbea50.js" crossorigin="anonymous"></script>
 </body>
 </html>
 </body>
