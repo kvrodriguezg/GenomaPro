@@ -2,131 +2,46 @@
 $directorioActual = __DIR__;
 $rutaestado = dirname($directorioActual) . "/Controllers/EstadoController.php";
 require_once $rutaestado;
-?>
+$IDEstado = $_POST['estadoID'];
+$row = $objetoEstado->MostrarEstados();
 
-<div class="modal fade" id="editar_Modal_<?php echo $codigo ?>" tabindex="-1" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+
+$estados = array();?>
+
+<div class="modal fade" id="editar_Modal_<?php echo $IDEstado?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"><?php echo $titulo ?></h5>
+                <h5 class="modal-title" id="exampleModalLabel">hola </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="POST" action="mantenedorestado.php">
-                <div class="modal-body">
+            <form method="POST" action="mantenedorestados.php">
+                <div class="modal-body text-center">
                     <div class="row">
-                        <?php
-
-                        require_once ("../Controllers/EstadoController.php");
-                        $NombreEstado = '';
-                        $IDPerfil = '';
-                        $sw = "";
-
-                        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                            if (!isset($_POST['NombreEstado'])) {
-                                $NombreEstado = '';
-                            } else {
-                                $NombreEstado = $_POST['NombreEstado'];
-                            }
-                            if (!isset($_POST['IDPerfil'])) {
-                                $IDPerfil = '';
-                            } else {
-                                $IDPerfil = $_POST['IDPerfil'];
-                            }
-                            if (!isset($_POST['sw'])) {
-                                $sw = '';
-                            } else {
-                                $sw = $_POST['sw'];
-                            }
-                            // if(isset($_POST['Perfil']))             { $perfilSelecionado=$_POST['Perfil'];} else {$perfilSelecionado = 1;}
-                        }
-                        ?>
-
-
-                        <!DOCTYPE html>
-                        <html lang="en">
-
-                        <head>
-                            <!--       <meta charset="UTF-8">
-                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-                                rel="stylesheet"
-                                integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-                                crossorigin="anonymous">
-                            <link rel="stylesheet"
-                                href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-                            <link rel="icon" type="image/svg+xml" href="~/favicon.ico" />
-                            <link rel="stylesheet"
-                                href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" /> -->
-
-                            <title>Crear Estado</title>
-                        </head>
-
-                        <body>
-
-                            <br><br>
-
-
-                            <form method="POST" class="form" enctype="multipart/form-data" style="padding: 100px 300px 0 300px;">
-                                <h2 style="text-align: center;">Crear Estado</h2><br>
-                                <div class="row">
-                                    <div class="col">
-                                        <label for="rut" style="text-align: center;">Estado:</label>
-                                        <input type="text" class="form-control" name="NombreEstado"
-                                            value="<?php echo "$NombreEstado"; ?>" placeholder="Nombre Estado"
-                                            required><br>
-                                        <label style="text-align: center;">Perfil:</label><br>
-                                        <select class="form-select" style="width: 150px" name="IDPerfil" required>
-                                            <?php
-                                            foreach ($DetallePerfiles as $opcPerfil) {
-                                                $idPerfil = $opcPerfil['IDPerfil'];
-                                                $tipoPerfil = $opcPerfil['TipoPerfil'];
-                                                $selected = ($idPerfil == $perfilSelecionado) ? 'selected' : '';
-                                                echo "<option value='$idPerfil' $selected>$tipoPerfil</option>";
-                                            }
-                                            ?>
-                                        </select> <br>
-                                        <input type="hidden" name="sw" value="Crear"><br>
-                                        <input type="submit" class="btn btn-primary w-100 center-block"
-                                            name="CrearRegistro" value="Crear">
-
-                                    </div>
-                            </form>
-
-                            <!-- <?php
-
-                            if ($sw == "Crear") {
-                                require_once ("../Controllers/EstadoController.php");
-                            }
-                            ?> -->
-
-
-
-
-                            <!--   <script src="https://kit.fontawesome.com/4652dbea50.js" crossorigin="anonymous"></script>
-                            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-                                integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-                                crossorigin="anonymous"></script>
-                            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-                                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-                                crossorigin="anonymous"></script>
-                            <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-                                integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-                                crossorigin="anonymous"></script>
- -->
-                        </body>
-                        <input type="hidden" name="op" value="GUARDAR">
+                        <input type="hidden" name="operacion" value='Guardar'>
+                        <div class="col-9 mx-auto">
+                            <input type="hidden" class="form-control" name="IDEstado" value=<?php echo $IDEstado ?> readonly>
+                            <label for="nombreCentro"> Estado</label>
+                            <input required type="text" class="form-control" name="nombreEstado" value="Perfil">
+                        </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="submit" name="Guardar" class="btn btn-primary" value="Guardar">Guardar</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <br>
+                    <div class="row">
+                        <div class="col-9 mx-auto">
+                            <label for="codigo">Código</label><br>
+                            <input required type="text" class="form-control" name="codigo" value=1>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="modal-footer">
+                                <button type="submit" name="enviar" class="btn btn-primary">enviar</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </form>
         </div>
     </div>
 </div>
-
-
-
-</html>

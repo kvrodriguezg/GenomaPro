@@ -46,36 +46,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <title>Document</title>
 </head>
-
-  <header class="navbar navbar-light fixed-top" style="background-color: #FFFFFF;">
+<header class="navbar navbar-light fixed-top" style="background-color: #FFFFFF;">
     <?php
-    include("../Views/Shared/nav.php");
+    include ("../Views/Shared/nav.php");
     ?>
 </header>
-<body style="background-color: #E7E7E7; font-family: 'Montserrat';" class="text-center">
-  <br><br><br><br><br><br>
-    <h1 style="padding-top:20px; color:#FFFFFF">Estados</h1><br>
+
+<br><br><br><br><br><br>
 
 
+<body class="text-center" style="background-color: #E7E7E7; font-family: 'Montserrat';">
+    <div style="width:100%; display:flex; justify-content:center;">
+        <div style="width: 80px; height: 80px; border-radius: 100%; background-color: #023E73; display: flex; justify-content: center; align-items: center; position: relative;"
+            class="text-center">
+            <div style="position: absolute; z-index: 10;">
+                <button type='button' style="color: #000000; position: absolute; left: 4px; top: 0;"
+                    class='btn center-block text-center btn-editar-estado' data-bs-toggle='modal' data-estado=0
+                    bs-target='#editar_Modal_0'>
+                    <i class="fa-solid fa-plus" style="color: #ffffff;"></i>
+                </button>
+            </div>
+            <i class="fa-regular fa-user fa-2xl" style="color: #FFFFFF;"></i>
+        </div>
+    </div>
 
-    <a type='button' class='btn btn-primary text-center btn-editar-estado ' data-bs-toggle='modal'
-        data-estados-id='0' data-bs-target='#editar_Modal_'>Crear Estado</a>
-    <br><br><br>
+    <!-- <h1 style="padding-top:20px; color:#000000">Usuarios</h1><br> -->
+
+
     <br><br><br>
     <style>
         .table thead th {
-            background-color: #115DFC;
+            background-color: #023E73;
             color: white;
-        }
-
-        .col-clave {
-            max-width: 100px;
-            overflow: hidden;
-            /* Oculta el texto que excede el ancho máximo */
-            text-overflow: ellipsis;
-            /* Agrega puntos suspensivos (...) al final del texto truncado */
-            white-space: nowrap;
-            /* Evita que el texto se divida en varias líneas */
+            text-decoration: none;
+            font-weight: lighter;
         }
 
         .table-container {
@@ -83,86 +87,103 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             justify-content: center;
         }
     </style>
-    <div class="table-container">
-        <div class="col-lg-11">
-            <table id="tableUsers" class="table table-responsive">
-                <thead>
-                    <tr>
-                        <th>ID Diagn&oacute;stico</th>
-                        <th>Estado</th>
-                        <th>Perfil</th>
-                        <th>Acci&oacute;n</th>
-                      <th></th>
-                    </tr>
-                </thead>
-                <tbody style="background-color: #FFFFFF">
-                    <?php
-                    foreach ($DetalleEstados as $fila) {
-                        ?>
+    <div>
+        <div class="table-container">
+            <div class="col-lg-11">
+                <table id="tableUsers" class="table table-responsive">
+                    <thead>
                         <tr>
-                            <td><?= $fila['IDEstado'] ?></td>
-                            <td><?= $fila['NombreEstado'] ?></td>
-                            <td>
-                                <?php
+                            <th>ID Diagn&oacute;stico</th>
+                            <th>Estado</th>
+                            <th>Perfil</th>
+                            <th>Acci&oacute;n</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody style="background-color: #FFFFFF">
+                        <?php
+                        $tempEstados = array();
+                        foreach ($DetalleEstados as $fila) {
+                            $tempEstados[] = $fila;
+
+                            ?>
+                            <tr>
+                                <td><?php echo $fila['IDEstado'] ?></td>
+                                <td><?php echo $fila['NombreEstado'] ?></td>
+                                <td> <?php
                                 $perfil = $objusuario->buscarPerfilId($fila['IDPerfil']);
                                 echo $perfil['TipoPerfil'];
                                 ?>
-                            </td>
-                            <td>
-                                <button type='button' class='btn center-block btn-editar-estado' data-bs-toggle='modal'
-                                    data-estados-id='<?php echo $fila['IDEstado']; ?>' data-bs-target='#editar_Modal'> <img src="../img/pen.png" width="40px" height="40px"></button>
-                              </td>
-                          <td>
-                              <form method="post">
-                                    <input type="hidden" name="sw" value="eliminar">
-                                    <input type="hidden" name="IDEstado" value="<?php echo $fila['IDEstado']; ?>">
-                                    <button type="submit" class="btn"><img src="../img/delete.png" width="40px" height="40px"></button>
-                                </form>
-                                <?php
-                                if ($sw == "eliminar") {
-                                    require_once $rutaestado;
-                                }
-                                ?>
-                            </td>
-                        </tr>
-                        <?php
-                    }
-                    ?>
-                </tbody>
-            </table>
-        </div>
-    </div>
+                                <td>
+                                    <button type='button' class='btn center-block btn-editar-estado'
+                                        data-estado="<?php echo $fila['IDEstado']; ?>" data-bs-toggle='modal'
+                                        data-bs-target='#editar_Modal_<?php echo $fila['IDEstado']; ?>'>
+                                        <i class="fa-solid fa-2xl fa-pen-to-square" style="color: #023059;"></i>
+                                    </button>
 
-    <script>
-        $(document).ready(function() {
-            $('.btn-editar-es').click(function() {
-                var estadoID = $(this).data('IDEstado');
-                $.ajax({
-                    type: 'POST',
-                    url: 'modalestado.php',
-                    data: {
-                        userId: userId
-                    },
-                    success: function(response) {
-                        $('body').append(response);
-                        $('#editar_Modal_' + userId).modal('show'); // Abre el modal con el ID único
-                    }
+                                </td>
+                                <td class="text-center">
+                                    <form method="POST" action="" id="eliminarForm">
+                                        <input type="hidden" name="op" id="op" value="eliminar">
+                                        <input type="hidden" name="IDEstado" value="<?php echo $fila['IDEstado']; ?>">
+                                        <button type="button" class="btn"
+                                            onclick="confirmarYEliminar('<?php echo $fila['IDEstado']; ?>')"><i
+                                                class="fa-solid fa-2xl fa-trash" style="color: #023059;"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <?php
+                        }
+                        ?>
+                    </tbody>
+                </table>
+                </section>
+                <script src="https://kit.fontawesome.com/4652dbea50.js" crossorigin="anonymous"></script>
+                <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+                    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                    crossorigin="anonymous"></script>
+                <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+                    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+                    crossorigin="anonymous"></script>
+            </div>
+        </div>
+
+        <script>
+            $(document).ready(function () {
+                $('.btn-editar-estado').click(function () {
+                    var estadoID = $(this).data('estado');
+                    $.ajax({
+                        type: 'POST',
+                        url: 'modalestado.php',
+                        data: {
+                            estadoID: estadoID,
+                        },
+                        success: function (response) {
+                            $('#modal-container').html(response);
+                            $('#editar_Modal' + estadoID).modal('show');
+                        }
+                    });
                 });
             });
-        });
-    </script>
-    <script>
-        function confirmarYEliminar(IDEstado) {
-            var confirmacion = confirm("¿Estás seguro de que deseas eliminar este usuario?");
-            if (confirmacion) {
-                var opField = document.getElementById('op');
-                opField.value = "eliminar";
-                console.log("Valor del campo op:", opField.value);
-                document.getElementById('eliminarForm').submit();
+
+        </script>
+        <script>
+            function confirmarYEliminar(IDEstado) {
+                var confirmacion = confirm("¿Estás seguro de que deseas eliminar este estado");
+                if (confirmacion) {
+                    var opField = document.getElementById('op');
+                    opField.value = "eliminar";
+                    console.log("Valor del campo op:", opField.value);
+                    document.getElementById('eliminarForm').submit();
+                }
             }
-        }
-    </script>
+
+        </script>
+
     <script src="https://kit.fontawesome.com/4652dbea50.js" crossorigin="anonymous"></script>
+
 </body>
+<div id="modal-container"></div>
 
 </html>
