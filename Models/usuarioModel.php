@@ -187,17 +187,17 @@ class usuario
     {
         $link = Conectarse();
 
-        $query = mysqli_prepare($link, "SELECT usuario, Clave, idPerfil, IDCentroMedico FROM Usuarios WHERE usuario = ?");
+        $query = mysqli_prepare($link, "SELECT usuario, Clave, Correo, idPerfil, IDCentroMedico FROM Usuarios WHERE usuario = ?");
 
         if ($query) {
             mysqli_stmt_bind_param($query, "s", $usuario);
             mysqli_stmt_execute($query);
-            mysqli_stmt_bind_result($query, $resultadoUsuario, $resultadoClave, $idPerfil, $IDCentroMedico);
+            mysqli_stmt_bind_result($query, $resultadoUsuario, $resultadoClave, $correo, $idPerfil, $IDCentroMedico);
             mysqli_stmt_fetch($query);
             mysqli_stmt_close($query);
 
             if ($resultadoUsuario === $usuario && password_verify($clave, $resultadoClave)) {
-                return array('idPerfil' => $idPerfil, 'IDCentroMedico' => $IDCentroMedico);
+                return array('idPerfil' => $idPerfil, 'IDCentroMedico' => $IDCentroMedico, 'correo' => $correo);
             }
         } else {
             return false;

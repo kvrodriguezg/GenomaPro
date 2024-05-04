@@ -32,7 +32,9 @@ if (isset($_POST['op']) && $_POST['op'] == "VERIFICAR") {
                 break;
         }
     } else {
-
-        echo "<script>alert('Error: Código de verificación incorrecto. Por favor, inténtelo de nuevo.');</script>";
+        session_start();
+        $_SESSION['error_verificacion'] = true;
+        header('Location: ../Views/verificacion.php');
+        exit();
     }
 }
