@@ -16,6 +16,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         require_once("../Controllers/loginController.php");
     }
 }
+
+header("Content-Security-Policy: default-src 'self' https://www.google.com; script-src 'self' https://www.google.com/recaptcha/ https://www.gstatic.com/ 'unsafe-inline' 'unsafe-eval'; style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net data:; frame-src 'self' https://www.google.com;");
+
 ?>
 
 <!DOCTYPE html>
@@ -35,11 +38,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
-    <div class="container rounded-3" style="display: flex; flex-direction: column; justify-content: center; height: 100vh;"> <!-- Ajusta este valor según la altura de tu header -->
+    <div class="container rounded-3" style="display: flex; flex-direction: column; justify-content: center; overflow:hidden; ">
         <div class="row justify-content-center">
             <div class="col-md-5">
                 <div class="card">
-                    <div class="card-body" >
+                    <div class="card-body">
                         <form method="POST" action="login.php" class="form" onsubmit="return validarFormulario()">
 
                             <img class="img-login mx-auto d-block" src="../img/1.png" alt="" width="250">

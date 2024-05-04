@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (isset($_SESSION['error_verificacion']) && $_SESSION['error_verificacion'] === true) {
+    echo "<script>alert('Error: Código de verificación incorrecto. Por favor, inténtelo de nuevo.');</script>";
+    unset($_SESSION['error_verificacion']);
+}
+?>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +17,7 @@
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <title>Iniciar Sesión</title>
 </head>
-<div class="container rounded-3" style="display: flex; flex-direction: column; justify-content: center; height: 100vh;"> <!-- Ajusta este valor según la altura de tu header -->
+<div class="container rounded-3" style="display: flex; flex-direction: column; justify-content: center; height: 100vh;"> 
         <div class="row justify-content-center">
             <div class="col-md-5">
                 <div class="card">
