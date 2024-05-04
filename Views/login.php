@@ -5,7 +5,7 @@
 $op = "";
 session_start();
 $error = $_SESSION['error'] ?? '';
-unset($_SESSION['error']); // Limpiar el mensaje de error para que no persista en futuras solicitudes
+unset($_SESSION['error']); 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $usuario = $_POST['usuario'] ?? '';
@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($op == "LOGIN") {
         require_once("../Controllers/loginController.php");
     }
-}//hola!!!!!!
+}
 ?>
 
 <!DOCTYPE html>
@@ -30,6 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/login.css">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <title>Iniciar Sesión</title>
 </head>
 
@@ -39,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="col-md-5">
                 <div class="card">
                     <div class="card-body" >
-                        <form method="POST" action="login.php" class="form">
+                        <form method="POST" action="login.php" class="form" onsubmit="return validarFormulario()">
 
                             <img class="img-login mx-auto d-block" src="../img/1.png" alt="" width="250">
                             <h1 style="text-align: center;">Iniciar Sesión</h1><br>
@@ -63,6 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     </span>
                                     <input type="password" class="form-control" name="clave" placeholder="Ingrese su clave">
                                 </div>
+                                <div class="g-recaptcha" data-sitekey="6LdH4M4pAAAAACFx6bwJwmKLPTpWZr6tLwf5cinF"></div>
                                 <input type="hidden" name="op" value="LOGIN"><br>
                                 <input type="submit" class="btn btn-primary mx-auto d-block" name="btnlogin" value="Ingresar">
                             </div>
@@ -72,5 +74,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
     </div>
-
+    <script>
+        function validarFormulario() {
+           
+            var respuesta = grecaptcha.getResponse();
+            if (respuesta.length == 0) {
+              
+                alert("Por favor, verifica que no eres un robot.");
+                return false; 
+            }
+            return true;
+        }
+        </script>
 </html>>
