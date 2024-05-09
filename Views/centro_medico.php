@@ -23,22 +23,32 @@ require_once $rutacentro;
     <!--font awesome con CDN-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/nav.css">
+    
+    <script src="https://kit.fontawesome.com/4652dbea50.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
 
-<header class="navbar navbar-light fixed-top" style="background-color: #FFFFFF;">
+<
     <?php
-    include("../Views/Shared/navCM.php");
+    include("../Views/Shared/navcentro.php");
     ?>
-</header>
+    
+<div style="width:100%; display:flex; justify-content:center; margin-top:80px;">
+<div style="width: 80px; height: 80px; border-radius: 100%; background-color: #023E73; display: flex; justify-content: center; align-items: center; position: relative;" class="text-center">
+    <div style="position: absolute; z-index: 10;">
+        <button type='button' style="color: #000000; position: absolute; left: 4px; top: 0;" class="btn center-block  btn-editar-centro" data-bs-toggle="modal" data-id=0 bs-target="#editar_Modal_0">
+        </button>
+    </div>
+    <i class="fa-regular fa-2xl fa-hospital" style="color: #ffffff;"></i>
+</div>
 
+</div>
+<div style="width:100%; display:flex; justify-content:center; margin-top:20px;">
+<h1 style="font-weight: bolder;"><?php echo "$nombreCentro"; ?><h1>
+</div>
 
-    <div style="height: 50px;">
-        <div class="container">
-            <h2 class="titulo">
-                <br><br><?php echo " Centro M&eacute;dico $nombreCentro"; ?>
-            </h2><br><br>
+    <div style="height: 20px; margin:0 10px 0 10px;">
             <div class="row">
                 <div class="col-lg-12">
                     <table id="pruebas" class="table table-striped table-bordered table-responsive">
@@ -118,5 +128,28 @@ require_once $rutacentro;
     <script type="text/javascript" src="../js/data.js"></script>
 
 </body>
+<style>
+        .table thead th {
+            background-color: #023E73;
+            color: white;
+            text-decoration: none;
+            font-weight: lighter;
+            text-align: center;
+        }
 
+        .col-clave {
+            max-width: 100px;
+            overflow: hidden;
+            /* Oculta el texto que excede el ancho máximo */
+            text-overflow: ellipsis;
+            /* Agrega puntos suspensivos (...) al final del texto truncado */
+            white-space: nowrap;
+            /* Evita que el texto se divida en varias líneas */
+        }
+
+        .table-container {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
 </html>
