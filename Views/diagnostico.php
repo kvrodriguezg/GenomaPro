@@ -33,6 +33,8 @@ verificarAcceso($perfilesPermitidos);
     <i class="fa-solid fa-stethoscope fa-2xl" style="color: #ffffff;"></i>
 </div>
 </div>
+
+
 <br><br><br>
     <section>
         <table id="tableUsers" class="tabla table">
@@ -44,9 +46,7 @@ verificarAcceso($perfilesPermitidos);
                     <th>Laboratorio</th>
                     <th>Examen</th>
                     <th>F. Toma de Muestra</th>
-                    <th>F. Diagnóstico</th>
-                    <th>Diagnóstico</th>
-                    <th>Cod. Diagnóstico</th>
+                    <th>Resultado</th>
                     <th>Estado</th>
                     <th>Cambiar Estado</th>
                     <th></th>
@@ -62,8 +62,8 @@ verificarAcceso($perfilesPermitidos);
                             <td><?php echo $examen->obtenerCentroMedico($row['IDCentroSolicitante']) ?></td>
                             <td><?php echo $row['NombreExamen'] ?></td>
                             <td><?php echo $row['FechaTomaMuestra'] ?></td>
-                            <td><?php echo $row['Fechadiagnostico'] ?></td>
-                            <td><?php echo $examen->obtenerDiagnostico($row['CodigoDiagnosticos']); ?></td>
+                            
+                            
                             <td>
                                 <select class="form-select" style="width: 150px" name="diagnostico" required>
                                     <?php
@@ -91,7 +91,7 @@ verificarAcceso($perfilesPermitidos);
                             <td>
                                 <!-- <a href="generar_pdf.php" class="btn w-100 m-1 btn-danger" >Ver PDF</a>  -->
                                 <input type="hidden" name="idExamen" value=<?php echo $row['IDExamen'] ?>>
-                                <input name="actualizarEstadoDiagnostico" type="submit" class="btn w-100 m-1 btn-success"></input>
+                                <button name="actualizarEstadoDiagnostico" type="submit" style="border:none;"><i class="fa-solid fa-file-import fa-2xl" style="color: #023059;"></i></button>
                             </td>
                         </form>
                     </tr>

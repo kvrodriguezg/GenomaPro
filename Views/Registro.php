@@ -36,38 +36,49 @@ verificarAcceso($perfilesPermitidos);
     <link rel="stylesheet" type="text/css" href="../datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css">
     <!--font awesome con CDN-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/nav.css">
 </head>
-
 <style>
-    .table thead th {
-        background-color: #115DFC;
-        color: white;
-    }
+        .table thead th {
+            background-color: #023E73;
+            color: white;
+            text-decoration: none;
+            font-weight: lighter;
+        }
 
-    .table-container {
-        display: flex;
-        justify-content: center;
-    }
-</style>
+        .col-clave {
+            max-width: 100px;
+            overflow: hidden;
+            /* Oculta el texto que excede el ancho máximo */
+            text-overflow: ellipsis;
+            /* Agrega puntos suspensivos (...) al final del texto truncado */
+            white-space: nowrap;
+            /* Evita que el texto se divida en varias líneas */
+        }
 
-<header class="navbar navbar-light fixed-top" style="background-color: #FFFFFF;">
+        .table-container {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+
     <?php
     include("../Views/Shared/navRecepcion.php");
     ?>
-</header>
+
 
 <body class="text-center" style="background-color: #E7E7E7; font-family: 'Montserrat';">
 
 
-
-    <br><br><br><br><br>
-    <div>
-        <h1 style="padding-top:20px; color:#000000">Registro</h1>
+<div style="width:100%; display:flex; justify-content:center; margin-top:80px;">
+        <div style="width: 80px; height: 80px; border-radius: 100%; background-color: #023E73; display: flex; justify-content: center; align-items: center; position: relative;" class="text-center">
+            <div style="position: absolute; z-index: 10;">
+                
+            </div>
+            <i class="fa-solid fa-2xl fa-file-prescription" style="color: #FFFFFF;"></i>
+        </div>
     </div>
-
-    <br>
-
-    <div class="table-container">
+    <div class="table-container" style="margin-top:20px;">
 
         <div class="col-lg-11">
             <table class="table table-responsive">
@@ -115,7 +126,7 @@ verificarAcceso($perfilesPermitidos);
                                 <td>
                                     <!-- <a href="generar_pdf.php" class="btn w-100 m-1 btn-danger" >Ver PDF</a>  -->
                                     <input type="hidden" name="idExamen" value=<?php echo $row['IDExamen'] ?>>
-                                    <button name="eliminarRegistro" type="submit" class="btn w-100 m-1"><img src="../img/delete.png" width="60px" height="60px"></button>
+                                    <button name="eliminarRegistro" type="submit" class="btn w-100 m-1"><i class="fa-solid fa-2xl fa-trash" style="color: #023059;"></i></button>
                                 </td>
                             </form>
                         </tr>

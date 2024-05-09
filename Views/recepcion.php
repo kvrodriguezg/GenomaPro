@@ -69,8 +69,11 @@ verificarAcceso($perfilesPermitidos);
             color: white;
             text-decoration: none;
             font-weight: lighter;
+            font-size: 14px;
         }
-
+        .tabla-recepcion td{
+            margin: 10px;
+        }
         .col-clave {
             max-width: 100px;
             overflow: hidden;
@@ -86,7 +89,7 @@ verificarAcceso($perfilesPermitidos);
             justify-content: center;
         }
     </style>
-    <div class="row">
+    <div class="row" style="margin:0 10px 0 10px;">
         <div class="col-m-12">
             <table id="pruebas4" class="tabla-recepcion">
                 <thead class="bg-primary" style="color:white;">
@@ -142,11 +145,11 @@ verificarAcceso($perfilesPermitidos);
                                     ?>
                                     </button>
                                 </td>
-                                <td>
+                                <td style="display: flex;">
                                     <!-- <a href="generar_pdf.php" class="btn w-100 m-1 btn-danger" >Ver PDF</a>  -->
                                     <input type="hidden" name="idExamen" value=<?php echo $row['IDExamen'] ?>>
-                                    <input name="actualizarEstado" type="submit" class="btn w-100 m-1 btn-primary"></input>
-                                    <input name="eliminarRegistro" type="submit" class="btn w-100 m-1 btn-danger" value="Eliminar"></input>
+                                    <button name="actualizarEstado" type="submit" style="border:none;"><i class="fa-solid fa-file-import fa-2xl" style="color: #023059;"></i></button>
+                                    <button name="eliminarRegistro" type="submit" value="Eliminar" style="border:none;" ><i class="fa-solid fa-2xl fa-trash" style="color:#023059;"></i></button>
                                 </td>
                             </form>
                         </tr>
