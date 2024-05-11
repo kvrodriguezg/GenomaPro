@@ -58,7 +58,7 @@ class perfiles
     {
         $query = "UPDATE Perfiles SET TipoPerfil = ? WHERE IDPerfil = ?;"; // LA CONSULTA QUE QUIERO EJECUTAR
         if ($stmt = mysqli_prepare($this->db, $query)) { // LE AVISO AL EDITOR QUE LE ENVIARE UNA CONSULTA PREPARADA
-            mysqli_stmt_bind_param($stmt, "si", $IDPerfil, $TipoPerfil); // LE INDICO A LA CONSULTA PREPARADA STMT 
+            mysqli_stmt_bind_param($stmt, "si", $TipoPerfil, $IDPerfil); // LE INDICO A LA CONSULTA PREPARADA STMT 
                                                                                 //QUE DATOS NECESITO QUE VALIDE
             if (mysqli_stmt_execute($stmt)) { //EJECUTO LA CONSULTA PREPARADA YA CON LOS DATOS QUE LE ENVIE
                 return true; //SI TODO VA BIEN, SE EJECUTA Y RETORNA TRUE
@@ -87,7 +87,7 @@ class perfiles
     }
 
     public function buscarPerfil($IDPerfil) {
-        $consulta = "SELECT TipoPerfil FROM Perfiles WHERE $IDPerfil = ?";
+        $consulta = "SELECT TipoPerfil FROM perfiles WHERE IDPerfil = ?";
         if ($stmt = mysqli_prepare($this->db, $consulta)) {
             mysqli_stmt_bind_param($stmt, "i", $IDPerfil); 
             if (mysqli_stmt_execute($stmt)) {

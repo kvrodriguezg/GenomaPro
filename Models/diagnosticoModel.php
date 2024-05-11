@@ -58,10 +58,8 @@ class diagnosticos
             mysqli_stmt_bind_param($statement, "ss", $codigo, $descripcion);
             $resultado = mysqli_stmt_execute($statement);
             if ($resultado) {
-                echo "<script> alert('Diagnóstico Ingresado.') </script>";
                 return true; // Retorna true si la inserción es exitosa
             } else {
-                echo "<script> alert('Error.') </script>";
                 return false; // Retorna false si hay un error en la inserción
             }
         }
@@ -74,10 +72,8 @@ class diagnosticos
         $query = "UPDATE diagnosticos SET Descripcion='$descripcion' WHERE Codigo='$codigo'";
 
         if (!mysqli_query($this->db, $query)) {
-            echo "<script> alert('Error.') </script>";
             return false;
         } else {
-            echo "<script> alert('Diagnóstico Modificado.') </script>";
             return true;
         }
     }
@@ -85,13 +81,11 @@ class diagnosticos
     public function eliminarDiagnostico($codigo)
     {
         $query = "DELETE FROM diagnosticos WHERE Codigo='$codigo'";
-        $resultado = mysqli_query($this->db,$query);
+        $resultado = mysqli_query($this->db, $query);
         if ($resultado) {
-            echo "<script> alert('Diagnóstico Eliminado.') </script>";
-            return true; 
+            return true;
         } else {
-            echo "<script> alert('Error al eliminar el diagnóstico.') </script>";
-            return false; 
+            return false;
         }
     }
 }

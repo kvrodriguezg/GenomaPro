@@ -1,3 +1,4 @@
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <?php
 $directorioActual = __DIR__;
 $usuarioModel = dirname($directorioActual) . "/Models/existetablaModel.php";
@@ -24,8 +25,12 @@ if (isset($_POST['crearTabla'])) {
         $existe->crearUsuarioAdmin();
     }
     $validacionExistencia = true;
-    echo '<div class="alert alert-success d-flex aling-items-center" role="alert">Base de Dato Creada Exitosamente!!</div>';
-    return ("../index.php");
+    echo '<script>                    Swal.fire({
+        icon: "success",
+        title: "Actualizado con éxito!",
+        confirmButtonColor: "#023059"
+    });</script>';
+    //return ("../index.php");
 }
 
 if ($existe->comprobarTabla("Usuarios")) {

@@ -188,7 +188,13 @@ class ExisteTabla
                     return false;
                 }
 
-                echo '<div class="alert alert-success d-flex aling-items-center" role="alert">Usuario administrador creado!</div>';
+                echo    '<script>                    
+                            Swal.fire({
+                                icon: "success",
+                                title: "Usuario admin creado!",
+                                confirmButtonColor: "#023059"
+                            });
+                        </script>';;
                 return true;
             } else {
                 echo "Error: " . mysqli_error($this->db);

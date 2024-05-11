@@ -13,23 +13,22 @@ class Estados
         $this->Estados = array();
     }
 
-    public function InsertaEstado($nuevoEstado,$nuevoPerfil)
+    public function InsertaEstado($nuevoEstado, $nuevoPerfil)
     {
-        $consulta="insert into Estados (NombreEstado, IDPerfil) values (?,?)";
+        $consulta = "insert into Estados (NombreEstado, IDPerfil) values (?,?)";
         if ($stmt = mysqli_prepare($this->db, $consulta)) {
-            mysqli_stmt_bind_param($stmt, "ss", $nuevoEstado,$nuevoPerfil);
+            mysqli_stmt_bind_param($stmt, "ss", $nuevoEstado, $nuevoPerfil);
             if (mysqli_stmt_execute($stmt)) {
-                 return true;
+                return true;
             } else {
                 return false;
             }
         }
-
     }
 
     public function MostrarEstados()
     {
-        $consulta=mysqli_query($this->db,"select * from Estados");
+        $consulta = mysqli_query($this->db, "select * from Estados");
         while ($filas = mysqli_fetch_assoc($consulta)) {
             $this->Estados[] = $filas;
         }
@@ -37,9 +36,9 @@ class Estados
     }
     public function buscarEstadoPorID($id)
     {
-        $consulta = "SELECT * FROM estados WHERE IDEstados = $id";
+        $consulta = "SELECT * FROM estados WHERE IDEstado = $id";
         $resultado = mysqli_query($this->db, $consulta);
-        if (mysqli_num_rows($resultado) > 0) {
+        if ($resultado) {
             $resultado2 = mysqli_fetch_assoc($resultado);
             return $resultado2;
         } else {
@@ -47,35 +46,34 @@ class Estados
         }
     }
 
- 
 
-    public function ModificarEstado($nuevoEstado,$nuevoPerfil,$idEstados)
+
+    public function ModificarEstado($nuevoEstado, $nuevoPerfil, $idEstados)
     {
-        
-        $consulta="update Estados set NombreEstado=?, IDPerfil=? where IDEstado=?";
+
+        $consulta = "update Estados set NombreEstado=?, IDPerfil=? where IDEstado=?";
         if ($stmt = mysqli_prepare($this->db, $consulta)) {
-            mysqli_stmt_bind_param($stmt, "ssi", $nuevoEstado,$nuevoPerfil,$idEstados);
+            mysqli_stmt_bind_param($stmt, "ssi", $nuevoEstado, $nuevoPerfil, $idEstados);
             if (mysqli_stmt_execute($stmt)) {
                 return true;
             } else {
                 return false;
             }
-
         }
-
     }
 
     public function EliminaEstado($idEstado)
     {
-        $ordenEliminar="delete from Estados where IDEstado=?;";
+        $ordenEliminar = "DELETE FROM estados WHERE IDEstado=?;";
         if ($stmt = mysqli_prepare($this->db, $ordenEliminar)) {
-            mysqli_stmt_bind_param($stmt, "s", $idEstado);
+            mysqli_stmt_bind_param($stmt, "i", $idEstado);
             if (mysqli_stmt_execute($stmt)) {
+                mysqli_stmt_close($stmt);
                 return true;
             } else {
+                mysqli_stmt_close($stmt);
                 return false;
             }
-
         }
     }
 }
