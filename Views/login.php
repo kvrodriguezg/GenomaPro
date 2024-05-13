@@ -1,5 +1,5 @@
 <?php
-//$directorioActual = __DIR__;
+$directorioActual = __DIR__;
 //$ruta = dirname($directorioActual) . "/Controllers/loginController.php";
 //require_once $ruta;
 $op = "";
@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-header("Content-Security-Policy: default-src 'self' https://www.google.com; script-src 'self' https://www.google.com/recaptcha/ https://www.gstatic.com/ 'unsafe-inline' 'unsafe-eval'; style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net data:; frame-src 'self' https://www.google.com;");
+//header("Content-Security-Policy: default-src 'self' https://www.google.com; script-src 'self' https://www.google.com/recaptcha/ https://www.gstatic.com/ 'unsafe-inline' 'unsafe-eval'; style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net data:; frame-src 'self' https://www.google.com;");
 
 ?>
 
@@ -49,7 +49,17 @@ header("Content-Security-Policy: default-src 'self' https://www.google.com; scri
                             <h1 style="text-align: center;">Iniciar Sesión</h1><br>
                             <?php
                             if (!empty($error)) {
-                                echo "<script>alert('$error')</script>";
+                                echo
+                                '<script>
+                                    document.addEventListener("DOMContentLoaded", function() {
+                                            Swal.fire({
+                                                icon: "error",
+                                                title: "Oops...",
+                                                text: "'.$error.'",
+                                                confirmButtonColor: "#023059"
+                                            });
+                                    });
+                                </script>';
                             }
                             ?>
 
@@ -83,7 +93,12 @@ header("Content-Security-Policy: default-src 'self' https://www.google.com; scri
             var respuesta = grecaptcha.getResponse();
             if (respuesta.length == 0) {
               
-                alert("Por favor, verifica que no eres un robot.");
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Por favor, verifica que no eres un robot.",
+                    confirmButtonColor: "#023059"
+                });
                 return false; 
             }
             return true;

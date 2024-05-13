@@ -1,20 +1,15 @@
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <?php
 $directorioActual = __DIR__;
 $ruta = dirname($directorioActual) . "/Models/examenesModel.php";
 require_once $ruta;
 //include("../Models/examenesModel.php");
 $examen = new examenesModel();
-$examenes = $examen->obtenerDatosExamenes();
-$examenesTincion = $examen->obtenerExamenesTincion();
-$examenesDiagnostico = $examen->obtenerExamenesDiagnosticos();
-$examenesRegistro = $examen->obtenerExamenesRegistro();
-$centrosmedicos = $examen->obtenerCentrosmedicos();
 
 if (isset($_POST['actualizarEstado'])) {
     $idExamen = $_POST['idExamen'];
     $idEstado = $_POST['estado'];
     $examen->cambiarEstado($idEstado, $idExamen);
-    echo "llego aqui";
     header("Location: recepcion.php");
     exit;
 }
@@ -103,29 +98,78 @@ if (!empty($_POST["ingreso"])) {
         $estado = $examen->validarut($rut);
 
         if ($estado === "MAL") {
-            echo '<script>alert("Rut Incorrecto");</script>';
+            echo 
+            '<script>
+                document.addEventListener("DOMContentLoaded", function() {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "RUT incorrecto.",
+                            confirmButtonColor: "#023059"
+                        });
+                });
+            </script>';
         } else {
-            echo '<script>alert("Rut Correcto");</script>';
             if ($existePaciente) {
                 $domicilioActual = $examen->obtenerDomicilioPaciente($rut);
                 if ($domicilioActual != $domicilio) {
                     $examen->actualizarDomicilioPaciente($rut, $domicilio);
-                    echo '<script>alert("Domicilio actualizado correctamente");</script>';
+                    echo
+                    '<script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        Swal.fire({
+                            icon: "success",
+                            title: "Domicilio de paciente actualizado.",
+                            confirmButtonColor: "#023059"
+                        });
+                    });
+                    </script>';;
                 }
             }
             if ($existePaciente == false) {
                 $examen->insertarPaciente($nombre, $domicilio, $rut);
                 $examen->insertarExamen($nombreexamen, $rut, $idcentro, $fechamuestra, $fecharecepcion);
-                echo '<script>alert("Paciente registrado correctamente");</script>';
-                header("Location: recepcion.php");
-                exit;
+                echo
+                '<script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        Swal.fire({
+                            icon: "success",
+                            title: "Paciente registrado correctamente.",
+                            confirmButtonColor: "#023059"
+                        });
+                    });
+                </script>';;
             } else {
                 $examen->insertarExamen($nombreexamen, $rut, $idcentro, $fechamuestra, $fecharecepcion);
-                echo '<script>alert("Paciente ya existe. Se ha registrado el examen.");</script>';
-                header("Location: recepcion.php");
+                echo
+                '<script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        Swal.fire({
+                            icon: "success",
+                            title: "Paciente ya existe. Se ha registrado el examen.",
+                            confirmButtonColor: "#023059"
+                        });
+                    });
+                </script>';                
             }
         }
     } else {
-        echo '<script>alert("Algunos campos están vacíos");</script>';
+        echo 
+        '<script>
+            document.addEventListener("DOMContentLoaded", function() {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Algunos campos están vacíos.",
+                        confirmButtonColor: "#023059"
+                    });
+            });
+        </script>';
     }
 }
+
+$examenes = $examen->obtenerDatosExamenes();
+$examenesTincion = $examen->obtenerExamenesTincion();
+$examenesDiagnostico = $examen->obtenerExamenesDiagnosticos();
+$examenesRegistro = $examen->obtenerExamenesRegistro();
+$centrosmedicos = $examen->obtenerCentrosmedicos();

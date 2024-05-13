@@ -1,4 +1,4 @@
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <?php
 // Incluir los archivos de PHPMailer
 require_once '../PHPMailer-master/src/PHPMailer.php';
@@ -83,7 +83,17 @@ if (isset($_POST['op']) && $_POST['op'] == "LOGIN") {
         } 
     }
     else {
-        echo "<script>alert(Error: Por favor, verifica que no eres un robot.)</script>";
+        echo
+        '<script>
+        document.addEventListener("DOMContentLoaded", function() {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Por favor, verifica que no eres un robot.",
+                    confirmButtonColor: "#023059"
+                });
+        });
+        </script>';
     }
 }
 function generarCodigo()
@@ -119,7 +129,7 @@ function SendMail($correo, $codigo)
             <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Correo de Verificación de GnomePro</title>
+            <title>Correo de Verificación de GenomaPro</title>
             <style>
             body {
                 font-family: Arial, sans-serif;
@@ -162,16 +172,16 @@ function SendMail($correo, $codigo)
             <body>
             <div class="container">
             <div class="header">
-                <h1>Verificación en Dos Pasos - GnomePro</h1>
+                <h1>Verificación en Dos Pasos - GenomaPro</h1>
             </div>
             <p>Hola,</p>
-            <p>Has solicitado un código de verificación para acceder a tu cuenta en GnomePro. Por favor, utiliza el siguiente código para completar el proceso de verificación:</p>
+            <p>Has solicitado un código de verificación para acceder a tu cuenta en GenomaPro. Por favor, utiliza el siguiente código para completar el proceso de verificación:</p>
             <div class="code">' . $codigo . '</div>
             <p>Por favor, no compartas este código con nadie. Si no has solicitado este código, ignora este correo electrónico.</p>
             <img src="cid:imagen_cid" alt="Imagen">
-            <p>Gracias,<br>El equipo de GnomePro</p>
+            <p>Gracias,<br>El equipo de GenomaPro</p>
             <div class="footer">
-                <p>&copy; 2024 GnomePro. Todos los derechos reservados.</p>
+                <p>&copy; 2024 GenomaPro. Todos los derechos reservados.</p>
             </div>
             </div>
             </body>
@@ -180,7 +190,17 @@ function SendMail($correo, $codigo)
 
         $mail->send();
     } catch (Exception $e) {
-        echo '<script>alert(Error al enviar el correo electrónico: ', $mail->ErrorInfo, ')</script>';
+        echo
+        '<script>
+        document.addEventListener("DOMContentLoaded", function() {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Error al enviar el correo electrónico: ' . $mail->ErrorInfo .'.",
+                    confirmButtonColor: "#023059"
+                });
+        });
+        </script>';
     }
 }
 ?>

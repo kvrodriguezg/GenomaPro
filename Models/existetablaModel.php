@@ -187,14 +187,6 @@ class ExisteTabla
                     echo "Error al crear el usuario admin: " . mysqli_error($this->db);
                     return false;
                 }
-
-                echo    '<script>                    
-                            Swal.fire({
-                                icon: "success",
-                                title: "Usuario admin creado!",
-                                confirmButtonColor: "#023059"
-                            });
-                        </script>';;
                 return true;
             } else {
                 echo "Error: " . mysqli_error($this->db);

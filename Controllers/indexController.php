@@ -16,6 +16,7 @@ foreach ($tablas as $tabla) {
 
 //Creacion de tablas si no existen.
 if (isset($_POST['crearTabla'])) {
+    $creacionadmin = false;
     $existe->crearTablas();
     $existe->crearCentros();
     $existe->crearDiagnosticos();
@@ -23,13 +24,31 @@ if (isset($_POST['crearTabla'])) {
     $existe->crearEstados();
     if (!$existe->comprobarAdmin()) {
         $existe->crearUsuarioAdmin();
+        $creacionadmin = true;
     }
     $validacionExistencia = true;
-    echo '<script>                    Swal.fire({
-        icon: "success",
-        title: "Actualizado con éxito!",
-        confirmButtonColor: "#023059"
-    });</script>';
+
+    if ($creacionadmin) {
+        echo '<script>
+        document.addEventListener("DOMContentLoaded", function() {
+            Swal.fire({
+                icon: "success",
+                title: "Tablas y usuario admin creados!",
+                confirmButtonColor: "#023059"
+            });
+        });
+    </script>';
+    } else {
+        echo '<script>
+        document.addEventListener("DOMContentLoaded", function() {
+            Swal.fire({
+                icon: "success",
+                title: "Tablas creadas!",
+                confirmButtonColor: "#023059"
+            });
+        });
+    </script>';
+    }
     //return ("../index.php");
 }
 

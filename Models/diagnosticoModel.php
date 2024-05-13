@@ -49,7 +49,17 @@ class diagnosticos
         $query = "SELECT * FROM diagnosticos WHERE Codigo = '$codigo'";
         $resultado = mysqli_query($this->db, $query);
         if (mysqli_num_rows($resultado) != 0) {
-            echo "<script> alert('Código ya existe.') </script>";
+            echo 
+            '<script>
+                document.addEventListener("DOMContentLoaded", function() {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Código ya existe.",
+                            confirmButtonColor: "#023059"
+                        });
+                });
+            </script>';
             return "existe"; // Retorna 'existe' si el código ya está en la base de datos
         } else {
             // El código no existe, entonces procedemos con la inserción
