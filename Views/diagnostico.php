@@ -21,7 +21,7 @@ verificarAcceso($perfilesPermitidos);
 <link rel="stylesheet" href="../css/prueba.css">
 <link rel="stylesheet" href="../css/nav.css">
 <?php include "../Views/Shared/navDiagnostico.php" ?>
-<body>
+<body style="background-color: #E7E7E7; font-family: 'Montserrat';">
     <div style="height: 70px"></div><br><br>
     <div style="width:100%; display:flex; justify-content:center;">
     <div style="width: 80px; height: 80px; border-radius: 100%; background-color: #023E73; display: flex; justify-content: center; align-items: center; position: relative;" class="text-center">
@@ -108,7 +108,11 @@ verificarAcceso($perfilesPermitidos);
             text-decoration: none;
             font-weight: lighter;
         }
-
+        .table td{
+            padding: 10px;
+            background-color: #FFFFFF;
+            text-align: center;
+        }
         .col-clave {
             max-width: 100px;
             overflow: hidden;

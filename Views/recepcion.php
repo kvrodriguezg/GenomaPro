@@ -39,7 +39,7 @@ verificarAcceso($perfilesPermitidos);
 <link rel="stylesheet" href="../css/nav.css">
 </head>
 
-<body class="text-center" style="background-color: #E7E7E7; font-family: 'Montserrat';">
+<body style="background-color: #E7E7E7; font-family: 'Montserrat';">
     <header class="navbar navbar-light fixed-top" style="background-color: #FFFFFF;">
         <?php
         include("../Views/Shared/navRecepcion.php");
@@ -64,15 +64,19 @@ verificarAcceso($perfilesPermitidos);
         </div>
     </div>
     <style>
+       
         .tabla-recepcion thead th {
             background-color: #023E73;
             color: white;
             text-decoration: none;
             font-weight: lighter;
-            font-size: 14px;
+            text-align: center;
+  
         }
         .tabla-recepcion td{
-            margin: 10px;
+            padding: 10px;
+            background-color: #FFFFFF;
+            text-align: center;
         }
         .col-clave {
             max-width: 100px;
@@ -148,8 +152,8 @@ verificarAcceso($perfilesPermitidos);
                                 <td style="display: flex;">
                                     <!-- <a href="generar_pdf.php" class="btn w-100 m-1 btn-danger" >Ver PDF</a>  -->
                                     <input type="hidden" name="idExamen" value=<?php echo $row['IDExamen'] ?>>
-                                    <button name="actualizarEstado" type="submit" style="border:none;"><i class="fa-solid fa-file-import fa-2xl" style="color: #023059;"></i></button>
-                                    <button name="eliminarRegistro" type="submit" value="Eliminar" style="border:none;" ><i class="fa-solid fa-2xl fa-trash" style="color:#023059;"></i></button>
+                                    <button name="actualizarEstado" type="submit" style="border:none;background-color:white; height:70px; width:71px;"><i class="fa-solid fa-file-import fa-2xl" style="color: #023059;"></i></button>
+                                    <button name="eliminarRegistro" type="submit" value="Eliminar" style="border:none; background-color:white;" ><i class="fa-solid fa-2xl fa-trash" style="color:#023059;"></i></button>
                                 </td>
                             </form>
                         </tr>

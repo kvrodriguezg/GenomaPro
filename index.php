@@ -6,10 +6,8 @@ $directorioActual = __DIR__;
 $rutaacceso = $directorioActual . "/Controllers/indexController.php";
 require_once $rutaacceso;
 //require_once("Controllers/indexController.php");
-
 ?>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
