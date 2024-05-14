@@ -87,8 +87,9 @@ $centros = $objusuario->buscarCentros() ?>
                             <input type="hidden" name="IDUsuario" value="<?php echo $row['IDUsuario']; ?>">
                             <input type="hidden" name="op" value="Modificar">
                         </div>
+                        <br>
                         <div class="modal-footer">
-                            <button type="submit" name="modificar" class="btn btn-primary" value="Modificar">Modificar</button>
+                            <button type="submit" name="modificar" class="btn" style="color:white; background-color:#023059" value="Modificar">Modificar</button>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                         </div>
                     </div>
@@ -169,7 +170,7 @@ $centros = $objusuario->buscarCentros() ?>
                             <input type="hidden" name="op" value="GUARDAR">
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" name="Guardar" class="btn btn-primary" value="Guardar">Guardar</button>
+                            <button type="submit" name="Guardar" class="btn" style="color:white; background-color:#023059" value="Guardar">Guardar</button>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                         </div>
                     </div>

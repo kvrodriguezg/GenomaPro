@@ -3,45 +3,47 @@ $directorioActual = __DIR__;
 $rutaestado = dirname($directorioActual) . "/Controllers/EstadoController.php";
 require_once $rutaestado;
 $IDEstado = $_POST['estadoID'];
-$row = $objetoEstado->MostrarEstados();
-
-
-$estados = array();?>
-
-<div class="modal fade" id="editar_Modal_<?php echo $IDEstado?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+?>
+<div class="modal fade" id="editar_Modal<?php echo $IDEstado ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">hola </h5>
+                <h5 class="modal-title" id="exampleModalLabel"><?php echo $modalTitle ?></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="POST" action="mantenedorestados.php">
-                <div class="modal-body text-center">
+
+            <form method="POST" class="form" action="">
+                <div class="modal-body">
                     <div class="row">
-                        <input type="hidden" name="operacion" value='Guardar'>
-                        <div class="col-9 mx-auto">
-                            <input type="hidden" class="form-control" name="IDEstado" value=<?php echo $IDEstado ?> readonly>
-                            <label for="nombreCentro"> Estado</label>
-                            <input required type="text" class="form-control" name="nombreEstado" value="Perfil">
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row">
-                        <div class="col-9 mx-auto">
-                            <label for="codigo">Código</label><br>
-                            <input required type="text" class="form-control" name="codigo" value=1>
+                        <div class="col">
+                            <label for="AgregaNEstado" style="text-align: center;">Estado:</label>
+                            <input type="text" class="form-control" name="AgregaNEstado" value="<?php echo $AgregaNEstado; ?>"><br>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
-                            <div class="modal-footer">
-                                <button type="submit" name="enviar" class="btn btn-primary">enviar</button>
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            </div>
+                            <label style="text-align: center;">Perfil:</label>
+                            <select class="form-select" name="IDPerfil" required>
+                                <?php
+                                foreach ($DetallePerfiles as $opcPerfil) {
+                                    $idPerfil = $opcPerfil['IDPerfil'];
+                                    $tipoPerfil = $opcPerfil['TipoPerfil'];
+                                    $selected = ($idPerfil == $perfilSelecionado) ? 'selected' : '';
+
+                                    echo "<option value='$idPerfil' $selected>$tipoPerfil</option>";
+                                }
+                                ?>
+                            </select>
                         </div>
+                        <input type="hidden" name="IDEstado" value="<?php echo $IDEstado; ?>">
+                        <input type="hidden" name="op" value="<?php echo $op; ?>">
+                    </div>
+                    <br>
+                    <div class="modal-footer">
+                        <button type="submit" name="ModificarRegistro" class="btn" style="color:white; background-color:#023059">Enviar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
-</div>

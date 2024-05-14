@@ -187,8 +187,6 @@ class ExisteTabla
                     echo "Error al crear el usuario admin: " . mysqli_error($this->db);
                     return false;
                 }
-
-                echo '<div class="alert alert-success d-flex aling-items-center" role="alert">Usuario administrador creado!</div>';
                 return true;
             } else {
                 echo "Error: " . mysqli_error($this->db);

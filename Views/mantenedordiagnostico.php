@@ -34,6 +34,14 @@ verificarAcceso($perfilesPermitidos); ?>
 </header>
 
 <style>
+    .table thead th {
+        background-color: #023E73;
+        color: white;
+        text-decoration: none;
+        font-weight: lighter;
+        text-align: center;
+    }
+
     .table-container {
         display: flex;
         justify-content: center;
@@ -42,7 +50,7 @@ verificarAcceso($perfilesPermitidos); ?>
 
 
 <body class="text-center" style="background-color: #E7E7E7; font-family: 'Montserrat';">
-    <br><br><br><br><br><br>
+    <br><br><br><br><br>
     <div style="width:100%; display:flex; justify-content:center;">
         <div style="width: 80px; height: 80px; border-radius: 100%; background-color: #023E73; display: flex; justify-content: center; align-items: center; position: relative;" class="text-center">
             <div style="position: absolute; z-index: 10;">
@@ -61,6 +69,7 @@ verificarAcceso($perfilesPermitidos); ?>
                 color: white;
                 text-decoration: none;
                 font-weight: lighter;
+                text-align: center;
             }
 
             .table-container {
@@ -79,23 +88,23 @@ verificarAcceso($perfilesPermitidos); ?>
                             <th></th>
                         </tr>
                     </thead>
-                    <tbody style="background-color: #FFFFFF">
+                    <tbody style="text-align:center; background-color: #FFFFFF">
                         <?php while ($fila = mysqli_fetch_assoc($diagnosticos)) : ?>
 
                             <tr class="table">
                                 <td><?php echo $fila['Codigo'] ?></td>
                                 <td><?php echo $fila['descripcion'] ?></td>
                                 <td>
-                                <div>
-                                    <button type='button' class='btn center-block btn-editar-diagnostico' data-bs-toggle='modal' data-cod-diag=<?php echo $fila['Codigo']; ?> bs-target='#editar_Modal_' <?php echo $fila['Codigo'] ?>> <i class="fa-solid fa-2xl fa-pen-to-square" style="color: #023059;"></i></button>
+                                    <div>
+                                        <button style="margin-top: 10px;" type='button' class='btn center-block btn-editar-diagnostico' data-bs-toggle='modal' data-cod-diag=<?php echo $fila['Codigo']; ?> bs-target='#editar_Modal_' <?php echo $fila['Codigo'] ?>> <i class="fa-solid fa-2xl fa-pen-to-square" style="color: #023059;"></i></button>
                                     </div>
-                                    
+
                                 </td>
                                 <td>
-                                    <form method="POST" id="eliminarForm" action="mantenedordiagnostico.php">
-                                        <input type="hidden" name="operacion" id="operacion" value="">
+                                    <form method="POST" id="eliminarForm" action="mantenedordiagnostico.php" class="eliminarForm">
+                                        <input type="hidden" name="operacion" id="operacion" value="eliminar">
                                         <input type="hidden" name="codigo" id="codigo" value="<?php echo $fila['Codigo']; ?>">
-                                        <button type="button" class="btn" onclick="confirmarYEliminar('<?php echo $fila['Codigo']; ?>')"><i class="fa-solid fa-2xl fa-trash" style="color: #023059;"></i></button>
+                                        <button style="margin-top: 10px;" type="submit" class="btn"><i class="fa-solid fa-2xl fa-trash" style="color: #023059;"></i></button>
                                     </form>
                                 </td>
                             </tr>
@@ -144,7 +153,31 @@ verificarAcceso($perfilesPermitidos); ?>
                     }
                 }
             </script>
+        <script>
+            $('.eliminarform').submit(function(e) {
+                e.preventDefault();
 
+                Swal.fire({
+                    title: "¿Está seguro que desea eliminarlo?",
+                    showDenyButton: true,
+                    confirmButtonText: "SI",
+                    denyButtonText: "NO",
+                    confirmButtonColor: '#023059'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Si el usuario hace clic en "Si"
+                        this.submit();
+                    } else if (result.isDenied) {
+                        // Si el usuario hace clic en "No"
+                        Swal.fire({
+                            title: "No se eliminará.",
+                            icon: "info",
+                            confirmButtonColor: '#023059'
+                       });
+                    }
+                });
+            })
+        </script>
 </body>
 
 </html>

@@ -37,11 +37,11 @@ verificarAcceso($perfilesPermitidos);
 <style>
     .table thead th {
         background-color: #023E73;
-            color: white;
-            text-decoration: none;
-            font-weight: lighter;
+        color: white;
+        text-decoration: none;
+        font-weight: lighter;
+        text-align: center;
     }
-    
 
     .table-container {
         display: flex;
@@ -56,16 +56,16 @@ verificarAcceso($perfilesPermitidos);
 </style>
 
 <body class="text-center" style="background-color: #E7E7E7; font-family: 'Montserrat';">
-<div style="width:100%; display:flex; justify-content:center;">
-<div style="width: 80px; height: 80px; border-radius: 100%; background-color: #023E73; display: flex; justify-content: center; align-items: center; position: relative;" class="text-center">
-    <div style="position: absolute; z-index: 10;">
-        <button type='button' style="color: #000000; position: absolute; left: 4px; top: 0;" class="btn center-block  btn-editar-centro" data-bs-toggle="modal" data-id=0 bs-target="#editar_Modal_0">
-            <i class="fa-solid fa-plus" style="color: #ffffff;"></i>
-        </button>
+    <div style="width:100%; display:flex; justify-content:center;">
+        <div style="width: 80px; height: 80px; border-radius: 100%; background-color: #023E73; display: flex; justify-content: center; align-items: center; position: relative;" class="text-center">
+            <div style="position: absolute; z-index: 10;">
+                <button type='button' style="color: #000000; position: absolute; left: 4px; top: 0;" class="btn center-block  btn-editar-centro" data-bs-toggle="modal" data-id=0 bs-target="#editar_Modal_0">
+                    <i class="fa-solid fa-plus" style="color: #ffffff;"></i>
+                </button>
+            </div>
+            <i class="fa-regular fa-2xl fa-hospital" style="color: #ffffff;"></i>
+        </div>
     </div>
-    <i class="fa-regular fa-2xl fa-hospital" style="color: #ffffff;"></i>
-</div>
-</div>
     <br><br><br>
 
     <div class="table-container">
@@ -85,7 +85,7 @@ verificarAcceso($perfilesPermitidos);
                         <th></th>
                     </tr>
                 </thead>
-                <tbody style="background-color: #FFFFFF">
+                <tbody style="text-align:center; background-color: #FFFFFF">
                     <?php
                     foreach ($listCentros as $registro) {
                     ?>
@@ -101,14 +101,14 @@ verificarAcceso($perfilesPermitidos);
                             </td>
                             <td>
                                 <div>
-                                    <button type='button' class='btn center-block btn-editar-centro' data-bs-toggle='modal' data-id=<?php echo $registro['IDCentroMedico']; ?> data-bs-target='#editar_Modal_' <?php echo $registro['IDCentroMedico'] ?>> <i class="fa-solid fa-2xl fa-pen-to-square" style="color: #023059;"></i></button>
+                                    <button style="margin-top: 10px;" type='button' class='btn center-block btn-editar-centro' data-bs-toggle='modal' data-id=<?php echo $registro['IDCentroMedico']; ?> data-bs-target='#editar_Modal_' <?php echo $registro['IDCentroMedico'] ?>> <i class="fa-solid fa-2xl fa-pen-to-square" style="color: #023059;"></i></button>
                                 </div>
                             </td>
                             <td class="text-center">
-                                <form method="POST" action="" id="eliminarCentroForm">
-                                    <input type="hidden" name="op" value="">
+                                <form method="POST" action="" id="eliminarCentroForm" class="eliminarForm">
+                                    <input type="hidden" name="op" value="ELIMINAR">
                                     <input type="hidden" name="IDCentroMedico" value="<?php echo $registro['IDCentroMedico']; ?>">
-                                    <button type="button" class="btn w-100 center-block" onclick="confirmarYEliminar(this)"><i class="fa-solid fa-2xl fa-trash" style="color: #023059;"></i></button>
+                                    <button style="margin-top: 10px;" type="submit" class="btn center-block"><i class="fa-solid fa-2xl fa-trash" style="color: #023059;"></i></button>
                                 </form>
                             </td>
                         </tr>
@@ -151,14 +151,27 @@ verificarAcceso($perfilesPermitidos);
 </script>
 
 <script>
-    function confirmarYEliminar(button) {
-        var confirmacion = confirm("¿Estás seguro de que deseas eliminar este centro?");
-        if (confirmacion) {
-            var form = button.closest('form');
-            var opField = form.querySelector('[name="op"]');
-            opField.value = "ELIMINAR";
-            console.log("Valor del campo op:", opField.value);
-            form.submit();
-        }
-    }
+    $('.eliminarform').submit(function(e) {
+        e.preventDefault();
+
+        Swal.fire({
+            title: "¿Está seguro que desea eliminarlo?",
+            showDenyButton: true,
+            confirmButtonText: "SI",
+            denyButtonText: "NO",
+            confirmButtonColor: '#023059'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Si el usuario hace clic en "Si"
+                this.submit();
+            } else if (result.isDenied) {
+                // Si el usuario hace clic en "No"
+                Swal.fire({
+                    title: "No se eliminará.",
+                    icon: "info",
+                    confirmButtonColor: '#023059'
+                });
+            }
+        });
+    })
 </script>

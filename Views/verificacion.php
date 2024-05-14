@@ -1,7 +1,17 @@
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <?php
 session_start();
 if (isset($_SESSION['error_verificacion']) && $_SESSION['error_verificacion'] === true) {
-    echo "<script>alert('Error: Código de verificación incorrecto. Por favor, inténtelo de nuevo.');</script>";
+    echo         '<script>
+    document.addEventListener("DOMContentLoaded", function() {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Código de verificación incorrecto. Por favor, inténtelo de nuevo.",
+                confirmButtonColor: "#023059"
+            });
+    });
+    </script>';
     unset($_SESSION['error_verificacion']);
 }
 ?>

@@ -27,8 +27,9 @@ require_once $rutadiagnostico;
                             <input type="text" required class="form-control" name="descripcion" value="<?php echo $descripcion ?>">
                         </div>
                     </div>
+                    <br>
                     <div class="modal-footer">
-                        <button type="submit" name="modificar" class="btn btn-primary"><?php echo $boton ?></button>
+                        <button type="submit" name="modificar" class="btn" style="color:white; background-color:#023059"><?php echo $boton ?></button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                     </div>
                 </div>

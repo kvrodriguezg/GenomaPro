@@ -72,8 +72,9 @@ require_once $rutaexamenes;
                     <input type="hidden" name="fecharecepcion" value="<?php echo date('Y-m-d H:i:s'); ?>">
                     <input type="hidden" name="ingreso" value="ingresado">
                 </div>
+                <br>
                 <div class="modal-footer">
-                    <input type="submit" name="btnregistrar" class="btn btn-primary center-block" value="Registrar">
+                    <input type="submit" name="btnregistrar" class="btn center-block" style="color:white; background-color:#023059" value="Registrar">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 </div>
             </form>

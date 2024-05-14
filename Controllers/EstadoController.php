@@ -1,3 +1,4 @@
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <?php
 $directorioActual = __DIR__;
 $ruta = dirname($directorioActual) . "/Models/estados_model.php";
@@ -7,7 +8,6 @@ $rutap = dirname($directorioActual) . "/Models/perfilesModel.php";
 require_once $rutap;
 $objetoEstado = new Estados();
 $objetoPerfiles = new perfiles();
-$DetalleEstados = $objetoEstado->MostrarEstados();
 $DetallePerfiles = $objetoPerfiles->verPerfiles();
 
 /* if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id']))
@@ -32,29 +32,36 @@ $DetallePerfiles = $objetoPerfiles->verPerfiles();
     }
 } */
 //nuevo
-if (isset($_POST['op']) && $_POST['op'] == "GUARDAR" && isset($_POST['NombreEstado']) && isset($_POST['Perfil']) && isset($_POST['usuario']) && isset($_POST['clave']) ) {
+if (isset($_POST['op']) && $_POST['op'] == "GUARDAR" && isset($_POST['IDEstado']) && isset($_POST['AgregaNEstado']) && isset($_POST['IDPerfil'])) {
 
-    $nombre = $_POST['nombre'] ?? '';
-    $rut = $_POST['rut'] ?? '';
-    $usuario = $_POST['usuario'] ?? '';
-    $clave = $_POST['clave'] ?? '';
-    $correo = $_POST['correo'] ?? '';
-    $perfil = $_POST['perfil'] ?? '';
-    $centro = $_POST['centro'] ?? '';
-    $op = $_POST['op'] ?? '';
-    $insertar = $objetoEstado->InsertaEstado($nuevoEstado,$nuevoPerfil);
-    if ($insertar) {
-        echo '<script>alert("Usuario creado con éxito.");</script>';
-    } else {
-        echo '<script>alert("Ocurrio un error al crear el usuario.");</script>';
-    }
+    $NombreEstado = $_POST['AgregaNEstado'] ?? '';
+    $IdPerfil = $_POST['IDPerfil'] ?? '';
 
-    echo '<script>
-            setTimeout(function() {
-                window.location.href = "mantenedorusuarios.php";
-            }, 100);
-          </script>';
-    exit();
+    $insertar = $objetoEstado->InsertaEstado($NombreEstado, $IdPerfil);
+
+    //Se mostrará la alerta según el caso.
+    $alertaExito = $insertar ? 'true' : 'false';
+
+    echo
+    '<script>
+            document.addEventListener("DOMContentLoaded", function() {
+                var resultado = ' . $alertaExito . ';
+                if (resultado) {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Creación exitosa!",
+                        confirmButtonColor: "#023059"
+                    });
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Ocurrió un error!",
+                        confirmButtonColor: "#023059"
+                    });
+                }
+            });
+    </script>';
 }
 
 
@@ -62,38 +69,79 @@ if (isset($_POST['op']) && $_POST['op'] == "GUARDAR" && isset($_POST['NombreEsta
 if (isset($_POST['op']) && $_POST['op'] == "eliminar" && isset($_POST['IDEstado'])) {
     $IDEstado = $_POST['IDEstado'];
     $borrarestado = $objetoEstado->EliminaEstado($IDEstado);
-    if ($borrarestado) {
-        echo '<script>alert("Usuario eliminado con éxito.");</script>';
-    } else {
-        echo '<script>alert("No se pudo eliminar el usuario.");</script>';
-    }
 
-    echo '<script>
-            setTimeout(function() {
-                window.location.href = "mantenedoestado.php";
-            }, 100);
-          </script>';
-    exit();
+    $alertaExito = $borrarestado ? 'true' : 'false';
+
+    echo
+    '<script>
+            document.addEventListener("DOMContentLoaded", function() {
+                var resultado = ' . $alertaExito . ';
+                if (resultado) {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Eliminado!",
+                        confirmButtonColor: "#023059"
+                    });
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Ocurrió un error!",
+                        confirmButtonColor: "#023059"
+                    });
+                }
+            });
+        </script>';
 }
 
 
 
-if (isset($_POST['op']) && $_POST['op'] == "Modificar" && isset($_POST['IDEstado']) && isset($_POST['NombreEstado'])&& isset($_POST['IdPerfil'])) {
-    $IDEstado= $_POST['IDEstado'] ?? '';
-    $NombreEstado = $_POST['NombreEstado'] ?? '';
-    $IdPerfil=$_POST['Perfil']??'';
+if (isset($_POST['op']) && $_POST['op'] == "Modificar" && isset($_POST['IDEstado']) && isset($_POST['AgregaNEstado']) && isset($_POST['IDPerfil'])) {
+    $IDEstado = $_POST['IDEstado'] ?? '';
+    $NombreEstado = $_POST['AgregaNEstado'] ?? '';
+    $IdPerfil = $_POST['IDPerfil'] ?? '';
     $op = $_POST['op'] ?? '';
-    $insertar = $objetoEstado-> ModificarEstado( $nuevoEstado,$nuevoPerfil,$idEstados);
-    if ($insertar) {
-        echo '<script>alert("Usuario editado con éxito.");</script>';
-    } else {
-        echo '<script>alert("Ocurrio un error al editar el usuario.");</script>';
-    }
+    $insertar = $objetoEstado->ModificarEstado($NombreEstado, $IdPerfil, $IDEstado);
 
-    echo '<script>
-            setTimeout(function() {
-                window.location.href = "mantenedorusuarios.php";
-            }, 100);
-          </script>';
-    exit();
+
+    $alertaExito = $insertar ? 'true' : 'false';
+
+    echo
+    '<script>
+            document.addEventListener("DOMContentLoaded", function() {
+                var resultado = ' . $alertaExito . ';
+                if (resultado) {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Actualizado con éxito!",
+                        confirmButtonColor: "#023059"
+                    });
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Ocurrió un error!",
+                        confirmButtonColor: "#023059"
+                    });
+                }
+            });
+     </script>';
 }
+
+if (isset($_POST['estadoID'])) {
+    $IDEstado = (int)$_POST['estadoID'];
+
+    if ($IDEstado != 0) {
+        $datosEstado = $objetoEstado->buscarEstadoPorID($IDEstado);
+        $AgregaNEstado = $datosEstado['NombreEstado'];
+        $perfilSelecionado = $datosEstado['IDPerfil'];
+        $modalTitle = "Editar:";
+        $op = "Modificar";
+    } else {
+        $AgregaNEstado = "";
+        $perfilSelecionado = "";
+        $modalTitle = "Nuevo Estado:";
+        $op = "GUARDAR";
+    }
+}
+$DetalleEstados = $objetoEstado->MostrarEstados();

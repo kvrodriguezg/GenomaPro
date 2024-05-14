@@ -17,7 +17,7 @@ require_once('../Controllers/accesoController.php');
 $perfilesPermitidos = 1;
 verificarAcceso($perfilesPermitidos);
 ?>
-<script src="../../js/diagnostico.js"></script>
+
 <link rel="stylesheet" href="../css/prueba.css">
 <link rel="stylesheet" href="../css/nav.css">
 <?php include "../Views/Shared/navDiagnostico.php" ?>

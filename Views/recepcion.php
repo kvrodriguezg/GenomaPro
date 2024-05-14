@@ -39,7 +39,7 @@ verificarAcceso($perfilesPermitidos);
 <link rel="stylesheet" href="../css/nav.css">
 </head>
 
-<body>
+<body class="text-center" style="background-color: #E7E7E7; font-family: 'Montserrat';">
     <header class="navbar navbar-light fixed-top" style="background-color: #FFFFFF;">
         <?php
         include("../Views/Shared/navRecepcion.php");

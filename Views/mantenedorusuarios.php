@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <?php
     include("../Views/Shared/nav.php");
     ?>
-<br><br><br><br><br><br>
+<br><br><br><br><br>
 
 
 <body class="text-center" style="background-color: #E7E7E7; font-family: 'Montserrat';">
@@ -74,6 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             color: white;
             text-decoration: none;
             font-weight: lighter;
+            text-align: center;
         }
 
         .col-clave {
@@ -110,7 +111,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <th></th>
                         </tr>
                     </thead>
-                    <tbody style="background-color: #FFFFFF">
+                    <tbody style="text-align:center; background-color: #FFFFFF">
                         <?php
                         $tempUsuarios = array();
                         foreach ($listusuarios as $usu) {
@@ -147,13 +148,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     ?>
                                 </td>
                                 <td>
-                                    <button type='button' class='btn w-100 center-block btn-editar-usuario' data-bs-toggle='modal' data-user-id=<?php echo $usu['IDUsuario']; ?> data-bs-target='#editar_Modal_' <?php echo $usu['IDUsuario'] ?>> <i class="fa-solid fa-2xl fa-pen-to-square" style="color: #023059;"></i></button>
+                                    <button type='button' style="margin-top: 10px;" class='btn w-100 center-block btn-editar-usuario' data-bs-toggle='modal' data-user-id=<?php echo $usu['IDUsuario']; ?> data-bs-target='#editar_Modal_' <?php echo $usu['IDUsuario'] ?>> <i class="fa-solid fa-2xl fa-pen-to-square" style="color: #023059;"></i></button>
                                 </td>
                                 <td class="text-center">
-                                    <form method="POST" action=""  id="eliminarForm_<?php echo $usu['IDUsuario'];?>">
+                                    <form method="POST" action="" id="eliminarForm_<?php echo $usu['IDUsuario'];?>" class="eliminarform">
                                         <input type="hidden" name="op" id="op" value="eliminar">
                                         <input type="hidden" name="IDUsuarioEliminar" value=<?php echo $usu['IDUsuario']; ?>>
-                                        <button type="submit" class="btn" onclick="confirmarYEliminar('<?php echo $usu['IDUsuario']; ?>')"><i class="fa-solid fa-2xl fa-trash" style="color: #023059;"></i></button>
+                                        <button type="submit" style="margin-top: 10px;" class="btn"><i class="fa-solid fa-2xl fa-trash" style="color: #023059;"></i></button>
                                     </form>
                                 </td>
                             </tr>
@@ -186,17 +187,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     });
                 });
             </script>
-            <script>
-                function confirmarYEliminar(IDUsuario) {
-                    var confirmacion = confirm("¿Estás seguro de que deseas eliminar este usuario?");
-                    if (confirmacion) {
-                        var opField = document.getElementById('op');
-                        opField.value = "eliminar";
-                        console.log("Valor del campo op:", opField.value);
-                        document.getElementById('eliminarForm').submit();
+        <script>
+            $('.eliminarform').submit(function(e) {
+                e.preventDefault();
+
+                Swal.fire({
+                    title: "¿Está seguro que desea eliminarlo?",
+                    showDenyButton: true,
+                    confirmButtonText: "SI",
+                    denyButtonText: "NO",
+                    confirmButtonColor: '#023059'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Si el usuario hace clic en "Si"
+                        this.submit();
+                    } else if (result.isDenied) {
+                        // Si el usuario hace clic en "No"
+                        Swal.fire({
+                            title: "No se eliminará.",
+                            icon: "info",
+                            confirmButtonColor: '#023059'
+                       });
                     }
-                }
-            </script>
+                });
+            })
+        </script>
 </body>
 
 </html>
