@@ -90,10 +90,10 @@ if (!empty($_POST["ingreso"])) {
         $fechamuestra = $_POST["fechamuestra"];
         $fecharecepcion = $_POST["fecharecepcion"];
         $idcentro = $_POST["idcentro"];
+        $rut = $_POST["rut"];
 
         $existePaciente = $examen->validarPaciente($rut);
-
-        $rut = $_POST["rut"];
+        
 
         $estado = $examen->validarut($rut);
 
