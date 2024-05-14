@@ -1,58 +1,137 @@
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <?php
 $directorioActual = __DIR__;
 $rutaperfiles = dirname($directorioActual) . "/Models/perfilesModel.php";
-//require_once $rutaperfiles;
-include("../Models/perfilesModel.php");
+require_once $rutaperfiles;
+
+
 $objPerfil = new Perfiles();
+
 
 // Creación de perfiles si no existe
 if (isset($_POST['crearPerfiles'])) {
     $objPerfil->crearperfiles();
-    header("Location: mantenedorPerfiles.php"); 
+    header("Location: mantenedorPerfiles.php");
     exit();
-} 
+}
 
-// Insertar perfil 
 if (isset($_POST['op']) && $_POST['op'] == "GUARDAR" && isset($_POST['tipoPerfil'])) {
+
     $tipoPerfil = $_POST['tipoPerfil'];
     $insertarperfil = $objPerfil->insertarPerfil($tipoPerfil);
-    if($insertarperfil){
-        echo '<div class="alert alert-success" role="alert"> Perfil creado con éxito.</div>';
-    }else{
-        echo '<div class="alert alert-danger" role="alert"> El perfil no puede ser eliminado, ya que se encuentra anclado a un usuario existente. </div>';
-    }
-    header("Location: mantenedorPerfiles.php"); 
-    exit();
+    echo
+    '<script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var resultado = ' . $insertarperfil . ';
+            if (resultado) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Creación exitosa!",
+                    confirmButtonColor: "#023059"
+                });
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Ocurrió un error!",
+                    confirmButtonColor: "#023059"
+                });
+            }
+        });
+    </script>';
 }
 
-// Ver perfiles
-$listperfiles = $objPerfil->verPerfiles();
 
-// Eliminar perfil 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['op']) && $_POST['op'] == "eliminar" && isset($_POST['IDPerfil'])) {
+/* if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['estadoID']))
+{
+    $boton = "Enviar";
+    $id = $_POST['estadoID'];
+    if ($id>0){
+        $IDEstado= $id;
+       $IDPerfil= $obj->buscarCentroPorID($id);
+        $codigo = $centros['codigo'];
+        $nombreCentro = $centros['NombreCentro'];
+        $operacion = "Modificar";
+        $titulo = "Editar:";
+    }
+    else if ($id==0)
+    {
+        $IDCentroMedico = 0;
+        $codigo = "";
+        $nombreCentro = "";
+        $operacion = "Guardar";
+        $titulo = "Nuevo Centro Médico:";
+    }
+} */
+
+
+
+if (isset($_POST['op']) && $_POST['op'] == "eliminar" && isset($_POST['IDPerfil'])) {
     $IDPerfil = $_POST['IDPerfil'];
     $borrarPerfil = $objPerfil->eliminarPerfil($IDPerfil);
-    if($borrarPerfil){
-        echo '<div class="alert alert-success" role="alert"> Perfil creado con éxito.</div>';
-    }else{
-        echo '<div class="alert alert-danger" role="alert"> El perfil no puede ser eliminado, ya que se encuentra anclado a un usuario existente. </div>';
+    $alertaExito = $borrarPerfil ? 'true' : 'false';
+
+    echo
+    '<script>
+            document.addEventListener("DOMContentLoaded", function() {
+                var resultado = ' . $alertaExito . ';
+                if (resultado) {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Eliminado!",
+                        confirmButtonColor: "#023059"
+                    });
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Ocurrió un error!",
+                        confirmButtonColor: "#023059"
+                    });
+                }
+            });
+    </script>';
+}
+
+if (isset($_POST['op']) && $_POST['op'] == "Modificar" && isset($_POST['IDPerfil']) && isset($_POST['tipoPerfil'])) {
+    $idPerfil = $_POST['IDPerfil'] ?? '';;
+    $tipoPerfil = $_POST['tipoPerfil'] ?? '';;
+    $editarPerfil = $objPerfil->modificarPerfil($idPerfil, $tipoPerfil);
+
+    echo
+    '<script>
+            document.addEventListener("DOMContentLoaded", function() {
+                var resultado = ' . $editarPerfil . ';
+                if (resultado) {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Actualizado con éxito!",
+                        confirmButtonColor: "#023059"
+                    });
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Ocurrió un error!",
+                        confirmButtonColor: "#023059"
+                    });
+                }
+            });
+     </script>';
+}
+
+if (isset($_POST['PerfilId'])) {
+
+    $idPerfil = $_POST['PerfilId'];
+    if ($idPerfil != 0) {
+        $tipoPerfil = $objPerfil->buscarPerfil($idPerfil);
+        $modalTitle = "Editar:";
+        $operacion = "Modificar";
+    } else {
+        $tipoPerfil = "";
+        $modalTitle = "Nuevo Perfil:";
+        $operacion = "GUARDAR";
     }
-    echo '<script>
-            setTimeout(function() {
-                window.location.href = "mantenedorPerfiles.php";
-            }, 100);
-          </script>';
-    exit();
 }
-
-//EDITAR PERFILES
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['op']) && $_POST['op'] == "Modificar" && isset($_POST['IDPerfil']) && isset($_POST['TipoPerfil'])) {
-    $IDPerfil = $_POST['IDPerfil'];
-    $TipoPerfil = $_POST['TipoPerfil'];
-    $editarPerfil = $objPerfil->modificarPerfil($IDPerfil, $TipoPerfil);
-    header("Location: mantenedorPerfiles.php");
-}
-
-
-//require_once '../Views/mantenedorPerfiles.php';
-?>
+// Ver perfiles
+$listperfiles = $objPerfil->verPerfiles();

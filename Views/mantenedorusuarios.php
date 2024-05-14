@@ -46,25 +46,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="../css/nav.css">
     <title>Document</title>
 </head>
-
-<header class="navbar navbar-light fixed-top" style="background-color: #FFFFFF;">
     <?php
     include("../Views/Shared/nav.php");
     ?>
-</header>
-<br><br><br><br><br><br>
+<br><br><br><br><br>
 
 
-<body style="background-color: #E7E7E7; font-family: 'Montserrat';" class="text-center">
-    <h1 style="padding-top:20px; color:#000000">Usuarios</h1><br>
+<body class="text-center" style="background-color: #E7E7E7; font-family: 'Montserrat';">
+<div style="width:100%; display:flex; justify-content:center;">
+<div style="width: 80px; height: 80px; border-radius: 100%; background-color: #023E73; display: flex; justify-content: center; align-items: center; position: relative;" class="text-center">
+    <div style="position: absolute; z-index: 10;">
+        <button type='button' style="color: #000000; position: absolute; left: 4px; top: 0;" class='btn center-block text-center btn-editar-usuario' data-bs-toggle='modal' data-user-id='0' data-bs-target='#editar_Modal'>
+            <i class="fa-solid fa-plus" style="color: #ffffff;"></i>
+        </button>
+    </div>
+    <i class="fa-regular fa-user fa-2xl" style="color: #FFFFFF;"></i>
+</div>
+</div>
 
-    <button type='button' class='btn btn-primary center-block text-center btn-editar-usuario' data-bs-toggle='modal' data-user-id='0' data-bs-target='#editar_Modal'>Nuevo Usuario</button>
+    <!-- <h1 style="padding-top:20px; color:#000000">Usuarios</h1><br> -->
+
 
     <br><br><br>
     <style>
         .table thead th {
-            background-color: #115DFC;
+            background-color: #023E73;
             color: white;
+            text-decoration: none;
+            font-weight: lighter;
+            text-align: center;
         }
 
         .col-clave {
@@ -101,7 +111,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <th></th>
                         </tr>
                     </thead>
-                    <tbody style="background-color: #FFFFFF">
+                    <tbody style="text-align:center; background-color: #FFFFFF">
                         <?php
                         $tempUsuarios = array();
                         foreach ($listusuarios as $usu) {
@@ -138,13 +148,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     ?>
                                 </td>
                                 <td>
-                                    <button type='button' class='btn w-100 center-block btn-editar-usuario' data-bs-toggle='modal' data-user-id=<?php echo $usu['IDUsuario']; ?> data-bs-target='#editar_Modal_' <?php echo $usu['IDUsuario'] ?>> <img src="../img/pen.png" width="40px" height="40px"></button>
+                                    <button type='button' style="margin-top: 10px;" class='btn w-100 center-block btn-editar-usuario' data-bs-toggle='modal' data-user-id=<?php echo $usu['IDUsuario']; ?> data-bs-target='#editar_Modal_' <?php echo $usu['IDUsuario'] ?>> <i class="fa-solid fa-2xl fa-pen-to-square" style="color: #023059;"></i></button>
                                 </td>
                                 <td class="text-center">
-                                    <form method="POST" action="" id="eliminarForm">
-                                        <input type="hidden" name="op" id="op" value="">
-                                        <input type="hidden" name="IDUsuario" value="<?php echo $usu['IDUsuario']; ?>">
-                                        <button type="button" class="btn" onclick="confirmarYEliminar('<?php echo $usu['IDUsuario']; ?>')"><img src="../img/delete.png" width="40px" height="40px"></button>
+                                    <form method="POST" action="" id="eliminarForm_<?php echo $usu['IDUsuario'];?>" class="eliminarform">
+                                        <input type="hidden" name="op" id="op" value="eliminar">
+                                        <input type="hidden" name="IDUsuarioEliminar" value=<?php echo $usu['IDUsuario']; ?>>
+                                        <button type="submit" style="margin-top: 10px;" class="btn"><i class="fa-solid fa-2xl fa-trash" style="color: #023059;"></i></button>
                                     </form>
                                 </td>
                             </tr>
@@ -177,17 +187,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     });
                 });
             </script>
-            <script>
-                function confirmarYEliminar(IDUsuario) {
-                    var confirmacion = confirm("¿Estás seguro de que deseas eliminar este usuario?");
-                    if (confirmacion) {
-                        var opField = document.getElementById('op');
-                        opField.value = "eliminar";
-                        console.log("Valor del campo op:", opField.value);
-                        document.getElementById('eliminarForm').submit();
+        <script>
+            $('.eliminarform').submit(function(e) {
+                e.preventDefault();
+
+                Swal.fire({
+                    title: "¿Está seguro que desea eliminarlo?",
+                    showDenyButton: true,
+                    confirmButtonText: "SI",
+                    denyButtonText: "NO",
+                    confirmButtonColor: '#023059'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Si el usuario hace clic en "Si"
+                        this.submit();
+                    } else if (result.isDenied) {
+                        // Si el usuario hace clic en "No"
+                        Swal.fire({
+                            title: "No se eliminará.",
+                            icon: "info",
+                            confirmButtonColor: '#023059'
+                       });
                     }
-                }
-            </script>
+                });
+            })
+        </script>
 </body>
 
 </html>

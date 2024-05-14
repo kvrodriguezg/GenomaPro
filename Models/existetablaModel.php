@@ -8,7 +8,7 @@ class ExisteTabla
     public function __construct()
     {
         $this->db = Conectarse();
-    }
+    } 
 
     public function comprobarTabla($tabla)
     {
@@ -66,12 +66,9 @@ class ExisteTabla
     {
         if ($this->comprobarTabla("Diagnosticos") == true) {
             $query = "INSERT IGNORE INTO Diagnosticos (codigo, descripcion) VALUES 
-                ('A', 'NEGATIVO'),
-                ('B', 'MUESTRA INADECUADA, VOLVER A TOMAR'),
-                ('C', 'MUESTRA PRESENTA INFECCION'),
-                ('D', 'POSIBLE ADENOCARCINOMA'),
-                ('E', 'CANCER EPIDERMOIDE'),
-                ('F', 'MUESTRA ATROFICA');";
+                ('N', 'NEGATIVO'),
+                ('P', 'POSITIVO'),
+                ('M', 'MUESTRA ATROFICA');";
             $creacion = mysqli_query($this->db, $query);
     
             if (!$creacion) {
@@ -111,8 +108,7 @@ class ExisteTabla
         if ($this->comprobarTabla("Estados") == true) {
             $query = "INSERT IGNORE INTO Estados (NombreEstado, IDPerfil) VALUES 
                 ('Recepcionado', (SELECT IDPerfil FROM Perfiles WHERE TipoPerfil = 'recepcion')),
-                ('Listo para Tincion', (SELECT IDPerfil FROM Perfiles WHERE TipoPerfil = 'recepcion')),
-                ('Listo para Diagnostico', (SELECT IDPerfil FROM Perfiles WHERE TipoPerfil = 'tincion')),
+                ('Listo para Diagnostico', (SELECT IDPerfil FROM Perfiles WHERE TipoPerfil = 'recepcion')),
                 ('Realizado', (SELECT IDPerfil FROM Perfiles WHERE TipoPerfil = 'diagnostico'));";
             $creacion = mysqli_query($this->db, $query);
     
@@ -169,7 +165,7 @@ class ExisteTabla
         }
     }
 
-    public function crearUsuarioAdmin()
+     public function crearUsuarioAdmin()
     {
         if ($this->comprobarTabla("Usuarios") == true) {
             $usuario = "admin";
@@ -191,8 +187,6 @@ class ExisteTabla
                     echo "Error al crear el usuario admin: " . mysqli_error($this->db);
                     return false;
                 }
-
-                echo '<div class="alert alert-success d-flex aling-items-center" role="alert">Usuario administrador creado!</div>';
                 return true;
             } else {
                 echo "Error: " . mysqli_error($this->db);
@@ -202,5 +196,5 @@ class ExisteTabla
             return false;
         }
     }
-    
+     
 }

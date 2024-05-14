@@ -1,5 +1,5 @@
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <?php
-
 require_once("../Models/diagnosticoModel.php");
 $objdiagnostico = new diagnosticos();
 
@@ -32,16 +32,78 @@ if (isset($_POST['operacion'])) {
 
     if ($operacion == "insertar")
     {
-        $objdiagnostico->insertarDiagnostico($codigo,$descripcion);
+        $resultado = $objdiagnostico->insertarDiagnostico($codigo,$descripcion);
+
+        echo 
+        '<script>
+            document.addEventListener("DOMContentLoaded", function() {
+                var resultado = ' . $resultado . ';
+                if (resultado) {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Creación exitosa!",
+                        confirmButtonColor: "#023059"
+                    });
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Ocurrió un error!",
+                        confirmButtonColor: "#023059"
+                    });
+                }
+            });
+        </script>';
     }
     else if ($operacion == "modificar")
     {
-        $objdiagnostico->editarDiagnostico($codigo,$descripcion);
+        $resultado = $objdiagnostico->editarDiagnostico($codigo,$descripcion);
+        echo
+        '<script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    var resultado = ' . $resultado . ';
+                    if (resultado) {
+                        Swal.fire({
+                            icon: "success",
+                            title: "Actualizado con éxito!",
+                            confirmButtonColor: "#023059"
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Ocurrió un error!",
+                            confirmButtonColor: "#023059"
+                        });
+                    }
+                });
+         </script>';
+
     }
     else if ($operacion == "eliminar")
     {
         //$codigoEliminar = isset($_POST['codigoEliminar']) ? $_POST['codigoEliminar'] : "";
-        $objdiagnostico->eliminarDiagnostico($codigo);
+        $resultado = $objdiagnostico->eliminarDiagnostico($codigo);
+        echo
+        '<script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    var resultado = ' . $resultado . ';
+                    if (resultado) {
+                        Swal.fire({
+                            icon: "success",
+                            title: "Eliminado!",
+                            confirmButtonColor: "#023059"
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Ocurrió un error!",
+                            confirmButtonColor: "#023059"
+                        });
+                    }
+                });
+        </script>';
     }
 }
 

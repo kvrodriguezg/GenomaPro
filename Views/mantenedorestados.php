@@ -14,7 +14,7 @@ verificarAcceso($perfilesPermitidos);
 $IDEstado = '';
 $sw = "";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+/*if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!isset($_POST['IDEstado'])) {
         $IDEstado = '';
     } else {
@@ -25,9 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $sw = $_POST['sw'];
     }
-
-}
-
+}*/
 ?>
 
 <!DOCTYPE html>
@@ -36,123 +34,155 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/prueba.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <link rel="icon" type="image/svg+xml" href="~/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/nav.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <title>Document</title>
 </head>
-
-
-
 <header class="navbar navbar-light fixed-top" style="background-color: #FFFFFF;">
     <?php
     include("../Views/Shared/nav.php");
     ?>
 </header>
-<br><br><br><br><br><br><br>
 
-<body class="container">
+<br><br><br><br><br>
 
-<?php if(isset($_GET['mensaje'])) :  ?>
 
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-    <strong><?php echo  $_GET['mensaje'] ?></strong> 
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+<body class="text-center" style="background-color: #E7E7E7; font-family: 'Montserrat';">
+    <div style="width:100%; display:flex; justify-content:center;">
+        <div style="width: 80px; height: 80px; border-radius: 100%; background-color: #023E73; display: flex; justify-content: center; align-items: center; position: relative;" class="text-center">
+            <div style="position: absolute; z-index: 10;">
+                <button type='button' style="color: #000000; position: absolute; left: 4px; top: 0;" class='btn center-block text-center btn-editar-estado' data-bs-toggle='modal' data-estado=0 bs-target='#editar_Modal_0'>
+                    <i class="fa-solid fa-plus" style="color: #ffffff;"></i>
+                </button>
+            </div>
+            <i class="fa-solid fa-bars fa-xl" style="color: #FFFFFF;"></i>
+        </div>
     </div>
 
-    <?php endif ?>
+    <!-- <h1 style="padding-top:20px; color:#000000">Usuarios</h1><br> -->
 
 
-    <h1 style="padding-top: 20px;">Listado de Estados</h1><br>
-    <a href="crearestado.php" class="btn  btn-primary">Crear Estados</a>
     <br><br><br>
-        <section style="margin: 10px;">
+    <style>
+        .table thead th {
+            background-color: #023E73;
+            color: white;
+            text-decoration: none;
+            font-weight: lighter;
+            text-align: center;
+        }
 
+        .table-container {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+    <div>
+        <div class="table-container">
+            <div class="col-lg-11">
+                <table class="table table-responsive">
+                    <thead>
+                        <tr>
+                            <th>ID Diagn&oacute;stico</th>
+                            <th>Estado</th>
+                            <th>Perfil</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody style="text-align:center; background-color: #FFFFFF;">
+                        <?php
+                        $tempEstados = array();
+                        foreach ($DetalleEstados as $fila) {
+                            $tempEstados[] = $fila;
 
-        <table id="tableUsers" class="tabla table">
-            <style>
-                .tabla {
-                    width: 100%;
-                }
-            </style>
+                        ?>
+                            <tr>
+                                <td><?php echo $fila['IDEstado'] ?></td>
+                                <td><?php echo $fila['NombreEstado'] ?></td>
+                                <td> <?php
+                                        $perfil = $objusuario->buscarPerfilId($fila['IDPerfil']);
+                                        echo $perfil['TipoPerfil'];
+                                        ?>
+                                <td>
+                                    <button style="margin-top: 10px" type='button' class='btn center-block btn-editar-estado' data-estado=<?php echo $fila['IDEstado']; ?> data-bs-toggle='modal' data-bs-target='#editar_Modal<?php echo $fila['IDEstado']; ?>'>
+                                        <i class="fa-solid fa-2xl fa-pen-to-square" style="color: #023059;"></i>
+                                    </button>
 
-            <thead>
-                <tr>
-                    <th>ID Diagn&oacute;stico</th>
-                    <th>Estado </th>
-                    <th>Perfil </th>
-                    <th>Acci&oacute;n </th>
-                </tr>
-            </thead>
+                                </td>
+                                <td class="text-center">
+                                    <form method="POST" action="" id="eliminarform" name="eliminarform" class="eliminarform">
+                                        <input type="hidden" name="op" id="op" value="eliminar">
+                                        <input type="hidden" name="IDEstado" value=<?php echo $fila['IDEstado']; ?>>
+                                        <button type="submit" style="margin-top: 10px" class="btn"><i class="fa-solid fa-2xl fa-trash" style="color: #023059;"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <?php
+                        }
+                        ?>
+                    </tbody>
+                </table>
+                </section>
+                <script src="https://kit.fontawesome.com/4652dbea50.js" crossorigin="anonymous"></script>
+                <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+                <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+            </div>
+        </div>
 
-            <?php
-            foreach ($DetalleEstados as $fila) {
-                ?>
-                <tbody>
-                    <tr>
-                        <td>
-                            <?= $fila['IDEstado'] ?>
-                        </td>
-                        <td>
-                            <?= $fila['NombreEstado'] ?>
-                        </td>
-                        <td>
-                            <?php
-                            $perfil = $objusuario->buscarPerfilId($fila['IDPerfil']);
-                            echo $perfil['TipoPerfil'];
-                            ?>
-                        </td>
-                        <td>
-                            <a href="editarestado.php?IDEstado=<?php echo $fila['IDEstado']; ?>"
-                                class="btn w-100 m-1 btn-primary">editar</a>
+        <script>
+            $(document).ready(function() {
+                $('.btn-editar-estado').click(function() {
+                    var estadoID = $(this).data('estado');
+                    $.ajax({
+                        type: 'POST',
+                        url: 'modalestado.php',
+                        data: {
+                            estadoID: estadoID,
+                        },
+                        success: function(response) {
+                            $('body').append(response);
+                            $('#editar_Modal' + estadoID).modal('show');
+                        }
+                    });
+                });
+            });
+        </script>
+        <script>
+            $('.eliminarform').submit(function(e) {
+                e.preventDefault();
 
-                            <form method="post">
-                                <input type="hidden" name="sw" value="eliminar">
-                                <input type="hidden" name="IDEstado" value="<?php echo $fila['IDEstado']; ?>">
-                                <input class="btn m-1 w-100 btn-danger" type="submit" value="eliminar">
-                            </form>
-                            <?php
+                Swal.fire({
+                    title: "¿Está seguro que desea eliminarlo?",
+                    showDenyButton: true,
+                    confirmButtonText: "SI",
+                    denyButtonText: "NO",
+                    confirmButtonColor: '#023059'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Si el usuario hace clic en "Si"
+                        this.submit();
+                    } else if (result.isDenied) {
+                        // Si el usuario hace clic en "No"
+                        Swal.fire({
+                            title: "No se eliminará.",
+                            icon: "info",
+                            confirmButtonColor: '#023059'
+                       });
+                    }
+                });
+            })
+        </script>
 
-                            if ($sw == "eliminar") {
+        <script src="https://kit.fontawesome.com/4652dbea50.js" crossorigin="anonymous"></script>
 
-                               require_once $rutaestado;
-                            }
-                            ?>
-                        </td>
-                    </tr>
-                </tbody>
-                <?php
-            }
-            ?>
-        </table>
-    </section>
-
-
-
-    <script src="https://kit.fontawesome.com/4652dbea50.js" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
-        
-        
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" 
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" 
-        crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" 
-        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" 
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" 
-        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" 
-        crossorigin="anonymous"></script>
 </body>
 
 </html>

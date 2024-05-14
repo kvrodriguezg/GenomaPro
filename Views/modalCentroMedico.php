@@ -28,10 +28,11 @@ require_once $rutacentro;
                             <input required type="text" class="form-control" name="codigo" value="<?php echo $codigo ?>">
                         </div>
                     </div>
+                    <br>
                     <div class="row">
                         <div class="col">
                             <div class="modal-footer">
-                                <button type="submit" name="enviar" class="btn btn-primary"><?php echo $boton ?></button>
+                                <button type="submit" name="enviar" class="btn" style="color:white; background-color:#023059"><?php echo $boton ?></button>
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                             </div>
                         </div>

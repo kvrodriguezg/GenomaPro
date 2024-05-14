@@ -1,3 +1,4 @@
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <?php
 $directorioActual = __DIR__;
 $usuarioModel = dirname($directorioActual) . "/Models/existetablaModel.php";
@@ -15,6 +16,7 @@ foreach ($tablas as $tabla) {
 
 //Creacion de tablas si no existen.
 if (isset($_POST['crearTabla'])) {
+    $creacionadmin = false;
     $existe->crearTablas();
     $existe->crearCentros();
     $existe->crearDiagnosticos();
@@ -22,10 +24,32 @@ if (isset($_POST['crearTabla'])) {
     $existe->crearEstados();
     if (!$existe->comprobarAdmin()) {
         $existe->crearUsuarioAdmin();
+        $creacionadmin = true;
     }
     $validacionExistencia = true;
-    echo '<div class="alert alert-success d-flex aling-items-center" role="alert">Base de Dato Creada Exitosamente!!</div>';
-    return ("../index.php");
+
+    if ($creacionadmin) {
+        echo '<script>
+        document.addEventListener("DOMContentLoaded", function() {
+            Swal.fire({
+                icon: "success",
+                title: "Tablas y usuario admin creados!",
+                confirmButtonColor: "#023059"
+            });
+        });
+    </script>';
+    } else {
+        echo '<script>
+        document.addEventListener("DOMContentLoaded", function() {
+            Swal.fire({
+                icon: "success",
+                title: "Tablas creadas!",
+                confirmButtonColor: "#023059"
+            });
+        });
+    </script>';
+    }
+    //return ("../index.php");
 }
 
 if ($existe->comprobarTabla("Usuarios")) {

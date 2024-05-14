@@ -1,3 +1,4 @@
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <?php
 $directorioActual = __DIR__;
 $rutausuario = dirname($directorioActual) . "/Models/usuarioModel.php";
@@ -7,7 +8,6 @@ require_once $rutaModel;
 $objusuario = new usuario();
 $objPerfil = new Perfiles();
 
-$listusuarios = $objusuario->verUsuarios();
 $listperfiles = $objPerfil->vertipoPerfiles();
 $listcentros = $objusuario->verCentrosarray();
 
@@ -22,37 +22,59 @@ if (isset($_POST['op']) && $_POST['op'] == "GUARDAR" && isset($_POST['nombre']) 
     $centro = $_POST['centro'] ?? '';
     $op = $_POST['op'] ?? '';
     $insertar = $objusuario->insertarUsuario($usuario, $nombre, $correo, $rut, $clave, $perfil, $centro);
-    if ($insertar) {
-        echo '<script>alert("Usuario creado con éxito.");</script>';
-    } else {
-        echo '<script>alert("Ocurrio un error al crear el usuario.");</script>';
-    }
 
-    echo '<script>
-            setTimeout(function() {
-                window.location.href = "mantenedorusuarios.php";
-            }, 100);
-          </script>';
-    exit();
+    //Se mostrará la alerta según el caso.
+    $alertaExito = $insertar ? 'true' : 'false';
+    echo
+    '<script>
+            document.addEventListener("DOMContentLoaded", function() {
+                var resultado = ' . $alertaExito . ';
+                if (resultado) {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Creación exitosa!",
+                        confirmButtonColor: "#023059"
+                    });
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Ocurrió un error!",
+                        confirmButtonColor: "#023059"
+                    });
+                }
+            });
+    </script>';
 }
 
 
 // Eliminar perfil 
-if (isset($_POST['op']) && $_POST['op'] == "eliminar" && isset($_POST['IDUsuario'])) {
-    $IDUsuario = $_POST['IDUsuario'];
+if (isset($_POST['op']) && $_POST['op'] == "eliminar" && isset($_POST['IDUsuarioEliminar'])) {
+    $IDUsuario = $_POST['IDUsuarioEliminar'];
     $borrarusuario = $objusuario->eliminarUsuario($IDUsuario);
-    if ($borrarusuario) {
-        echo '<script>alert("Usuario eliminado con éxito.");</script>';
-    } else {
-        echo '<script>alert("No se pudo eliminar el usuario.");</script>';
-    }
 
-    echo '<script>
-            setTimeout(function() {
-                window.location.href = "mantenedorusuarios.php";
-            }, 100);
-          </script>';
-    exit();
+    $alertaExito = $borrarusuario ? 'true' : 'false';
+
+    echo
+    '<script>
+            document.addEventListener("DOMContentLoaded", function() {
+                var resultado = ' . $alertaExito . ';
+                if (resultado) {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Eliminado!",
+                        confirmButtonColor: "#023059"
+                    });
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Ocurrió un error!",
+                        confirmButtonColor: "#023059"
+                    });
+                }
+            });
+    </script>';
 }
 
 
@@ -67,16 +89,29 @@ if (isset($_POST['op']) && $_POST['op'] == "Modificar" && isset($_POST['IDUsuari
     $centro = $_POST['centro'] ?? '';
     $op = $_POST['op'] ?? '';
     $insertar = $objusuario->modificarPerfil($IDUsuario, $usuario, $nombre, $correo, $rut, $clave, $perfil, $centro);
-    if ($insertar) {
-        echo '<script>alert("Usuario editado con éxito.");</script>';
-    } else {
-        echo '<script>alert("Ocurrio un error al editar el usuario.");</script>';
-    }
 
-    echo '<script>
-            setTimeout(function() {
-                window.location.href = "mantenedorusuarios.php";
-            }, 100);
-          </script>';
-    exit();
+    $alertaExito = $insertar ? 'true' : 'false';
+
+    echo
+    '<script>
+            document.addEventListener("DOMContentLoaded", function() {
+                var resultado = ' . $alertaExito . ';
+                if (resultado) {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Actualizado con éxito!",
+                        confirmButtonColor: "#023059"
+                    });
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Ocurrió un error!",
+                        confirmButtonColor: "#023059"
+                    });
+                }
+            });
+     </script>';
 }
+
+$listusuarios = $objusuario->verUsuarios();
