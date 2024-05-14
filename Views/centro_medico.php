@@ -27,7 +27,7 @@ require_once $rutacentro;
     <script src="https://kit.fontawesome.com/4652dbea50.js" crossorigin="anonymous"></script>
 </head>
 
-<body>
+<body style="background-color: #E7E7E7; font-family: 'Montserrat';">
 
 <
     <?php
@@ -51,7 +51,7 @@ require_once $rutacentro;
     <div style="height: 20px; margin:0 10px 0 10px;">
             <div class="row">
                 <div class="col-lg-12">
-                    <table id="pruebas" class="table table-striped table-bordered table-responsive">
+                    <table id="pruebas" class="table">
                         <thead>
                             <tr>
                                 <th>Nombre</th>
@@ -134,9 +134,12 @@ require_once $rutacentro;
             color: white;
             text-decoration: none;
             font-weight: lighter;
+        }
+        .table td{
+            padding: 10px;
+            background-color: #FFFFFF;
             text-align: center;
         }
-
         .col-clave {
             max-width: 100px;
             overflow: hidden;
