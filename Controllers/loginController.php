@@ -1,4 +1,3 @@
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <?php
 // Incluir los archivos de PHPMailer
 require_once '../PHPMailer-master/src/PHPMailer.php';
@@ -77,7 +76,7 @@ if (isset($_POST['op']) && $_POST['op'] == "LOGIN") {
             }else {
                
                 session_start();
-                $_SESSION['error'] = 'Usuario o contraseña incorrectos';
+                $_SESSION['error'] = 'Usuario o contraseña incorrectos.';
                 header('Location: ../Views/login.php');
                 exit();
         } 
