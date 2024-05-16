@@ -11,6 +11,7 @@ $objPerfil = new Perfiles();
 $listperfiles = $objPerfil->vertipoPerfiles();
 $listcentros = $objusuario->verCentrosarray();
 
+
 if (isset($_POST['op']) && $_POST['op'] == "GUARDAR" && isset($_POST['nombre']) && isset($_POST['rut']) && isset($_POST['usuario']) && isset($_POST['clave']) && isset($_POST['correo']) && isset($_POST['perfil']) && isset($_POST['centro'])) {
 
     $nombre = $_POST['nombre'] ?? '';
@@ -21,30 +22,37 @@ if (isset($_POST['op']) && $_POST['op'] == "GUARDAR" && isset($_POST['nombre']) 
     $perfil = $_POST['perfil'] ?? '';
     $centro = $_POST['centro'] ?? '';
     $op = $_POST['op'] ?? '';
-    $insertar = $objusuario->insertarUsuario($usuario, $nombre, $correo, $rut, $clave, $perfil, $centro);
+    $estado = $objusuario->validarut($rut);
+    if($estado=="BIEN"){
+        $insertar = $objusuario->insertarUsuario($usuario, $nombre, $correo, $rut, $clave, $perfil, $centro);
+        echo '<script>
+        document.addEventListener("DOMContentLoaded", function() {
+            Swal.fire({
+                icon: "success",
+                title: "Creación exitosa!",
+                confirmButtonColor: "#023059"
+            });
+        });
+    </script>';
+    }
+    else{
+        echo '<script>
+        document.addEventListener("DOMContentLoaded", function() {
+            Swal.fire({
+                icon: "warning",
+                title: "No se puede insertar!",
+                confirmButtonColor: "#023059"
+            });
+        });
+    </script>';
+    }
+    
 
     //Se mostrará la alerta según el caso.
-    $alertaExito = $insertar ? 'true' : 'false';
-    echo
-    '<script>
-            document.addEventListener("DOMContentLoaded", function() {
-                var resultado = ' . $alertaExito . ';
-                if (resultado) {
-                    Swal.fire({
-                        icon: "success",
-                        title: "Creación exitosa!",
-                        confirmButtonColor: "#023059"
-                    });
-                } else {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops...",
-                        text: "Ocurrió un error!",
-                        confirmButtonColor: "#023059"
-                    });
-                }
-            });
-    </script>';
+    
+   
+    
+
 }
 
 
@@ -76,42 +84,67 @@ if (isset($_POST['op']) && $_POST['op'] == "eliminar" && isset($_POST['IDUsuario
             });
     </script>';
 }
-
-
 if (isset($_POST['op']) && $_POST['op'] == "Modificar" && isset($_POST['IDUsuario']) && isset($_POST['nombre']) && isset($_POST['rut']) && isset($_POST['usuario']) && isset($_POST['clave']) && isset($_POST['correo']) && isset($_POST['perfil']) && isset($_POST['centro'])) {
     $IDUsuario = $_POST['IDUsuario'] ?? '';
     $nombre = $_POST['nombre'] ?? '';
     $rut = $_POST['rut'] ?? '';
+    $existeUsuario = $objusuario->buscarUsuarioPorLlaveForanea($rut);
     $usuario = $_POST['usuario'] ?? '';
     $clave = $_POST['clave'] ?? '';
     $correo = $_POST['correo'] ?? '';
     $perfil = $_POST['perfil'] ?? '';
     $centro = $_POST['centro'] ?? '';
     $op = $_POST['op'] ?? '';
-    $insertar = $objusuario->modificarPerfil($IDUsuario, $usuario, $nombre, $correo, $rut, $clave, $perfil, $centro);
+    $estado = $objusuario->validarut($rut);
 
-    $alertaExito = $insertar ? 'true' : 'false';
-
-    echo
-    '<script>
+    if ($estado === "MAL") {
+        echo 
+        '<script>
             document.addEventListener("DOMContentLoaded", function() {
-                var resultado = ' . $alertaExito . ';
-                if (resultado) {
-                    Swal.fire({
-                        icon: "success",
-                        title: "Actualizado con éxito!",
-                        confirmButtonColor: "#023059"
-                    });
-                } else {
                     Swal.fire({
                         icon: "error",
                         title: "Oops...",
-                        text: "Ocurrió un error!",
+                        text: "RUT incorrecto.",
                         confirmButtonColor: "#023059"
                     });
-                }
             });
-     </script>';
+        </script>';
+    } 
+    elseif($estado === "BIEN") {
+        if ($existeUsuario) {
+
+            if ($existeUsuario != $rut) {
+                $objusuario->modificarPerfil($IDUsuario, $usuario, $nombre, $correo, $rut, $clave, $perfil, $centro);
+                '<script>
+            document.addEventListener("DOMContentLoaded", function() {
+                Swal.fire({
+                    icon: "success",
+                    title: "Datos modificados correctamente.",
+                    confirmButtonColor: "#023059"
+                });
+            });
+        </script>';
+                
+            }
+        }
+        if ($existeUsuario == false) {
+            $objusuario->insertarUsuario($usuario, $nombre, $correo, $rut, $clave, $perfil, $centro);
+            '<script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    Swal.fire({
+                        icon: "success",
+                        title: " Usuario actualizado.",
+                        confirmButtonColor: "#023059"
+                    });
+                });
+                </script>';;
+            exit();
+
+        }
+    }
+
 }
+    
+ 
 
 $listusuarios = $objusuario->verUsuarios();
