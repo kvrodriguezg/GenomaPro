@@ -136,7 +136,7 @@ $centros = $objusuario->buscarCentros()
                             </div>
                             <div class="col">
                                 <label for="rut">Rut:</label>
-                                <input required type="text" class="form-control" name="rut" id="rut">
+                                <input required type="text" class="form-control" name="rut" id="rut" oninput="agregarGuion()" maxlength="10" >
                             </div>
                         </div>
 
@@ -159,7 +159,7 @@ $centros = $objusuario->buscarCentros()
                             <div class="col">
                                 <label for="correo">Correo:</label>
                                 <input required type="text" class="form-control" name="correo">
-                            </div>git
+                            </div>
 
                         </div>
 
