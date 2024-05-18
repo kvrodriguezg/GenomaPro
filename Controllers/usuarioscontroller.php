@@ -24,16 +24,49 @@ if (isset($_POST['op']) && $_POST['op'] == "GUARDAR" && isset($_POST['nombre']) 
     $op = $_POST['op'] ?? '';
     $estado = $objusuario->validarut($rut);
     if($estado=="BIEN"){
-        $insertar = $objusuario->insertarUsuario($usuario, $nombre, $correo, $rut, $clave, $perfil, $centro);
-        echo '<script>
-        document.addEventListener("DOMContentLoaded", function() {
-            Swal.fire({
-                icon: "success",
-                title: "Creación exitosa!",
-                confirmButtonColor: "#023059"
+        $existeUsuario = $objusuario->buscarUsuarioPorLlaveForanea($rut);
+        if ($existeUsuario != $rut)
+        {
+            $insertar = $objusuario->insertarUsuario($usuario, $nombre, $correo, $rut, $clave, $perfil, $centro);
+            if ($insertar)
+            {
+                echo '<script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Creación exitosa!",
+                        confirmButtonColor: "#023059"
+                    });
+                });
+            </script>';
+            }
+            else
+            {
+                echo '<script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Ocurrió un error!",
+                        confirmButtonColor: "#023059"
+                    });
+                });
+            </script>';
+            }
+        }
+        else
+        {
+            echo '<script>
+            document.addEventListener("DOMContentLoaded", function() {
+                Swal.fire({
+                    icon: "warning",
+                    title: "No se puede insertar!",
+                    text: "RUT ya existe.",
+                    confirmButtonColor: "#023059"
+                });
             });
-        });
-    </script>';
+        </script>';
+        }
     }
     else{
         echo '<script>
@@ -41,18 +74,12 @@ if (isset($_POST['op']) && $_POST['op'] == "GUARDAR" && isset($_POST['nombre']) 
             Swal.fire({
                 icon: "warning",
                 title: "No se puede insertar!",
+                text: "RUT inválido.",
                 confirmButtonColor: "#023059"
             });
         });
     </script>';
     }
-    
-
-    //Se mostrará la alerta según el caso.
-    
-   
-    
-
 }
 
 
