@@ -8,4 +8,6 @@ $objCentros = new centromedico();
 $idCentro = $_SESSION['idCentro'];
 $listExamenes = $objCentros->buscarExamenes($idCentro);
 
+
+
 $nombreCentro = $objCentros->nombreCentro($idCentro);
