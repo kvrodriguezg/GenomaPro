@@ -33,7 +33,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/login.css">
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <title>Iniciar Sesión</title>
 </head>
 
@@ -77,7 +76,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     </span>
                                     <input type="password" class="form-control" name="clave" placeholder="Ingrese su clave">
                                 </div>
-                                <div class="g-recaptcha" data-sitekey="6LdH4M4pAAAAACFx6bwJwmKLPTpWZr6tLwf5cinF"></div>
                                 <input type="hidden" name="op" value="LOGIN"><br>
                                 <input type="submit" class="btn btn-primary mx-auto d-block" name="btnlogin" value="Ingresar">
                             </div>
@@ -87,21 +85,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
     </div>
-    <script>
-        function validarFormulario() {
-           
-            var respuesta = grecaptcha.getResponse();
-            if (respuesta.length == 0) {
-              
-                Swal.fire({
-                    icon: "error",
-                    title: "Oops...",
-                    text: "Por favor, verifica que no eres un robot.",
-                    confirmButtonColor: "#023059"
-                });
-                return false; 
-            }
-            return true;
-        }
-        </script>
 </html>>

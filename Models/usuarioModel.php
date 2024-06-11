@@ -2,20 +2,17 @@
 $directorioActual = __DIR__;
 $ruta = dirname($directorioActual) . "/Models/conexion.php";
 require_once $ruta;
+
 class usuario
 {
     private $db;
     private $usuario;
     private $user;
     private $userLogin;
-
-
     private $centrosarray;
 
     public function __construct()
     {
-        //sacar aqui
-        //require_once("conexion.php");
         $this->db = Conectarse();
         $this->usuario = array();
         $this->user = array();
@@ -31,7 +28,6 @@ class usuario
         }
         return $this->usuario;
     }
-    
 
     public function buscarPerfil($nombrePerfil)
     {
@@ -44,11 +40,9 @@ class usuario
     {
         $perfiles = array();
         $consulta = mysqli_query($this->db, "SELECT * FROM Perfiles");
-        
         while ($perfil = mysqli_fetch_array($consulta)) {
             $perfiles[] = $perfil;
         }
-        
         return $perfiles;
     }
 
@@ -56,11 +50,9 @@ class usuario
     {
         $centros = array();
         $consulta = mysqli_query($this->db, "SELECT * FROM CentrosMedicos");
-        
         while ($centro = mysqli_fetch_array($consulta)) {
             $centros[] = $centro;
         }
-        
         return $centros;
     }
 
@@ -79,59 +71,45 @@ class usuario
         }
         return $this->centrosarray;
     }
+
     public function insertarUsuario($usuario, $nombre, $correo, $rut, $clave, $perfil, $centro)
     {
         $idperfil = $this->buscarPerfil($perfil);
         $idcentro = $this->buscarcentro($centro);
-        $clavehash = password_hash($clave, PASSWORD_DEFAULT);
 
         // Verificar si ya existe un usuario con la misma llave foránea
         $existingUser = $this->buscarUsuarioPorLlaveForanea($rut);
         if ($existingUser) {
             return false;
         } else {
-            $query = "INSERT INTO Usuarios (usuario, Nombre, Correo, Rut, Clave, IDPerfil, IDCentroMedico) VALUES (?, ?, ?, ?, ?, ?, ?);";
+            $query = "INSERT INTO Usuarios (usuario, Nombre, Correo, Rut, Clave, IDPerfil, IDCentroMedico) VALUES ('$usuario', '$nombre', '$correo', '$rut', '$clave', {$idperfil['IDPerfil']}, {$idcentro['IDCentroMedico']})";
 
-            if ($stmt = mysqli_prepare($this->db, $query)) {
-                mysqli_stmt_bind_param($stmt, "sssssii", $usuario, $nombre, $correo, $rut, $clavehash, $idperfil['IDPerfil'], $idcentro['IDCentroMedico']);
-
-                if (mysqli_stmt_execute($stmt)) {
-                    return true;
-                } else {
-                    return false;
-                }
+            if (mysqli_query($this->db, $query)) {
+                return true;
+            } else {
+                return false;
             }
         }
-
     }
 
     private function buscarUsuarioPorLlaveForanea($rut)
     {
-        $query = "SELECT * FROM Usuarios WHERE Rut = ?";
-
-        if ($stmt = mysqli_prepare($this->db, $query)) {
-            mysqli_stmt_bind_param($stmt, "s", $rut);
-            mysqli_stmt_execute($stmt);
-            mysqli_stmt_store_result($stmt);
-
-            if (mysqli_stmt_num_rows($stmt) > 0) {
-                return true; 
-            } else {
-                return false; 
-            }
+        $query = "SELECT * FROM Usuarios WHERE Rut = '$rut'";
+        $result = mysqli_query($this->db, $query);
+        if (mysqli_num_rows($result) > 0) {
+            return true;
+        } else {
+            return false;
         }
     }
 
     public function eliminarUsuario($IDUsuario)
     {
-        $query = "DELETE FROM Usuarios WHERE IDUsuario=?;";
-        if ($stmt = mysqli_prepare($this->db, $query)) {
-            mysqli_stmt_bind_param($stmt, "i", $IDUsuario);
-            if (mysqli_stmt_execute($stmt)) {
-                return true;
-            } else {
-                return false;
-            }
+        $query = "DELETE FROM Usuarios WHERE IDUsuario=$IDUsuario";
+        if (mysqli_query($this->db, $query)) {
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -167,19 +145,14 @@ class usuario
 
     public function modificarPerfil($IDUsuario, $usuario, $nombre, $correo, $rut, $clave, $perfil, $centro)
     {
-
         $idperfil = $this->buscarPerfil($perfil);
         $idcentro = $this->buscarcentro($centro);
 
-        $query = "UPDATE Usuarios SET usuario = ?,Nombre = ?, Correo = ?, Rut = ?, Clave = ?, IDPerfil = ?, IDCentroMedico = ? WHERE IDUsuario = ?;";
-        if ($stmt = mysqli_prepare($this->db, $query)) {
-            mysqli_stmt_bind_param($stmt, "sssssiii", $usuario, $nombre, $correo, $rut, $clave, $idperfil['IDPerfil'], $idcentro['IDCentroMedico'], $IDUsuario);
-
-            if (mysqli_stmt_execute($stmt)) {
-                return true;
-            } else {
-                return false;
-            }
+        $query = "UPDATE Usuarios SET usuario = '$usuario',Nombre = '$nombre', Correo = '$correo', Rut = '$rut', Clave = '$clave', IDPerfil = {$idperfil['IDPerfil']}, IDCentroMedico = {$idcentro['IDCentroMedico']} WHERE IDUsuario = $IDUsuario";
+        if (mysqli_query($this->db, $query)) {
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -204,3 +177,4 @@ class usuario
         }
     }
 }
+?>
