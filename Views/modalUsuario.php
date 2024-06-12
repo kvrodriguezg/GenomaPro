@@ -8,7 +8,25 @@ $row = $objusuario->buscarUsuarioporID($IDUsuario);
 $perfiles = array();
 $centros = array();
 $perfiles = $objusuario->buscarPerfiles();
-$centros = $objusuario->buscarCentros() ?>
+$centros = $objusuario->buscarCentros() 
+?>
+<script>
+    function agregarGuion() {
+        var rutInput = document.getElementById('rut');
+        var valorRut = rutInput.value.replace(/[^\dKk]/g, '');
+
+        if (valorRut.length <= 10) {
+            rutInput.value = formatearRut(valorRut);
+        }
+    }
+
+    function formatearRut(rut) {
+        if (rut.length > 1) {
+            return rut.slice(0, -1) + '-' + rut.slice(-1);
+        }
+        return rut;
+    }
+</script>
 
 <?php if ($IDUsuario > 0) { ?>
     <div class="modal fade" id="editar_Modal_<?php echo $row['IDUsuario']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -24,10 +42,13 @@ $centros = $objusuario->buscarCentros() ?>
                             <div class="col">
                                 <label for="nombre">Nombre Completo:</label>
                                 <input required type="text" class="form-control" name="nombre" value="<?php echo $row['Nombre']; ?>">
+                                
                             </div>
                             <div class="col">
                                 <label for="rut">Rut:</label>
-                                <input required type="text" class="form-control" name="rut" value="<?php echo $row['Rut']; ?>">
+                                <input required type="text" class="form-control" name="rut" maxlength="10"oninput="agregarGuion()" value="<?php echo $row['Rut']; ?>">
+                               
+
                             </div>
                         </div>
 
@@ -115,7 +136,7 @@ $centros = $objusuario->buscarCentros() ?>
                             </div>
                             <div class="col">
                                 <label for="rut">Rut:</label>
-                                <input required type="text" class="form-control" name="rut">
+                                <input required type="text" class="form-control" name="rut" id="rut">
                             </div>
                         </div>
 
@@ -138,7 +159,7 @@ $centros = $objusuario->buscarCentros() ?>
                             <div class="col">
                                 <label for="correo">Correo:</label>
                                 <input required type="text" class="form-control" name="correo">
-                            </div>
+                            </div>git
 
                         </div>
 
