@@ -1,6 +1,6 @@
-projectKey=clase
+projectKey=g-no-seguro
 serverUrl=http://localhost:9000
 serverVersion=10.5.0.89998
-dashboardUrl=http://localhost:9000/dashboard?id=clase
-ceTaskId=82e7491e-030f-4f13-b797-65e1cb783dbf
-ceTaskUrl=http://localhost:9000/api/ce/task?id=82e7491e-030f-4f13-b797-65e1cb783dbf
+dashboardUrl=http://localhost:9000/dashboard?id=g-no-seguro
+ceTaskId=52d3604c-a1de-4040-861a-86ce0c13f74d
+ceTaskUrl=http://localhost:9000/api/ce/task?id=52d3604c-a1de-4040-861a-86ce0c13f74d
