@@ -77,7 +77,6 @@ class usuario
         $idperfil = $this->buscarPerfil($perfil);
         $idcentro = $this->buscarcentro($centro);
 
-        // Verificar si ya existe un usuario con la misma llave foránea
         $existingUser = $this->buscarUsuarioPorLlaveForanea($rut);
         if ($existingUser) {
             return false;
