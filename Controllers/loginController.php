@@ -7,18 +7,13 @@ require_once $rutausuario;
 
 //include("../Models/usuarioModel.php");
 $objlogin = new usuario();
-
 if (isset($_POST['op']) && $_POST['op'] == "LOGIN") {
-
         $loginResult = $objlogin->iniciarSesion($usuario, $clave);
-
         if ($loginResult) {
             $idperfil = $loginResult['idPerfil'];
             $idcentro = $loginResult['IDCentroMedico'];
-            // Almacenar valores en la sesión
             $_SESSION['idPerfil'] = $idperfil;
             $_SESSION['idCentro'] = $idcentro;
-
                      switch ($idperfil) {
                          case 1:
                              header('Location: ../Views/diagnostico.php');
